@@ -1,0 +1,16 @@
+# Manila Pampanga Go Taxi
+
+> Private car with driver (not self-drive) serving Pampanga, Metro Manila and destinations across Luzon, Philippines.
+
+- Services: airport transfers (NAIA, Clark), Pampanga to Metro Manila, out-of-town trips, whole-day service.
+- Fixed fares: Pampanga to Metro Manila. Other routes: request a quotation.
+- Contact: WhatsApp +639853900002, email manilapampangagotaxi@gmail.com
+- Languages on the website: English, Chinese, Korean
+
+## Main pages
+- [Home](/)
+- [Popular routes and places to visit](/routes)
+- [Book a ride](/book)
+- [FAQ](/faq)
+- [Booking terms](/terms)
+- [Privacy policy](/privacy)
