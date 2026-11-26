@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Track My Booking | Manila Pampanga Go Taxi</title>
+<meta name="description" content="Check the status of your booking.">
+<meta name="theme-color" content="#102A43">
+<link rel="icon" type="image/png" href="/assets/69fafbe15d88b8ca53de7f08169a767b.png">
+<meta name="robots" content="noindex, nofollow">
+<script src="/mpgt-sb.js"></script>
+<script src="/dc.js"></script>
+<script src="/i18n.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F5F1E8;font-family:'Inter',system-ui,sans-serif;color:#102A43}
+a{color:inherit;text-decoration:none}
+button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid #C9A66B;outline-offset:3px}
+.rb-fld{box-sizing:border-box;width:100%;min-height:48px;padding:0 14px;border:1px solid #D8CFBA;border-radius:2px;background:#FBF8F1;font:inherit;font-size:15px;color:#102A43}
+.rb-fld[aria-invalid="true"]{border-color:#B3261E;background:#FDF3F2}
+.rb-lbl{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#4A5D70}
+.rb-btn{transition:transform .2s ease,box-shadow .2s ease}
+.rb-btn:hover{transform:translateY(-2px);box-shadow:0 10px 22px rgba(16,42,67,.28)}
+@media (prefers-reduced-motion:reduce){.rb-btn{transition:none}.rb-btn:hover{transform:none}}
+.tk-msg{margin:14px 0 0;font-size:15px;line-height:1.65;color:#102A43}.tk-dt{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#4A5D70;padding-top:3px}.tk-dd{margin:0;color:#102A43;overflow-wrap:anywhere}
+</style>
+</helmet>
+<div style="min-height:100vh;display:flex;flex-direction:column;overflow-x:clip">
+  <header style="background:#FFFFFF;padding:12px 24px;border-bottom:1px solid #C9A66B;display:flex;align-items:center;justify-content:space-between;gap:16px">
+    <a href="/" aria-label="Manila Pampanga Go Taxi home" style="display:flex;align-items:center"><img src="/assets/69fafbe15d88b8ca53de7f08169a767b.png" alt="Manila Pampanga Go Taxi" style="height:52px;width:auto;max-width:100%"></a>
+    <span style="font-size:12px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:#8F6B2E">Track booking</span>
+  </header>
+
+  <main style="flex:1;padding:48px 16px 64px;box-sizing:border-box">
+    <div style="max-width:600px;margin:0 auto">
+      <section aria-label="Track my booking" style="background:#FFFFFF;border:1px solid #E3DCCB;border-top:3px solid #C9A66B;border-radius:4px;padding:32px 28px">
+        <p style="margin:0;font-size:11.5px;font-weight:600;letter-spacing:.3em;text-transform:uppercase;color:#8F6B2E">Booking status</p>
+        <h1 style="margin:10px 0 0;font-family:'Cormorant Garamond',Georgia,serif;font-weight:600;font-size:40px;line-height:1.1">Track my booking</h1>
+        <p style="margin:14px 0 0;font-size:15px;line-height:1.65;color:#4A5D70">Enter your booking number and the email or phone number you booked with.</p>
+        <form onSubmit="{{ submit }}" novalidate style="margin-top:22px;display:flex;flex-direction:column;gap:16px">
+          <div style="display:flex;flex-direction:column;gap:6px"><label class="rb-lbl" for="tk-ref">Booking number *</label><input class="rb-fld" id="tk-ref" type="text" inputmode="numeric" autocomplete="off" placeholder="MPG-12345" value="{{ ref }}" onChange="{{ setRef }}" onInput="{{ setRef }}" aria-invalid="{{ invRef }}"></div>
+          <div style="display:flex;flex-direction:column;gap:6px"><label class="rb-lbl" for="tk-contact">Email or phone number *</label><input class="rb-fld" id="tk-contact" type="text" autocomplete="off" placeholder="name@email.com or +63 9XX XXX XXXX" value="{{ contact }}" onChange="{{ setContact }}" onInput="{{ setContact }}" aria-invalid="{{ invContact }}"></div>
+          <template data-sc="if" value="{{ err }}" hint-placeholder-val="{{ false }}"><p role="alert" style="margin:0;font-size:14px;color:#B3261E">{{ err }}</p></template>
+          <button type="button" onClick="{{ submit }}" class="rb-btn" style="min-height:54px;padding:0 24px;border:0;border-radius:2px;background:#102A43;color:#C9A66B;font:inherit;font-weight:700;font-size:16px;cursor:pointer">Check status</button>
+        </form>
+      </section>
+
+      <template data-sc="if" value="{{ hasRes }}" hint-placeholder-val="{{ false }}">
+        <section role="status" aria-live="polite" style="margin-top:20px;background:#FFFFFF;border:1px solid #E3DCCB;border-top:3px solid {{ accent }};border-radius:4px;padding:28px">
+          <p style="margin:0;font-size:11.5px;font-weight:600;letter-spacing:.3em;text-transform:uppercase;color:#8F6B2E">{{ r.ref }}</p>
+          <p style="margin:10px 0 0"><span style="display:inline-block;padding:7px 14px;border-radius:2px;background:{{ accent }};color:#FFFFFF;font-weight:700;font-size:14px;letter-spacing:.04em">{{ statusLabel }}</span></p>
+
+          <template data-sc="if" value="{{ sNew }}" hint-placeholder-val="{{ false }}"><p class="tk-msg">We received your request. We will review it and message you soon.</p></template>
+          <template data-sc="if" value="{{ sQuoted }}" hint-placeholder-val="{{ false }}"><p class="tk-msg">Your quotation has been sent to you. Please use the payment link we sent to confirm your trip.</p></template>
+          <template data-sc="if" value="{{ sRebooking }}" hint-placeholder-val="{{ false }}"><p class="tk-msg">We received your new date and are checking availability. We will message you soon.</p></template>
+          <template data-sc="if" value="{{ sConfirmed }}" hint-placeholder-val="{{ false }}"><p class="tk-msg">Your booking is confirmed. Your driver will contact you before pickup.</p></template>
+          <template data-sc="if" value="{{ sCompleted }}" hint-placeholder-val="{{ false }}"><p class="tk-msg">This trip is completed. Thank you for riding with us.</p></template>
+          <template data-sc="if" value="{{ sRejected }}" hint-placeholder-val="{{ false }}">
+            <p class="tk-msg">We are sorry, we could not accept this trip.</p>
+            <template data-sc="if" value="{{ rejReason }}" hint-placeholder-val="{{ false }}"><p class="tk-msg" style="margin-top:6px">{{ rejReason }}</p></template>
+            <template data-sc="if" value="{{ rebookHref }}" hint-placeholder-val="{{ false }}"><a href="{{ rebookHref }}" class="rb-btn" style="margin-top:14px;display:inline-flex;align-items:center;min-height:48px;padding:0 22px;border-radius:2px;background:#102A43;color:#C9A66B;font-weight:700;font-size:15px">Choose a new date</a></template>
+          </template>
+
+          <dl style="margin:22px 0 0;display:grid;grid-template-columns:minmax(0,130px) minmax(0,1fr);gap:10px 16px;font-size:14.5px;line-height:1.5">
+            <dt class="tk-dt">Name</dt><dd class="tk-dd">{{ r.name }}</dd>
+            <dt class="tk-dt">Trip</dt><dd class="tk-dd">{{ r.route }}</dd>
+            <dt class="tk-dt">Date</dt><dd class="tk-dd">{{ when }}</dd>
+            <dt class="tk-dt">Passengers</dt><dd class="tk-dd">{{ r.pax }}</dd>
+            <dt class="tk-dt">Vehicle</dt><dd class="tk-dd">{{ r.vehicle }}</dd>
+            <template data-sc="if" value="{{ amount }}" hint-placeholder-val="{{ true }}"><dt class="tk-dt">Amount</dt><dd class="tk-dd">{{ amount }}</dd></template>
+            <template data-sc="if" value="{{ payShow }}" hint-placeholder-val="{{ true }}"><dt class="tk-dt">Payment</dt><dd class="tk-dd">{{ payText }}</dd></template>
+          </dl>
+        </section>
+      </template>
+      <p style="margin:18px 4px 0;font-size:13.5px;line-height:1.6;color:#4A5D70">Need help? Message us on WhatsApp, Viber or KakaoTalk at +63 985 390 0002 and quote your booking number.</p>
+      <a href="/" style="display:inline-block;margin:10px 4px 0;font-size:14px;font-weight:600;color:#8F6B2E">&larr; Back to website</a>
+    </div>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":900}}'>
+class Component extends DCLogic {
+constructor(props) {
+super(props);
+this.state = { ref: '', contact: '', err: '', tried: false, busy: false, res: null };
+}
+renderVals() {
+const s = this.state;
+const r = s.res || {};
+const st = r.status || '';
+const LBL = { new: 'Received', quoted: 'Quote sent', rebooking: 'Rebooking requested', confirmed: 'Confirmed', completed: 'Completed', rejected: 'Not accepted' };
+const COL = { new: '#4A5D70', quoted: '#102A43', rebooking: '#8F6B2E', confirmed: '#2F7D4F', completed: '#2F7D4F', rejected: '#B3261E' };
+const WHY = { v: 'The vehicle you requested was not available.', d: 'We are not available on your travel date.', g: 'We are not available on your date range.', o: '' };
+let when = r.date || '';
+try { const p = String(r.date).split('-'); when = new Date(Number(p[0]), Number(p[1]) - 1, Number(p[2])).toLocaleDateString('en-PH', { weekday: 'short', month: 'long', day: 'numeric', year: 'numeric' }); } catch (e) {}
+try { const q = String(r.time).split(':'); const hh = Number(q[0]); when += ' at ' + ((hh % 12) || 12) + ':' + q[1] + (hh >= 12 ? ' PM' : ' AM'); } catch (e) {}
+const q = r.quote;
+const amount = (q !== '' && q != null && !isNaN(Number(q)) && Number(q) > 0) ? '\u20b1' + Number(q).toLocaleString('en-PH') : '';
+let payText = '';
+if (r.pay === 'cash') payText = 'Pay in cash on the day';
+else if (r.paid) payText = 'Paid';
+else if (amount) payText = 'Waiting for your payment';
+const rej = r.reject || {};
+const rt = r.rebookToken || '';
+return {
+ref: s.ref, contact: s.contact, err: s.err,
+invRef: s.tried && !s.ref.trim(), invContact: s.tried && !s.contact.trim(),
+hasRes: !!s.res, r, statusLabel: LBL[st] || st, accent: COL[st] || '#4A5D70',
+sNew: st === 'new', sQuoted: st === 'quoted', sRebooking: st === 'rebooking', sConfirmed: st === 'confirmed', sCompleted: st === 'completed', sRejected: st === 'rejected',
+rejReason: [WHY[rej.reason] || '', rej.note || ''].filter(Boolean).join(' '),
+rebookHref: rt ? '/rebook#' + rt : '',
+when, amount, payText, payShow: !!payText,
+setRef: (ev) => this.setState({ ref: ev.target.value, err: '' }),
+setContact: (ev) => this.setState({ contact: ev.target.value, err: '' }),
+submit: (ev) => {
+if (ev && ev.preventDefault) ev.preventDefault();
+const st2 = this.state;
+const digits = st2.ref.replace(/\D/g, '');
+if (!digits || !st2.contact.trim()) { this.setState({ err: 'Please enter your booking number and your email or phone number.', tried: true, res: null }); return; }
+if (!(window.MPGT && window.MPGT.on)) { this.setState({ err: 'Booking lookup is not available right now. Please message us.', res: null }); return; }
+if (st2.busy) return;
+this.setState({ busy: true, err: '', res: null });
+window.MPGT.trackBooking('MPG-' + digits, st2.contact.trim()).then((out) => {
+if (out && out.ref) this.setState({ busy: false, res: out, err: '' });
+else this.setState({ busy: false, res: null, err: 'We could not find a booking with those details. Please check the booking number and the email or phone you used.' });
+}).catch(() => this.setState({ busy: false, res: null, err: 'We could not check right now. Please check your connection and try again.' }));
+}
+};
+}
+}
+</script>
+</body>
+</html>

@@ -13,7 +13,7 @@
   ],
   "headers": [
     {
-      "source": "/(admin|pay|rebook)",
+      "source": "/(admin|pay|rebook|track)",
       "headers": [
         {
           "key": "X-Robots-Tag",
