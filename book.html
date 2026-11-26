@@ -18,6 +18,7 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Book a Private Car with Driver | Manila Pampanga Go Taxi">
 <meta name="twitter:description" content="Request a quotation or book a fixed-fare private car with a driver in Pampanga, Metro Manila and across Luzon. Choose your vehicle and pay online or by your preferred method.">
+<script src="/mpgt-sb.js"></script>
 <script src="/dc.js"></script>
 <script src="/i18n.js"></script>
 </head>
@@ -130,6 +131,15 @@ a.route-btn:hover{background:linear-gradient(180deg,#E6CC96 0%,#C9A66B 52%,#B58F
 .mpgt-kk-note{margin:2px 10px 10px 58px;font-size:12.5px;line-height:1.5;color:#4A5D70;font-weight:400}
 @media (max-width:520px){.mpgt-chat-fab-txt{display:none}.mpgt-chat-menu>summary{width:56px;padding:0;justify-content:center}}
 @media (prefers-reduced-motion:reduce){.mpgt-chat-menu>summary{transition:none}.mpgt-chat-menu>summary:hover{transform:none}}
+/* mpgt-mnav */
+@media (max-width:760px){
+header{padding:8px 16px !important;gap:6px 12px !important}
+header>a:first-child img{height:44px !important}
+header>.btn-ring{order:2;margin-left:auto}
+header>nav[aria-label="Main"]{order:3;flex:1 1 100% !important;flex-wrap:nowrap !important;overflow-x:auto;gap:2px 20px !important;font-size:13px !important;-webkit-overflow-scrolling:touch;scrollbar-width:none;margin:0 -16px;padding:0 16px}
+header>nav[aria-label="Main"]::-webkit-scrollbar{display:none}
+header>nav[aria-label="Main"] a{flex:none;white-space:nowrap;padding:8px 0 !important}
+}
 </style>
 </helmet>
 
@@ -147,11 +157,11 @@ a.route-btn:hover{background:linear-gradient(180deg,#E6CC96 0%,#C9A66B 52%,#B58F
   </div>
 
   <!-- HEADER -->
-  <header id="top" style="background:#FFFFFF;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px 32px;padding:12px 40px;border-bottom:1px solid #C9A66B">
+  <header id="top" style="background:#FFFFFF;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px clamp(16px,2vw,32px);padding:12px clamp(16px,3vw,40px);border-bottom:1px solid #C9A66B">
     <a href="/" aria-label="Manila Pampanga Go Taxi home" style="display:flex;align-items:center">
       <img src="/assets/69fafbe15d88b8ca53de7f08169a767b.png" alt="Manila Pampanga Go Taxi, private car service" style="height:64px;width:auto;max-width:100%">
     </a>
-    <nav aria-label="Main" style="display:flex;flex-wrap:wrap;align-items:center;gap:8px 32px;font-size:16px;font-weight:500">
+    <nav aria-label="Main" style="display:flex;flex-wrap:wrap;align-items:center;gap:4px clamp(14px,1.6vw,32px);font-size:16px;font-weight:500">
       <a href="/" style="padding:10px 0">Home</a>
       <a href="/" style="padding:10px 0">Our Services</a>
       <a href="/" style="padding:10px 0">Destinations</a>
@@ -205,8 +215,8 @@ a.route-btn:hover{background:linear-gradient(180deg,#E6CC96 0%,#C9A66B 52%,#B58F
                       <button type="button" onClick="{{ useFixed }}" class="route-btn" style="display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 20px;border:0;border-radius:2px;background:#102A43;color:#C9A66B;font:inherit;font-weight:700;font-size:14px;cursor:pointer">Use fixed fare</button>
                     </div>
                   </template>
-                  <template data-sc="if" value="{{ isFixed }}" hint-placeholder-val="{{ false }}">
-                    <p style="margin:12px 0 0;padding:12px 16px;border-left:3px solid #C9A66B;background:#F6EBD3;font-size:14px;line-height:1.55;color:#4A3B16"><strong>Fixed fare route.</strong> No quotation needed. Choose your vehicle, fill in your booking details and pay to confirm your ride.</p>
+                  <template data-sc="if" value="{{ isRouteFixed }}" hint-placeholder-val="{{ false }}">
+                    <p style="margin:12px 0 0;padding:12px 16px;border-left:3px solid #C9A66B;background:#F6EBD3;font-size:14px;line-height:1.55;color:#4A3B16"><strong>Fixed fare route.</strong> No quotation needed for Sedan and MPV / SUV / AUV. Choose your vehicle, fill in your booking details and pay to confirm your ride. Van rental is by quotation.</p>
                   </template>
                 </fieldset>
                 <template data-sc="if" value="{{ showTripType }}" hint-placeholder-val="{{ true }}">
@@ -222,13 +232,29 @@ a.route-btn:hover{background:linear-gradient(180deg,#E6CC96 0%,#C9A66B 52%,#B58F
 
                 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:18px">
                   <div style="display:flex;flex-direction:column;gap:6px;min-width:0">
-                    <label class="lbl" for="bf-pickup">Pickup location</label>
-                    <input class="fld" id="bf-pickup" type="text" placeholder="{{ pickupPh }}" value="{{ pickup }}" onChange="{{ setPickup }}" aria-invalid="{{ invPickup }}">
+                    <label class="lbl" for="bf-pickup">{{ pickupLbl }}</label>
+                    <div style="position:relative">
+                      <input class="fld" id="bf-pickup" type="text" autocomplete="off" placeholder="{{ pickupPh }}" value="{{ pickup }}" onChange="{{ typePickup }}" onBlur="{{ blurSg }}" aria-invalid="{{ invPickup }}" style="width:100%;box-sizing:border-box">
+                      <template data-sc="if" value="{{ sgPickupOpen }}" hint-placeholder-val="{{ false }}">
+                        <ul role="listbox" aria-label="Suggested places" style="position:absolute;z-index:30;left:0;right:0;top:100%;margin:4px 0 0;padding:0;list-style:none;background:#FFFFFF;border:1px solid #C9A66B;border-radius:4px;box-shadow:0 12px 28px rgba(16,42,67,.18);overflow:hidden">
+                          <template data-sc="for" list="{{ sgPickup }}" as="o" hint-placeholder-count="3"><li role="option"><button type="button" onClick="{{ o.pick }}" style="display:block;width:100%;box-sizing:border-box;padding:11px 14px;border:0;border-bottom:1px solid #F0EADB;background:#FFFFFF;text-align:left;font:inherit;font-size:14px;line-height:1.4;color:#102A43;cursor:pointer"><strong style="display:block;font-weight:600">{{ o.title }}</strong><span style="display:block;font-size:12.5px;color:#5B6D7F">{{ o.sub }}</span></button></li></template>
+                          <li style="padding:6px 14px;font-size:11px;color:#6B7C8C;background:#FBF8F1">Place suggestions: Photon, &copy; OpenStreetMap contributors</li>
+                        </ul>
+                      </template>
+                    </div>
                     <template data-sc="if" value="{{ errPickup }}" hint-placeholder-val="{{ false }}"><p class="err">{{ errPickup }}</p></template>
                   </div>
                   <div style="display:flex;flex-direction:column;gap:6px;min-width:0">
-                    <label class="lbl" for="bf-dest">Drop-off location</label>
-                    <input class="fld" id="bf-dest" type="text" placeholder="{{ destPh }}" value="{{ dest }}" onChange="{{ setDest }}" aria-invalid="{{ invDest }}">
+                    <label class="lbl" for="bf-dest">{{ destLbl }}</label>
+                    <div style="position:relative">
+                      <input class="fld" id="bf-dest" type="text" autocomplete="off" placeholder="{{ destPh }}" value="{{ dest }}" onChange="{{ typeDest }}" onBlur="{{ blurSg }}" aria-invalid="{{ invDest }}" style="width:100%;box-sizing:border-box">
+                      <template data-sc="if" value="{{ sgDestOpen }}" hint-placeholder-val="{{ false }}">
+                        <ul role="listbox" aria-label="Suggested places" style="position:absolute;z-index:30;left:0;right:0;top:100%;margin:4px 0 0;padding:0;list-style:none;background:#FFFFFF;border:1px solid #C9A66B;border-radius:4px;box-shadow:0 12px 28px rgba(16,42,67,.18);overflow:hidden">
+                          <template data-sc="for" list="{{ sgDest }}" as="o" hint-placeholder-count="3"><li role="option"><button type="button" onClick="{{ o.pick }}" style="display:block;width:100%;box-sizing:border-box;padding:11px 14px;border:0;border-bottom:1px solid #F0EADB;background:#FFFFFF;text-align:left;font:inherit;font-size:14px;line-height:1.4;color:#102A43;cursor:pointer"><strong style="display:block;font-weight:600">{{ o.title }}</strong><span style="display:block;font-size:12.5px;color:#5B6D7F">{{ o.sub }}</span></button></li></template>
+                          <li style="padding:6px 14px;font-size:11px;color:#6B7C8C;background:#FBF8F1">Place suggestions: Photon, &copy; OpenStreetMap contributors</li>
+                        </ul>
+                      </template>
+                    </div>
                     <template data-sc="if" value="{{ errDest }}" hint-placeholder-val="{{ false }}"><p class="err">{{ errDest }}</p></template>
                   </div>
                 </div>
@@ -367,7 +393,7 @@ a.route-btn:hover{background:linear-gradient(180deg,#E6CC96 0%,#C9A66B 52%,#B58F
                   <div style="display:flex;flex-direction:column;gap:6px;min-width:0">
                     <label class="lbl" for="bf-pay">Payment preference (optional)</label>
                     <select class="fld" id="bf-pay" value="{{ pay }}" onChange="{{ setPay }}">
-                      <option value="">No preference</option><option value="Cash">Cash</option><option value="GCash">GCash</option><option value="Bank transfer">Bank transfer</option><option value="PayPal">PayPal</option><option value="Wise">Wise</option>
+                      <option value="">No preference</option><option value="Cash">Cash</option><option value="GCash">GCash</option><option value="Bank transfer">Bank transfer</option><option value="PayPal">PayPal</option>
                     </select>
                   </div>
                   </template>
@@ -408,6 +434,11 @@ a.route-btn:hover{background:linear-gradient(180deg,#E6CC96 0%,#C9A66B 52%,#B58F
                 <template data-sc="if" value="{{ isCustom }}" hint-placeholder-val="{{ true }}">
                 <div style="padding:14px 16px;border-radius:2px;background:#F6EBD3;border:1px solid #E3CFA4">
                   <p style="margin:0;font-size:13px;line-height:1.55;color:#4A3B16"><strong>Booking and payment.</strong> Advance reservations may require an agreed down payment to secure the ride. A free quotation request does not confirm a reservation.</p>
+                </div>
+                </template>
+                <template data-sc="if" value="{{ isVanQuote }}" hint-placeholder-val="{{ false }}">
+                <div style="padding:14px 16px;border-radius:2px;background:#F6EBD3;border:1px solid #E3CFA4">
+                  <p style="margin:0;font-size:13px;line-height:1.55;color:#4A3B16"><strong>Van rental is by quotation.</strong> Send us your details and we will reply with your fare. No payment is needed to request it.</p>
                 </div>
                 </template>
                 <template data-sc="if" value="{{ isFixed }}" hint-placeholder-val="{{ false }}">
@@ -494,10 +525,14 @@ a.route-btn:hover{background:linear-gradient(180deg,#E6CC96 0%,#C9A66B 52%,#B58F
                             </template>
                           </dl>
                           <template data-sc="if" value="{{ showQr }}" hint-placeholder-val="{{ false }}">
-                            <div style="flex:none;text-align:center">
-                              <div style="padding:8px;border:2px solid #102A43;border-radius:8px;background:#FFFFFF;display:inline-block"><svg viewBox="0 0 112 112" width="112" height="112" aria-hidden="true" style="display:block"><rect x="4" y="4" width="21" height="21" fill="#102A43"/><rect x="7" y="7" width="15" height="15" fill="#FFFFFF"/><rect x="10" y="10" width="9" height="9" fill="#102A43"/><rect x="87" y="4" width="21" height="21" fill="#102A43"/><rect x="90" y="7" width="15" height="15" fill="#FFFFFF"/><rect x="93" y="10" width="9" height="9" fill="#102A43"/><rect x="4" y="87" width="21" height="21" fill="#102A43"/><rect x="7" y="90" width="15" height="15" fill="#FFFFFF"/><rect x="10" y="93" width="9" height="9" fill="#102A43"/><rect x="53" y="4" width="7" height="7" fill="#102A43"/><rect x="53" y="11" width="7" height="7" fill="#102A43"/><rect x="53" y="25" width="7" height="7" fill="#102A43"/><rect x="53" y="39" width="7" height="7" fill="#102A43"/><rect x="53" y="46" width="7" height="7" fill="#102A43"/><rect x="11" y="53" width="7" height="7" fill="#102A43"/><rect x="18" y="53" width="7" height="7" fill="#102A43"/><rect x="25" y="53" width="7" height="7" fill="#102A43"/><rect x="32" y="53" width="7" height="7" fill="#102A43"/><rect x="39" y="53" width="7" height="7" fill="#102A43"/><rect x="53" y="53" width="7" height="7" fill="#102A43"/><rect x="60" y="53" width="7" height="7" fill="#102A43"/><rect x="88" y="53" width="7" height="7" fill="#102A43"/><rect x="102" y="53" width="7" height="7" fill="#102A43"/><rect x="60" y="60" width="7" height="7" fill="#102A43"/><rect x="67" y="60" width="7" height="7" fill="#102A43"/><rect x="74" y="60" width="7" height="7" fill="#102A43"/><rect x="81" y="60" width="7" height="7" fill="#102A43"/><rect x="95" y="60" width="7" height="7" fill="#102A43"/><rect x="60" y="67" width="7" height="7" fill="#102A43"/><rect x="74" y="67" width="7" height="7" fill="#102A43"/><rect x="81" y="67" width="7" height="7" fill="#102A43"/><rect x="88" y="67" width="7" height="7" fill="#102A43"/><rect x="102" y="67" width="7" height="7" fill="#102A43"/><rect x="53" y="74" width="7" height="7" fill="#102A43"/><rect x="67" y="74" width="7" height="7" fill="#102A43"/><rect x="74" y="74" width="7" height="7" fill="#102A43"/><rect x="95" y="74" width="7" height="7" fill="#102A43"/><rect x="74" y="81" width="7" height="7" fill="#102A43"/><rect x="88" y="81" width="7" height="7" fill="#102A43"/><rect x="95" y="81" width="7" height="7" fill="#102A43"/><rect x="53" y="88" width="7" height="7" fill="#102A43"/><rect x="60" y="88" width="7" height="7" fill="#102A43"/><rect x="67" y="88" width="7" height="7" fill="#102A43"/><rect x="102" y="88" width="7" height="7" fill="#102A43"/><rect x="74" y="95" width="7" height="7" fill="#102A43"/><rect x="95" y="95" width="7" height="7" fill="#102A43"/><rect x="53" y="102" width="7" height="7" fill="#102A43"/><rect x="88" y="102" width="7" height="7" fill="#102A43"/><rect x="95" y="102" width="7" height="7" fill="#102A43"/></svg></div>
-                              <p style="margin:6px 0 0;font-size:12px;color:#6B7C8C">QR (optional)</p>
+                            <div style="flex:1 1 100%;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,210px),1fr));gap:18px">
+                              <template data-sc="for" list="{{ qrs }}" as="q" hint-placeholder-count="2">
+                                <figure style="margin:0;text-align:center"><img src="{{ q.src }}" alt="{{ q.alt }}" loading="lazy" style="display:block;width:100%;max-width:270px;margin:0 auto;border:1px solid #E3DCCB;border-radius:10px"><figcaption style="margin-top:8px;font-size:13px;font-weight:700;color:#102A43">{{ q.label }}</figcaption></figure>
+                              </template>
                             </div>
+                          </template>
+                          <template data-sc="if" value="{{ showLink }}" hint-placeholder-val="{{ false }}">
+                            <a href="{{ payLink }}" target="_blank" rel="noopener" style="flex:1 1 100%;display:inline-flex;align-items:center;justify-content:center;gap:10px;box-sizing:border-box;min-height:52px;padding:0 24px;border-radius:2px;background:#102A43;color:#C9A66B;font-weight:700;font-size:15px;text-decoration:none">{{ payLinkLabel }} <span aria-hidden="true">&rarr;</span></a>
                           </template>
                         </div>
                         <div style="height:1px;background:#E3DCCB"></div>
@@ -613,15 +648,16 @@ a.route-btn:hover{background:linear-gradient(180deg,#E6CC96 0%,#C9A66B 52%,#B58F
           <p style="margin:12px 0 0;font-family:'Cormorant Garamond',Georgia,serif;font-weight:600;font-size:38px;line-height:1.1">We're here to help.</p>
           <a href="https://wa.me/639853900002" target="_blank" rel="noopener" style="margin-top:22px;display:flex;align-items:center;gap:16px;padding:16px 20px;border:1px solid rgba(201,166,107,.65);border-radius:4px;background:rgba(255,255,255,.06);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)">
             <span style="flex:none;display:inline-flex;color:#E6CC96"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 0 1-13.2 8L3 21l1.2-4.6A9 9 0 1 1 21 12z"/><path d="M9 9c0 3 3 6 6 6l1-2-2-1-1 1c-1-.5-2-1.5-2.5-2.5l1-1-1-2z"/></svg></span>
-            <span style="flex:1;min-width:0"><span style="display:block;font-size:11.5px;color:#D9E1EA">Chat on WhatsApp</span><span style="display:block;margin-top:2px;font-size:17px;font-weight:600;letter-spacing:.02em">+63 985 390 0002</span></span>
+            <span style="flex:1;min-width:0"><span style="display:block;font-size:11.5px;color:#D9E1EA">WhatsApp, Viber &amp; KakaoTalk</span><span style="display:block;margin-top:2px;font-size:17px;font-weight:600;letter-spacing:.02em">+63 985 390 0002</span></span>
+            <span aria-hidden="true" style="color:#C9A66B;font-size:18px">&rarr;</span>
+          </a>
+          <a href="https://www.facebook.com/profile.php?id=61563234841462" target="_blank" rel="noopener" style="margin-top:12px;display:flex;align-items:center;gap:16px;padding:14px 20px;border:1px solid rgba(201,166,107,.65);border-radius:4px;background:rgba(255,255,255,.06);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)">
+            <span style="flex:none;display:inline-flex;color:#E6CC96"><svg width="30" height="30" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M14 8h3V4h-3a5 5 0 0 0-5 5v2H6v4h3v7h4v-7h3l1-4h-4V9a1 1 0 0 1 1-1z"></path></svg></span>
+            <span style="flex:1;min-width:0"><span style="display:block;font-size:11.5px;color:#D9E1EA">Facebook</span><span style="display:block;margin-top:2px;font-size:17px;font-weight:600;letter-spacing:.02em">Manila Pampanga Go Taxi</span></span>
             <span aria-hidden="true" style="color:#C9A66B;font-size:18px">&rarr;</span>
           </a>
           <p style="margin:20px 0 0;display:flex;align-items:center;gap:12px;font-size:14px;color:#F5F1E8"><span style="display:inline-flex;color:#C9A66B"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span><span style="overflow-wrap:anywhere"><a href="mailto:manilapampangagotaxi@gmail.com" style="color:inherit;text-decoration:none">manilapampangagotaxi@gmail.com</a></span></p>
           <p style="margin:14px 0 0;font-size:13px;color:#9FB0C2">Metro Manila, Pampanga &amp; Luzon, Philippines</p>
-          <div style="margin-top:22px;display:flex;align-items:center;gap:14px">
-            <span style="flex:none;display:inline-flex;align-items:center;justify-content:center;width:52px;height:52px;border-radius:50%;border:1.5px solid #C9A66B"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M14 8h3V4h-3a4 4 0 0 0-4 4v2H7v4h3v8h4v-8h3l1-4h-4V8z"/></svg></span>
-            <span><span style="display:block;font-size:11px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:#9FB0C2">Follow us</span><span style="display:block;margin-top:2px;font-size:16px;font-weight:600">Facebook</span></span>
-          </div>
         </div>
       </div>
       <div style="margin-top:56px;padding-top:20px;border-top:1px solid rgba(245,241,232,0.18);display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 24px;font-size:12.5px;color:#CFC7B6">
@@ -727,7 +763,7 @@ a.route-btn:hover{background:linear-gradient(180deg,#E6CC96 0%,#C9A66B 52%,#B58F
       <li>
         <details class="mpgt-kk">
           <summary class="mpgt-chat-item kk"><span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-12.4 7.4L3 21l2.1-5.5A8.4 8.4 0 1 1 21 11.5z"/></svg></span>KakaoTalk</summary>
-          <p class="mpgt-kk-note">KakaoTalk chat is coming soon. For now, please message us on WhatsApp or Viber.</p>
+          <p class="mpgt-kk-note">Add us on KakaoTalk with this number: +63 985 390 0002.</p>
         </details>
       </li>
     </ul>
@@ -740,7 +776,60 @@ constructor(props) {
 super(props);
 this.state = { step: 1, trip: 'oneway', pickup: '', dest: '', date: '', time: '', pax: '1', showStops: false, stop1: '', stop2: '', stop3: '', vehicle: 'sedan', model: 'mirage', name: '', phone: '', email: '', kakao: '', pay: '', notes: '', flight: '', terminal: '', arrival: '', agree: false, errors: {}, submitted: false, copied: '', legal: '', routeKind: (() => { try { const h = (location.hash || '').slice(1); return h === 'pm' || h === 'mp' ? h : 'custom'; } catch (err) { return 'custom'; } })(), payMethod: '', receipt: '', receiptSent: false, ref: '', confirmed: false };
 }
+suggest(field, q) {
+try { clearTimeout(this.sgTimer); } catch (err) {}
+const text = (q || '').trim();
+const seq = (this.sgSeq = (this.sgSeq || 0) + 1);
+if (text.length < 3) { if (this.state.sgField) this.setState({ sgField: '', sgItems: [] }); return; }
+this.sgTimer = setTimeout(() => {
+try {
+const rk = this.state.routeKind;
+const PAMP = [15.03, 120.69], MNL = [14.6, 120.99], LUZ = [15.0, 120.9];
+const c = rk === 'pm' ? (field === 'pickup' ? PAMP : MNL) : rk === 'mp' ? (field === 'pickup' ? MNL : PAMP) : LUZ;
+const url = 'https://photon.komoot.io/api/?q=' + encodeURIComponent(text) + '&limit=7&lang=en&lat=' + c[0] + '&lon=' + c[1] + '&bbox=116.9,4.5,127.0,21.5';
+fetch(url).then((r) => (r.ok ? r.json() : null)).then((j) => {
+if (!j || seq !== this.sgSeq) return;
+const seen = {};
+const items = [];
+(j.features || []).forEach((f) => {
+const p = f.properties || {};
+if (p.countrycode && p.countrycode !== 'PH') return;
+const street = [p.housenumber, p.street].filter(Boolean).join(' ');
+const title = p.name || street;
+if (!title) return;
+const sub = [p.name ? street : '', p.district || p.locality, p.city || p.county, p.state].filter((x) => x && x !== title).join(', ');
+const full = [title, sub].filter(Boolean).join(', ');
+if (seen[full]) return;
+seen[full] = 1;
+items.push({ title, sub, full });
+});
+this.setState({ sgField: field, sgItems: items.slice(0, 6) });
+}).catch(() => {});
+} catch (err) {}
+}, 350);
+}
+sgItems(field) {
+const s = this.state;
+if (s.sgField !== field) return [];
+return (s.sgItems || []).map((o) => ({ title: o.title, sub: o.sub, pick: () => { try { clearTimeout(this.sgBlur); } catch (err) {} this.setState({ [field]: o.full, sgField: '', sgItems: [], errors: Object.assign({}, this.state.errors, { [field]: '' }) }); } }));
+}
+sendRemote(rec) {
+const M = window.MPGT;
+if (!this.bkToken) this.bkToken = M.rid(10);
+const token = this.bkToken;
+const go = (r, retried) => M.submitBooking(r, token, this.rcptFile || null).catch((err) => {
+if (err && /ref taken/i.test(err.message || '') && !retried) {
+const nr = 'MPG-' + String(Math.floor(10000 + Math.random() * 90000));
+r.ref = nr; r.id = 'n' + nr;
+this.setState({ ref: nr });
+return go(r, true);
+}
+if (err && (err.net || err.status >= 500)) M.outbox.add({ rec: r, token });
+});
+go(JSON.parse(JSON.stringify(rec)), false);
+}
 saveInbox(rec) {
+if (window.MPGT && window.MPGT.on) { this.sendRemote(rec); return; }
 try {
 let a = JSON.parse(localStorage.getItem('mpgt.inbox.v1'));
 if (!Array.isArray(a)) a = [];
@@ -784,14 +873,16 @@ const tripLabel = tripDefs.find((t) => t.id === s.trip).label;
 const vehicleLabel = vehicleDefs.find((v) => v.id === s.vehicle).label;
 const modelName = (modelDefs.find((d) => d.id === selModel) || {}).name || 'To be assigned';
 
-const fixed = s.routeKind !== 'custom';
-const FARES_DEFAULT = { sedan: 5500, mpv: 5800, van: 8500 };
+const routeFixed = s.routeKind !== 'custom';
+const vanQuote = routeFixed && s.vehicle === 'van';
+const fixed = routeFixed && !vanQuote;
+const FARES_DEFAULT = { sedan: 5500, mpv: 5800 };
 const rateRow = (adm && Array.isArray(adm.rates)) ? adm.rates.find((r) => r && /pampanga/i.test(r.name || '') && /metro manila/i.test(r.name || '')) : null;
-const FARES = rateRow ? { sedan: Number(rateRow.sedan) || FARES_DEFAULT.sedan, mpv: Number(rateRow.mpv) || FARES_DEFAULT.mpv, van: Number(rateRow.van) || FARES_DEFAULT.van } : FARES_DEFAULT;
+const FARES = rateRow ? { sedan: Number(rateRow.sedan) || FARES_DEFAULT.sedan, mpv: Number(rateRow.mpv) || FARES_DEFAULT.mpv } : FARES_DEFAULT;
 const peso = (n) => '\u20B1' + n.toLocaleString('en-US');
-const fare = FARES[s.vehicle];
+const fare = FARES[s.vehicle] || 0;
 const trips = tripDefs.map((t) => ({ ...t, on: s.trip === t.id, style: s.trip === t.id ? on : off, pick: () => this.setState({ trip: t.id, submitted: false }) }));
-const vehicles = vehicleDefs.map((v) => ({ ...v, price: fixed ? peso(FARES[v.id]) : '', priceStyle: 'display:block;font-size:13px;font-weight:600;color:' + (s.vehicle === v.id ? '#C9A66B' : '#8F6B2E'), on: s.vehicle === v.id, style: (s.vehicle === v.id ? on : off) + ';border-radius:2px;width:100%;display:flex;flex-direction:column;align-items:center;gap:2px', pick: () => this.setState({ vehicle: v.id, model: firstModel(v.id), submitted: false }) }));
+const vehicles = vehicleDefs.map((v) => ({ ...v, price: routeFixed ? (v.id === 'van' ? 'By quotation' : peso(FARES[v.id])) : '', priceStyle: 'display:block;font-size:13px;font-weight:600;color:' + (s.vehicle === v.id ? '#C9A66B' : '#8F6B2E'), on: s.vehicle === v.id, style: (s.vehicle === v.id ? on : off) + ';border-radius:2px;width:100%;display:flex;flex-direction:column;align-items:center;gap:2px', pick: () => this.setState({ vehicle: v.id, model: firstModel(v.id), submitted: false, step: (s.step === 4 && v.id === 'van') ? 3 : s.step, confirmed: false }) }));
 const models = catModels.map((d) => {
 const sel = selModel === d.id;
 return {
@@ -837,28 +928,30 @@ const MNL = /manila|makati|naia|quezon|pasay|taguig|bgc|bonifacio|mandaluyong|pa
 const guess = s.routeKind !== 'custom' ? '' : (PAMP.test(pickup) && MNL.test(dest) ? 'pm' : (MNL.test(pickup) && PAMP.test(dest) ? 'mp' : ''));
 const pickupPh = s.routeKind === 'pm' ? 'Address in Pampanga' : s.routeKind === 'mp' ? 'Address in Metro Manila' : 'Airport, hotel or address';
 const destPh = s.routeKind === 'pm' ? 'Address in Metro Manila' : s.routeKind === 'mp' ? 'Address in Pampanga' : 'Where are you going?';
+const areaP = s.routeKind === 'pm' ? ' (Pampanga Area)' : s.routeKind === 'mp' ? ' (Metro Manila Area)' : '';
+const areaD = s.routeKind === 'pm' ? ' (Metro Manila Area)' : s.routeKind === 'mp' ? ' (Pampanga Area)' : '';
 const methodDefs = [
 { id: 'cash', label: 'Cash', sub: 'Pay your driver on the day' },
 { id: 'bank', label: 'Bank transfer', sub: 'Local bank deposit' },
 { id: 'ewallet', label: 'GCash or Maya', sub: 'E-wallet with QR code' },
-{ id: 'intl', label: 'PayPal or Wise', sub: 'For international guests' },
-{ id: 'card', label: 'Visa or Mastercard', sub: 'Secure card payment link' }
+{ id: 'intl', label: 'PayPal', sub: 'For international guests' },
+{ id: 'card', label: 'Visa or Mastercard', sub: 'Coming soon', soon: true }
 ];
 const amountText = peso(fare);
 const PH = '#8F6B2E';
 const panels = {
 cash: { title: 'Pay in cash', rows: [['Amount to pay', amountText, '#102A43'], ['Pay to', 'Your driver, on pickup day', '#102A43']], steps: ['Prepare the exact amount in Philippine pesos.', 'Pay your driver at pickup.', 'Ask for your receipt.'], note: 'Advance bookings may need a down payment. We confirm any amount with you before the trip.', qr: false, upload: false },
-bank: { title: 'Pay by bank transfer', rows: [['Bank', '[Bank name]', PH], ['Account name', '[Business account name]', PH], ['Account number', '[Account number]', PH], ['Amount to pay', amountText, '#102A43']], steps: ['Transfer the amount shown to the account above.', 'Take a screenshot of your transfer receipt.', 'Upload it on this page.'], note: 'Use your booking reference as the transfer message.', qr: false, upload: true },
-ewallet: { title: 'Pay through GCash or Maya', rows: [['Account name', '[Business account name]', PH], ['GCash or Maya number', '[09__ ___ ____]', PH], ['Amount to pay', amountText, '#102A43']], steps: ['Open GCash or Maya and send the amount shown.', 'Take a screenshot of your receipt.', 'Upload it on this page.'], note: 'Scan the QR code or send to the number above.', qr: true, upload: true },
-intl: { title: 'Pay with PayPal or Wise', rows: [['PayPal', '[PayPal email]', PH], ['Wise', '[Wise email or tag]', PH], ['Amount to pay', amountText, '#102A43']], steps: ['Send the amount shown using PayPal or Wise.', 'Take a screenshot of your payment confirmation.', 'Upload it on this page.'], note: 'Any transfer fees are covered by the sender.', qr: false, upload: true },
-card: { title: 'Pay by Visa or Mastercard', rows: [['Amount to pay', amountText, '#102A43'], ['Accepted cards', 'Visa, Mastercard', '#102A43']], steps: ['Confirm your booking below.', 'We send you a secure payment link on WhatsApp or email.', 'Pay on the link. Your ride is confirmed once payment clears.'], note: 'Never type card details into this page. Cards are paid only on our secure link.', qr: false, upload: false }
+bank: { title: 'Pay by bank transfer', rows: [['Bank', 'BDO', '#102A43'], ['Account name', 'Gelyn Cabingan', '#102A43'], ['Account number', '000030166810', '#102A43'], ['Amount to pay', amountText, '#102A43']], steps: ['Transfer the amount shown to the account above.', 'Take a screenshot of your transfer receipt.', 'Upload it on this page.'], note: 'Use your booking reference as the transfer message.', qr: false, upload: true },
+ewallet: { title: 'Pay through GCash or Maya', rows: [['Account name', 'John Karlo Ty', '#102A43'], ['Amount to pay', amountText, '#102A43']], steps: ['Open GCash or Maya and scan the matching QR code.', 'Send the amount shown and take a screenshot of your receipt.', 'Upload it on this page.'], note: 'Transfer fees may apply.', qr: true, upload: true },
+intl: { title: 'Pay with PayPal', rows: [['PayPal', 'paypal.me/mpgtaxi', '#102A43'], ['Amount to pay', amountText, '#102A43']], steps: ['Open the PayPal link and pay the amount shown.', 'Write your booking reference in the PayPal note.', 'Take a screenshot of your payment confirmation and upload it on this page.'], note: 'PayPal fees, if any, are covered by the sender.', qr: false, upload: true, link: true },
+card: { title: 'Pay by Visa or Mastercard', rows: [['Status', 'Coming soon', '#8F6B2E']], steps: ['Visa and Mastercard payments are coming soon.', 'Please choose another payment method for now.'], note: 'Thank you for your patience.', qr: false, upload: false }
 };
 const pnl = panels[s.payMethod];
 const needsReceipt = !!(pnl && pnl.upload);
 const payStatus = s.payMethod === 'cash' ? 'Pay driver on pickup' : s.payMethod === 'card' ? 'Payment link to follow' : s.receiptSent ? 'For Verification' : 'Unpaid';
 const pending = payStatus === 'For Verification' || payStatus === 'Pay driver on pickup' || payStatus === 'Payment link to follow';
 const statusStyle = 'display:inline-block;padding:4px 12px;border-radius:999px;font-size:12px;font-weight:700;' + (pending ? 'background:#C9A66B;color:#102A43' : 'background:#8A97A5;color:#FFFFFF');
-const methods = methodDefs.map((m) => { const o = s.payMethod === m.id; return { ...m, on: o, style: 'display:flex;flex-direction:column;align-items:flex-start;gap:4px;box-sizing:border-box;min-height:76px;padding:12px 14px;text-align:left;font:inherit;cursor:pointer;border-radius:2px;border:2px solid ' + (o ? '#102A43' : '#D8CFBA') + ';background:' + (o ? '#102A43' : '#FFFFFF') + ';box-shadow:' + (o ? '0 0 0 3px #C9A66B' : 'none'), titleStyle: 'font-size:15px;font-weight:700;color:' + (o ? '#F5F1E8' : '#102A43'), subStyle: 'font-size:12.5px;line-height:1.35;color:' + (o ? '#D9CDB4' : '#5B6D7F'), pick: () => this.setState({ payMethod: m.id, receipt: '', receiptSent: false, errors: Object.assign({}, this.state.errors, { pay: '' }) }) }; });
+const methods = methodDefs.map((m) => { const o = s.payMethod === m.id; return { ...m, on: o, style: (m.soon ? 'opacity:.55;cursor:not-allowed;' : '') + 'display:flex;flex-direction:column;align-items:flex-start;gap:4px;box-sizing:border-box;min-height:76px;padding:12px 14px;text-align:left;font:inherit;cursor:pointer;border-radius:2px;border:2px solid ' + (o ? '#102A43' : '#D8CFBA') + ';background:' + (o ? '#102A43' : '#FFFFFF') + ';box-shadow:' + (o ? '0 0 0 3px #C9A66B' : 'none'), titleStyle: 'font-size:15px;font-weight:700;color:' + (o ? '#F5F1E8' : '#102A43'), subStyle: 'font-size:12.5px;line-height:1.35;color:' + (o ? '#D9CDB4' : '#5B6D7F'), pick: m.soon ? () => {} : () => this.setState({ payMethod: m.id, receipt: '', receiptSent: false, errors: Object.assign({}, this.state.errors, { pay: '' }) }) }; });
 const methodLabel = (methodDefs.find((m) => m.id === s.payMethod) || {}).label || 'Not selected';
 const lines = ['Trip: ' + tripLabel, 'From: ' + pickup];
 stops.forEach((x, i) => lines.push('Stop ' + (i + 1) + ': ' + x));
@@ -876,7 +969,7 @@ if (fixed) lines.push('Fixed fare: ' + amountText, 'Payment: ' + methodLabel + '
 if (s.notes.trim()) lines.push('Requests: ' + s.notes.trim());
 const digitsOnly = s.phone.replace(/\D/g, '');
 const waNum = digitsOnly.indexOf('0') === 0 ? '63' + digitsOnly.slice(1) : digitsOnly;
-const payKey = (txt) => (/visa|master|card/i.test(txt) ? 'card' : /gcash|maya/i.test(txt) ? 'gcash' : /bank/i.test(txt) ? 'bank' : /paypal|wise/i.test(txt) ? 'intl' : /cash/i.test(txt) ? 'cash' : '');
+const payKey = (txt) => (/visa|master|card/i.test(txt) ? 'card' : /gcash|maya/i.test(txt) ? 'gcash' : /bank/i.test(txt) ? 'bank' : /paypal/i.test(txt) ? 'intl' : /cash/i.test(txt) ? 'cash' : '');
 const record = (ref) => {
 const noteBits = [];
 if (s.notes.trim()) noteBits.push(s.notes.trim());
@@ -923,8 +1016,11 @@ openPrivacy: () => this.setState({ legal: 'privacy' }),
 openTerms: () => this.setState({ legal: 'terms' }),
 closeLegal: () => this.setState({ legal: '' }),
 isStep1: s.step === 1, isStep2: s.step === 2, isStep3: s.step === 3, isStep4: s.step === 4 && fixed,
-isFixed: fixed, suggestFixed: !!guess, useFixed: () => this.setState({ routeKind: guess, trip: 'oneway', payMethod: '', receipt: '', receiptSent: false, confirmed: false, submitted: false }), isCustom: !fixed, showTripType: !fixed, showPayPref: !fixed,
-routeOpts, pickupPh, destPh,
+isFixed: fixed, suggestFixed: !!guess, useFixed: () => this.setState({ routeKind: guess, trip: 'oneway', payMethod: '', receipt: '', receiptSent: false, confirmed: false, submitted: false }), isCustom: !fixed, showTripType: !routeFixed, showPayPref: !fixed, isRouteFixed: routeFixed, isVanQuote: vanQuote,
+routeOpts, pickupPh, destPh, pickupLbl: 'Pickup location' + areaP, destLbl: 'Drop-off location' + areaD,
+sgPickup: this.sgItems('pickup'), sgDest: this.sgItems('dest'), sgPickupOpen: s.sgField === 'pickup' && (s.sgItems || []).length > 0, sgDestOpen: s.sgField === 'dest' && (s.sgItems || []).length > 0,
+typePickup: (ev) => { set('pickup')(ev); this.suggest('pickup', ev.target.value); }, typeDest: (ev) => { set('dest')(ev); this.suggest('dest', ev.target.value); },
+blurSg: () => { try { clearTimeout(this.sgBlur); this.sgBlur = setTimeout(() => this.setState({ sgField: '', sgItems: [] }), 220); } catch (err) {} },
 step1Note: fixed ? 'Fixed fare. A private driver is included.' : 'Free quotation. A private driver is included.',
 detailsSub: fixed ? 'Just a few more details so we can prepare your booking.' : 'Just a few more details so we can prepare your quotation.',
 payHint: fixed ? 'Next, you choose how you would like to pay.' : 'No payment is needed to request a quotation. Final payment details are confirmed with you directly.',
@@ -935,10 +1031,12 @@ panelTitle: pnl ? pnl.title : '', panelNote: pnl ? pnl.note : '',
 detailRows: pnl ? pnl.rows.map((r) => ({ k: r[0], v: r[1], style: 'margin:3px 0 0;font-size:15px;font-weight:700;line-height:1.4;word-break:break-word;color:' + r[2] })) : [],
 panelSteps: pnl ? pnl.steps.map((t, i) => ({ n: String(i + 1), t })) : [],
 showQr: !!(pnl && pnl.qr), showUpload: needsReceipt,
+qrs: [{ src: '/assets/44247fe0abf2fcc69c1231d6e12ef4fc.png', alt: 'GCash QR code', label: 'GCash' }, { src: '/assets/dee003d28159b4a45ff1eb0f9183c7b4.png', alt: 'Maya QR code', label: 'Maya' }],
+showLink: !!(pnl && pnl.link), payLink: 'https://paypal.me/mpgtaxi' + (fare ? '/' + fare + 'PHP' : ''), payLinkLabel: 'Open PayPal',
 hasReceipt: !!s.receipt, receipt: s.receipt,
 errPay: e.pay || '',
 notConfirmed: !s.confirmed, confirmed: s.confirmed,
-setReceipt: (ev) => { const f = ev.target.files && ev.target.files[0]; this.setState({ receipt: f ? f.name : '', receiptSent: false, errors: Object.assign({}, this.state.errors, { pay: '' }) }); },
+setReceipt: (ev) => { const f = ev.target.files && ev.target.files[0]; const bad = (f && f.size > 5 * 1024 * 1024) ? 'That file is larger than 5 MB. Please choose a smaller screenshot or photo.' : ''; this.rcptFile = (f && !bad) ? f : null; this.setState({ receipt: (f && !bad) ? f.name : '', receiptSent: false, errors: Object.assign({}, this.state.errors, { pay: bad }) }); },
 submitReceipt: () => { if (!s.receipt) { this.setState({ errors: Object.assign({}, this.state.errors, { pay: 'Choose a screenshot or photo of your receipt first.' }) }); } else { this.setState({ receiptSent: true, errors: Object.assign({}, this.state.errors, { pay: '' }) }); } },
 confirmBooking: () => {
 let msg = '';
@@ -984,9 +1082,9 @@ if (!s.name.trim()) errs.name = 'Enter your name.';
 if (s.phone.replace(/\D/g, '').length < 7) errs.phone = 'Enter a number we can reach.';
 if (!s.agree) errs.agree = 'Please confirm to continue.';
 const ok = Object.keys(errs).length === 0;
-if (fixed && ok) { this.setState({ errors: {}, step: 4, confirmed: false, submitted: false, copied: '', ref: s.ref || ('MPG-' + String(Math.floor(2000 + Math.random() * 7000))) }); top(); return; }
+if (fixed && ok) { this.setState({ errors: {}, step: 4, confirmed: false, submitted: false, copied: '', ref: s.ref || ('MPG-' + String(Math.floor(10000 + Math.random() * 90000))) }); top(); return; }
 if (ok) {
-const ref = s.ref || ('MPG-' + String(Math.floor(2000 + Math.random() * 7000)));
+const ref = s.ref || ('MPG-' + String(Math.floor(10000 + Math.random() * 90000)));
 this.saveInbox(record(ref));
 this.setState({ errors: errs, submitted: true, copied: '', ref });
 return;

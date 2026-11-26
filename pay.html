@@ -11,6 +11,7 @@
 <meta name="theme-color" content="#102A43">
 <link rel="icon" type="image/png" href="/assets/69fafbe15d88b8ca53de7f08169a767b.png">
 <meta name="robots" content="noindex, nofollow">
+<script src="/mpgt-sb.js"></script>
 <script src="/dc.js"></script>
 <script src="/i18n.js"></script>
 </head>
@@ -38,7 +39,7 @@ button:focus-visible,a:focus-visible{outline:3px solid #C9A66B;outline-offset:3p
     <div style="max-width:560px;margin:0 auto">
       <template data-sc="if" value="{{ isActive }}" hint-placeholder-val="{{ true }}">
         <section aria-label="Payment" style="background:#FFFFFF;border:1px solid #E3DCCB;border-top:3px solid #C9A66B;border-radius:4px;padding:32px 28px">
-          <p style="margin:0;font-size:11.5px;font-weight:600;letter-spacing:.3em;text-transform:uppercase;color:#8F6B2E">Pay by Visa or Mastercard</p>
+          <p style="margin:0;font-size:11.5px;font-weight:600;letter-spacing:.3em;text-transform:uppercase;color:#8F6B2E">Secure payment</p>
           <h1 style="margin:10px 0 0;font-family:'Cormorant Garamond',Georgia,serif;font-weight:600;font-size:40px;line-height:1.1">Complete your payment</h1>
           <dl style="margin:24px 0 0;display:grid;grid-template-columns:130px 1fr;gap:12px 14px;font-size:15px">
             <dt style="font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#6B7C8C">Booking</dt><dd style="margin:0;font-weight:600">{{ ref }}</dd>
@@ -49,9 +50,41 @@ button:focus-visible,a:focus-visible{outline:3px solid #C9A66B;outline-offset:3p
             <p style="margin:4px 0 0;font-size:26px;font-weight:700;font-variant-numeric:tabular-nums;color:#102A43">{{ countdown }}</p>
             <p style="margin:4px 0 0;font-size:13px;color:#4A3B16">{{ expiresText }}</p>
           </div>
-          <button type="button" onClick="{{ pay }}" class="pay-btn" style="margin-top:24px;width:100%;display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:56px;padding:0 24px;border:0;border-radius:2px;background:#102A43;color:#C9A66B;font:inherit;font-weight:700;font-size:16px;cursor:pointer">Pay securely with card <span aria-hidden="true">&rarr;</span></button>
-          <template data-sc="if" value="{{ gatewayNote }}" hint-placeholder-val="{{ false }}"><p role="status" style="margin:14px 0 0;padding:12px 14px;background:#EDE7D6;border-radius:2px;font-size:13.5px;line-height:1.55">Prototype: the card gateway is not connected yet. In the live site this button opens our secure Visa and Mastercard payment page.</p></template>
-          <p style="margin:18px 0 0;font-size:13px;line-height:1.6;color:#4A5D70">Visa and Mastercard are accepted. Your card details are entered only on the secure payment page, never on this website or by message.</p>
+
+          <h2 style="margin:32px 0 0;font-family:'Cormorant Garamond',Georgia,serif;font-weight:600;font-size:26px">Choose how to pay</h2>
+
+          <div style="margin:16px 0 0;padding:20px;border:1px solid #E3DCCB;border-radius:4px;background:#FBF8F1">
+            <h3 style="margin:0;font-size:16px;font-weight:700">Pay by bank transfer</h3>
+            <dl style="margin:14px 0 0;display:grid;grid-template-columns:130px 1fr;gap:10px 14px;font-size:15px">
+              <dt style="font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#6B7C8C">Bank</dt><dd style="margin:0;font-weight:600">BDO</dd>
+              <dt style="font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#6B7C8C">Account name</dt><dd style="margin:0;font-weight:600">Gelyn Cabingan</dd>
+              <dt style="font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#6B7C8C">Account number</dt><dd style="margin:0;font-weight:600;letter-spacing:.04em;user-select:all">000030166810</dd>
+            </dl>
+          </div>
+
+          <div style="margin:14px 0 0;padding:20px;border:1px solid #E3DCCB;border-radius:4px;background:#FBF8F1">
+            <h3 style="margin:0;font-size:16px;font-weight:700">Pay through GCash or Maya</h3>
+            <p style="margin:8px 0 0;font-size:14px;line-height:1.55;color:#4A5D70">Scan the QR code with GCash or Maya.</p>
+            <p style="margin:6px 0 0;font-size:15px"><span style="font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#6B7C8C">Account name</span> &nbsp; <strong>John Karlo Ty</strong></p>
+            <div style="margin:16px 0 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:18px">
+              <template data-sc="for" list="{{ qrs }}" as="q" hint-placeholder-count="2">
+                <figure style="margin:0;text-align:center"><img src="{{ q.src }}" alt="{{ q.alt }}" loading="lazy" style="display:block;width:100%;max-width:250px;margin:0 auto;border:1px solid #E3DCCB;border-radius:10px;background:#FFFFFF"><figcaption style="margin-top:8px;font-size:13px;font-weight:700;color:#102A43">{{ q.label }}</figcaption></figure>
+              </template>
+            </div>
+          </div>
+
+          <div style="margin:14px 0 0;padding:20px;border:1px solid #E3DCCB;border-radius:4px;background:#FBF8F1">
+            <h3 style="margin:0;font-size:16px;font-weight:700">Pay with PayPal</h3>
+            <a href="{{ payLink }}" target="_blank" rel="noopener" class="pay-btn" style="margin-top:14px;display:flex;align-items:center;justify-content:center;gap:10px;box-sizing:border-box;min-height:52px;padding:0 24px;border-radius:2px;background:#102A43;color:#C9A66B;font-weight:700;font-size:15px">Open PayPal <span aria-hidden="true">&rarr;</span></a>
+          </div>
+
+          <div aria-disabled="true" style="margin:14px 0 0;padding:20px;border:1px dashed #D8CFBA;border-radius:4px;background:#F5F1E8;opacity:.75">
+            <h3 style="margin:0;font-size:16px;font-weight:700;color:#4A5D70">Visa or Mastercard</h3>
+            <p style="margin:6px 0 0;font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#8F6B2E">Coming soon</p>
+            <p style="margin:8px 0 0;font-size:13.5px;line-height:1.55;color:#4A5D70">Visa and Mastercard payments are coming soon. Please use one of the methods above for now.</p>
+          </div>
+
+          <p style="margin:22px 0 0;font-size:13.5px;line-height:1.6;color:#4A5D70">After you pay, send your receipt on WhatsApp, Viber or KakaoTalk (+63 985 390 0002) and include your booking number. We will confirm your booking once the payment is received.</p>
         </section>
       </template>
 
@@ -78,7 +111,7 @@ button:focus-visible,a:focus-visible{outline:3px solid #C9A66B;outline-offset:3p
 class Component extends DCLogic {
 constructor(props) {
 super(props);
-this.state = { now: Date.now(), gateway: false };
+this.state = { now: Date.now() };
 }
 componentDidMount() {
 try { this.timer = setInterval(() => this.setState({ now: Date.now() }), 1000); } catch (err) {}
@@ -108,8 +141,8 @@ try { expiresText = 'Valid until ' + new Date(exp).toLocaleString('en-PH', { mon
 return {
 isActive: state === 'active', isExpired: state === 'expired', isInvalid: state === 'invalid',
 ref, amountText, countdown, expiresText,
-gatewayNote: s.gateway,
-pay: () => this.setState({ gateway: true })
+payLink: 'https://paypal.me/mpgtaxi' + (m && Number(m[2]) > 0 ? '/' + Number(m[2]) + 'PHP' : ''),
+qrs: [{ src: '/assets/44247fe0abf2fcc69c1231d6e12ef4fc.png', alt: 'GCash QR code', label: 'GCash' }, { src: '/assets/dee003d28159b4a45ff1eb0f9183c7b4.png', alt: 'Maya QR code', label: 'Maya' }]
 };
 }
 }

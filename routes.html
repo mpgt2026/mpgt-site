@@ -18,6 +18,7 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Popular Routes &amp; Places to Visit in Luzon | Manila Pampanga Go Taxi">
 <meta name="twitter:description" content="Explore private car routes from Manila and Pampanga to Baguio, Tagaytay, Batangas, La Union, Zambales and more. Read each route guide and request a ride with a driver.">
+<script src="/mpgt-sb.js"></script>
 <script src="/dc.js"></script>
 <script src="/i18n.js"></script>
 </head>
@@ -136,6 +137,15 @@ a[style*="background:#102A43"][style*="color:#C9A66B"]:hover{color:#C9A66B}
 .mpgt-kk-note{margin:2px 10px 10px 58px;font-size:12.5px;line-height:1.5;color:#4A5D70;font-weight:400}
 @media (max-width:520px){.mpgt-chat-fab-txt{display:none}.mpgt-chat-menu>summary{width:56px;padding:0;justify-content:center}}
 @media (prefers-reduced-motion:reduce){.mpgt-chat-menu>summary{transition:none}.mpgt-chat-menu>summary:hover{transform:none}}
+/* mpgt-mnav */
+@media (max-width:760px){
+header{padding:8px 16px !important;gap:6px 12px !important}
+header>a:first-child img{height:44px !important}
+header>.btn-ring{order:2;margin-left:auto}
+header>nav[aria-label="Main"]{order:3;flex:1 1 100% !important;flex-wrap:nowrap !important;overflow-x:auto;gap:2px 20px !important;font-size:13px !important;-webkit-overflow-scrolling:touch;scrollbar-width:none;margin:0 -16px;padding:0 16px}
+header>nav[aria-label="Main"]::-webkit-scrollbar{display:none}
+header>nav[aria-label="Main"] a{flex:none;white-space:nowrap;padding:8px 0 !important}
+}
 </style>
 </helmet>
 
@@ -152,11 +162,11 @@ a[style*="background:#102A43"][style*="color:#C9A66B"]:hover{color:#C9A66B}
     </div>
   </div>
 
-  <header style="background:#FFFFFF;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px 32px;padding:12px 40px;border-bottom:1px solid #C9A66B">
+  <header style="background:#FFFFFF;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px clamp(16px,2vw,32px);padding:12px clamp(16px,3vw,40px);border-bottom:1px solid #C9A66B">
     <a href="/" aria-label="Manila Pampanga Go Taxi home" style="display:flex;align-items:center">
       <img src="/assets/69fafbe15d88b8ca53de7f08169a767b.png" alt="Manila Pampanga Go Taxi, private car service" style="height:64px;width:auto;max-width:100%">
     </a>
-    <nav aria-label="Main" style="display:flex;flex-wrap:wrap;align-items:center;gap:8px 32px;font-size:16px;font-weight:500">
+    <nav aria-label="Main" style="display:flex;flex-wrap:wrap;align-items:center;gap:4px clamp(14px,1.6vw,32px);font-size:16px;font-weight:500">
       <a href="/" style="padding:10px 0">Home</a>
       <a href="/" style="padding:10px 0">Our Services</a>
       <a href="/" style="padding:10px 0">Destinations</a>
@@ -245,15 +255,16 @@ a[style*="background:#102A43"][style*="color:#C9A66B"]:hover{color:#C9A66B}
           <p style="margin:12px 0 0;font-family:'Cormorant Garamond',Georgia,serif;font-weight:600;font-size:38px;line-height:1.1">We're here to help.</p>
           <a href="https://wa.me/639853900002" target="_blank" rel="noopener" style="margin-top:22px;display:flex;align-items:center;gap:16px;padding:16px 20px;border:1px solid rgba(201,166,107,.65);border-radius:4px;background:rgba(255,255,255,.06);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)">
             <span style="flex:none;display:inline-flex;color:#E6CC96"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 0 1-13.2 8L3 21l1.2-4.6A9 9 0 1 1 21 12z"/><path d="M9 9c0 3 3 6 6 6l1-2-2-1-1 1c-1-.5-2-1.5-2.5-2.5l1-1-1-2z"/></svg></span>
-            <span style="flex:1;min-width:0"><span style="display:block;font-size:11.5px;color:#D9E1EA">Chat on WhatsApp</span><span style="display:block;margin-top:2px;font-size:17px;font-weight:600;letter-spacing:.02em">+63 985 390 0002</span></span>
+            <span style="flex:1;min-width:0"><span style="display:block;font-size:11.5px;color:#D9E1EA">WhatsApp, Viber &amp; KakaoTalk</span><span style="display:block;margin-top:2px;font-size:17px;font-weight:600;letter-spacing:.02em">+63 985 390 0002</span></span>
             <span aria-hidden="true" style="color:#C9A66B;font-size:18px">&rarr;</span>
+          </a>
+          <a href="https://www.facebook.com/profile.php?id=61563234841462" target="_blank" rel="noopener" style="margin-top:12px;display:flex;align-items:center;gap:16px;padding:14px 20px;border:1px solid rgba(201,166,107,.65);border-radius:4px;background:rgba(255,255,255,.06);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)">
+            <span style="flex:none;display:inline-flex;color:#E6CC96"><svg width="30" height="30" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M14 8h3V4h-3a5 5 0 0 0-5 5v2H6v4h3v7h4v-7h3l1-4h-4V9a1 1 0 0 1 1-1z"></path></svg></span>
+            <span style="flex:1;min-width:0"><span style="display:block;font-size:11.5px;color:#D9E1EA">Facebook</span><span style="display:block;margin-top:2px;font-size:17px;font-weight:600;letter-spacing:.02em">Manila Pampanga Go Taxi</span></span>
+            <span aria-hidden="true" style="color:#C9A66B;font-size:18px">→</span>
           </a>
           <p style="margin:20px 0 0;display:flex;align-items:center;gap:12px;font-size:14px;color:#F5F1E8"><span style="display:inline-flex;color:#C9A66B"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span><span style="overflow-wrap:anywhere"><a href="mailto:manilapampangagotaxi@gmail.com" style="color:inherit;text-decoration:none">manilapampangagotaxi@gmail.com</a></span></p>
           <p style="margin:14px 0 0;font-size:13px;color:#9FB0C2">Metro Manila, Pampanga &amp; Luzon, Philippines</p>
-          <div style="margin-top:22px;display:flex;align-items:center;gap:14px">
-            <span style="flex:none;display:inline-flex;align-items:center;justify-content:center;width:52px;height:52px;border-radius:50%;border:1.5px solid #C9A66B"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M14 8h3V4h-3a4 4 0 0 0-4 4v2H7v4h3v8h4v-8h3l1-4h-4V8z"/></svg></span>
-            <span><span style="display:block;font-size:11px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:#9FB0C2">Follow us</span><span style="display:block;margin-top:2px;font-size:16px;font-weight:600">Facebook</span></span>
-          </div>
         </div>
       </div>
       <div style="margin-top:56px;padding-top:20px;border-top:1px solid rgba(245,241,232,0.18);display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 24px;font-size:12.5px;color:#CFC7B6">
@@ -273,7 +284,7 @@ a[style*="background:#102A43"][style*="color:#C9A66B"]:hover{color:#C9A66B}
       <li>
         <details class="mpgt-kk">
           <summary class="mpgt-chat-item kk"><span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-12.4 7.4L3 21l2.1-5.5A8.4 8.4 0 1 1 21 11.5z"/></svg></span>KakaoTalk</summary>
-          <p class="mpgt-kk-note">KakaoTalk chat is coming soon. For now, please message us on WhatsApp or Viber.</p>
+          <p class="mpgt-kk-note">Add us on KakaoTalk with this number: +63 985 390 0002.</p>
         </details>
       </li>
     </ul>
@@ -285,7 +296,7 @@ class Component extends DCLogic {
 renderVals() {
 const data = [["Pampanga & Manila", "Private City & Airport Transfers"], ["Airport Transfers", "Airport Pickup & Drop-Off"], ["Manila & Baguio", "Long-Distance Private Rides"], ["Manila & Tagaytay", "City & Leisure Trips"], ["Manila & Batangas", "Port & Provincial Transfers"], ["Pampanga & Tagaytay", "Luzon Road Trips"], ["Manila & Clark Airport", "Private Airport Transfer"], ["NAIA & Pampanga", "Airport Pickup & Drop-Off"], ["Manila & La Union", "Provincial Private Driver"], ["Manila & Laguna", "Private Car with Driver · Custom Quote"], ["Manila & Cavite", "Private Car with Driver · Custom Quote"], ["Manila & Zambales", "Private Car with Driver · Custom Quote"], ["Manila & Pangasinan", "Private Car with Driver · Custom Quote"], ["Manila & Dingalan, Aurora", "Coastal Views · Custom Quote"]];
 const routes = data.map((r, i) => ({ n: (i + 1 < 10 ? '0' : '') + (i + 1), title: r[0], sub: r[1], href: ["/routes/pampanga-to-metro-manila", "/routes/naia-clark-airport-transfer", "/routes/manila-to-baguio", "/routes/manila-to-tagaytay", "/routes/manila-to-batangas", "/routes/pampanga-to-tagaytay", "/routes/manila-to-clark-airport", "/routes/naia-to-pampanga", "/routes/manila-to-la-union", "/routes/manila-to-laguna", "/routes/manila-to-cavite", "/routes/manila-to-zambales", "/routes/manila-to-pangasinan", "/routes/manila-to-dingalan"][i], label: r[0] + ', request a quotation' }));
-let places = [{"name": "La Union", "href": "/routes/manila-to-la-union", "img": "/assets/f960cf664102a1490035dae8ef9cdcce.jpg", "alt": "Surfboard sign on a La Union beach"}, {"name": "Cavite", "href": "/routes/manila-to-cavite", "img": "/assets/6e039ab6490916cad189c37a9478bcea.jpg", "alt": "Winding road through the Cavite countryside"}, {"name": "Laguna", "href": "/routes/manila-to-laguna", "img": "/assets/3bc0807e30fe46963152b812127f6334.jpg", "alt": "View over Laguna de Bay"}, {"name": "Dingalan, Aurora", "href": "/routes/manila-to-dingalan", "img": "/assets/6ab722698b2020a04a7914b34213061c.jpg", "alt": "Green coastal cliffs near Dingalan, Aurora"}, {"name": "Pampanga & Clark", "href": "/routes/manila-to-clark-airport", "img": "/assets/b95a56582c2dedc9b0f1334e6014dc3e.jpg", "alt": "Mount Arayat and fairways near Clark"}, {"name": "Batangas", "href": "/routes/manila-to-batangas", "img": "/assets/705fb8381a3910ad624da9b1b7caab3f.jpg", "alt": "White-sand beach with Greek-style ruins in Batangas"}, {"name": "Pangasinan", "href": "/routes/manila-to-pangasinan", "img": "/assets/9f95023620a0ad52441513b709c1c34f.jpg", "alt": "Islands of Hundred Islands, Pangasinan"}, {"name": "Subic & Zambales", "href": "/routes/manila-to-zambales", "img": "/assets/43a34c26030adece67c21ac79f3f96e0.jpg", "alt": "Bay and beach in Zambales"}, {"name": "Tagaytay", "href": "/routes/manila-to-tagaytay", "img": "/assets/4d01a6f174b2b2f4c2f0c77dee53852e.jpg", "alt": "Ferris wheel above Taal Lake, Tagaytay"}, {"name": "Baguio", "href": "/routes/manila-to-baguio", "img": "/assets/39c2bf028036efef87a907ab5ce17116.jpg", "alt": "Baguio city above the morning clouds"}];
+let places = [{"name": "La Union", "href": "/routes/manila-to-la-union", "img": "/assets/f960cf664102a1490035dae8ef9cdcce.jpg", "alt": "Surfboard sign on a La Union beach"}, {"name": "Cavite", "href": "/routes/manila-to-cavite", "img": "/assets/6e039ab6490916cad189c37a9478bcea.jpg", "alt": "Winding road through the Cavite countryside"}, {"name": "Laguna", "href": "/routes/manila-to-laguna", "img": "/assets/3bc0807e30fe46963152b812127f6334.jpg", "alt": "View over Laguna de Bay"}, {"name": "Dingalan, Aurora", "href": "/routes/manila-to-dingalan", "img": "/assets/6c56b61a14b76fb0df220cf1928818ce.jpg", "alt": "Green coastal cliffs near Dingalan, Aurora"}, {"name": "Pampanga & Clark", "href": "/routes/manila-to-clark-airport", "img": "/assets/b95a56582c2dedc9b0f1334e6014dc3e.jpg", "alt": "Mount Arayat and fairways near Clark"}, {"name": "Batangas", "href": "/routes/manila-to-batangas", "img": "/assets/6f23e6069027b0fa08409bbc70479693.jpg", "alt": "White-sand beach with Greek-style ruins in Batangas"}, {"name": "Pangasinan", "href": "/routes/manila-to-pangasinan", "img": "/assets/9f95023620a0ad52441513b709c1c34f.jpg", "alt": "Islands of Hundred Islands, Pangasinan"}, {"name": "Subic & Zambales", "href": "/routes/manila-to-zambales", "img": "/assets/8eeaf8899d4febdb3bc89174abf0552e.jpg", "alt": "Bay and beach in Zambales"}, {"name": "Tagaytay", "href": "/routes/manila-to-tagaytay", "img": "/assets/4d01a6f174b2b2f4c2f0c77dee53852e.jpg", "alt": "Ferris wheel above Taal Lake, Tagaytay"}, {"name": "Baguio", "href": "/routes/manila-to-baguio", "img": "/assets/39c2bf028036efef87a907ab5ce17116.jpg", "alt": "Baguio city above the morning clouds"}];
 try {
 const adm = JSON.parse(localStorage.getItem('mpgt.admin.v1'));
 if (adm && Array.isArray(adm.destinations)) places = adm.destinations.filter((d) => d && d.name).map((d) => ({ name: d.name, href: d.page || '/book', img: d.img || '', alt: d.name }));

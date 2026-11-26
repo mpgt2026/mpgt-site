@@ -10,6 +10,7 @@
 <meta name="theme-color" content="#102A43">
 <link rel="icon" type="image/png" href="/assets/69fafbe15d88b8ca53de7f08169a767b.png">
 <meta name="robots" content="noindex, nofollow">
+<script src="/mpgt-sb.js"></script>
 <script src="/dc.js"></script>
 <script src="/i18n.js"></script>
 </head>
@@ -53,18 +54,19 @@ a[style*="background:#C9A66B"]:hover,button[style*="background:#C9A66B"]:hover,a
 </style>
 </helmet>
 
+<template data-sc="if" value="{{ isBooting }}" hint-placeholder-val="{{ false }}"><div role="status" style="min-height:100vh;display:flex;align-items:center;justify-content:center;background:#0B1F33;color:#E6CC96;font-size:15px;letter-spacing:.08em">Loading&hellip;</div></template>
 <template data-sc="if" value="{{ notAuthed }}" hint-placeholder-val="{{ false }}">
 <div style="min-height:100vh;box-sizing:border-box;display:flex;align-items:center;justify-content:center;padding:40px 16px;background:radial-gradient(ellipse at 50% 0%,#17324D 0%,#0B1F33 62%)">
   <form onSubmit="{{ login }}" aria-label="Admin sign in" style="width:100%;max-width:400px;box-sizing:border-box;padding:36px 36px 32px;border-radius:28px;border:1px solid rgba(201,166,107,.5);background:linear-gradient(160deg,#133250,#0D2338);box-shadow:0 30px 60px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.06);display:flex;flex-direction:column;gap:16px">
     <div style="align-self:center;background:#F5F1E8;border-radius:2px;padding:8px 16px"><img src="/assets/69fafbe15d88b8ca53de7f08169a767b.png" alt="Manila Pampanga Go Taxi" style="display:block;height:44px;width:auto"></div>
     <h1 style="margin:8px 0 14px;text-align:center;font-family:'Cormorant Garamond',Georgia,serif;font-weight:500;font-size:40px;line-height:1;color:#F5F1E8">Login</h1>
-    <label class="lg-field"><span aria-hidden="true" style="font-size:20px;font-weight:600;width:22px;text-align:center">@</span><input class="lg-in" type="text" placeholder="Username" aria-label="Username" autocomplete="username" value="{{ loginUser }}" onChange="{{ setLoginUser }}"></label>
+    <label class="lg-field"><span aria-hidden="true" style="font-size:20px;font-weight:600;width:22px;text-align:center">@</span><input class="lg-in" type="text" placeholder="{{ userPh }}" aria-label="{{ userPh }}" autocomplete="username" value="{{ loginUser }}" onChange="{{ setLoginUser }}"></label>
     <label class="lg-field"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17 9h-1V7a4 4 0 0 0-8 0v2H7a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-8a2 2 0 0 0-2-2Zm-7-2a2 2 0 0 1 4 0v2h-4V7Z"/></svg><input class="lg-in" type="password" placeholder="Password" aria-label="Password" autocomplete="current-password" value="{{ loginPass }}" onChange="{{ setLoginPass }}"></label>
     <template data-sc="if" value="{{ loginErr }}" hint-placeholder-val="{{ false }}"><p role="alert" style="margin:0;font-size:13.5px;line-height:1.5;color:#F2A9A3">{{ loginErr }}</p></template>
     <template data-sc="if" value="{{ loginInfo }}" hint-placeholder-val="{{ false }}"><p role="status" style="margin:0;font-size:13.5px;line-height:1.5;color:#E6CC96">{{ loginInfo }}</p></template>
     <div style="display:flex;gap:12px;margin-top:14px">
       <button type="button" onClick="{{ login }}" style="flex:1;min-height:46px;padding:0 16px;border-radius:6px;background:#C9A66B;color:#102A43;font:inherit;font-size:15px;font-weight:700;cursor:pointer">Login</button>
-      <button type="button" class="lg-btn" onClick="{{ showSignup }}" style="flex:1">Sign Up</button>
+      <template data-sc="if" value="{{ testMode }}" hint-placeholder-val="{{ true }}"><button type="button" class="lg-btn" onClick="{{ showSignup }}" style="flex:1">Sign Up</button></template>
     </div>
     <button type="button" class="lg-btn" onClick="{{ showForgot }}">Forgot Password</button>
   </form>
@@ -90,9 +92,9 @@ a[style*="background:#C9A66B"]:hover,button[style*="background:#C9A66B"]:hover,a
     </div>
     <div style="margin-top:auto;display:flex;flex-direction:column;gap:12px">
       <a href="/" style="font-size:13px;color:#CFC7B6;letter-spacing:.04em">&larr; View website</a>
-      <p style="margin:0;font-size:12px;line-height:1.5;color:#9FB0C2">Test mode: what you change here is saved in this browser and shows on the website.</p>
+      <p style="margin:0;font-size:12px;line-height:1.5;color:#9FB0C2">{{ modeNote }}</p>
       <button type="button" onClick="{{ signOut }}" style="min-height:40px;padding:0 14px;border-radius:2px;border:1px solid rgba(201,166,107,.6);background:transparent;color:#E6CC96;font:inherit;font-size:12.5px;font-weight:600;cursor:pointer">Sign out</button>
-      <button type="button" onClick="{{ resetData }}" style="min-height:40px;padding:0 14px;border-radius:2px;border:1px solid rgba(245,241,232,.35);background:transparent;color:#F5F1E8;font:inherit;font-size:12.5px;font-weight:600;cursor:pointer">Reset test data</button>
+      <template data-sc="if" value="{{ testMode }}" hint-placeholder-val="{{ true }}">      <button type="button" onClick="{{ resetData }}" style="min-height:40px;padding:0 14px;border-radius:2px;border:1px solid rgba(245,241,232,.35);background:transparent;color:#F5F1E8;font:inherit;font-size:12.5px;font-weight:600;cursor:pointer">Reset test data</button></template>
     </div>
   </aside>
 
@@ -106,7 +108,7 @@ a[style*="background:#C9A66B"]:hover,button[style*="background:#C9A66B"]:hover,a
       <div style="display:flex;flex-direction:column;align-items:flex-end;gap:8px"><p style="margin:0;font-size:13px;color:#4A5D70">{{ todayLabel }}</p><button type="button" onClick="{{ checkInbox }}" style="min-height:36px;padding:0 14px;border-radius:2px;border:1px solid #D8CFBA;background:#FFFFFF;color:#102A43;font:inherit;font-size:12.5px;font-weight:600;cursor:pointer">Check for new requests</button></div>
     </div>
     <template data-sc="if" value="{{ hasFlash }}" hint-placeholder-val="{{ false }}"><div role="status" style="margin-top:16px;padding:12px 16px;background:#E7F1EA;border-left:3px solid #2F7D4F;border-radius:2px;font-size:14px;display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;justify-content:space-between"><span>{{ flashText }}</span><button type="button" onClick="{{ clearFlash }}" style="min-height:34px;padding:0 14px;border:1px solid #2F7D4F;border-radius:2px;background:transparent;color:#1F5A38;font:inherit;font-size:12.5px;font-weight:600;cursor:pointer">Dismiss</button></div></template>
-    <template data-sc="if" value="{{ saveWarn }}" hint-placeholder-val="{{ false }}"><div role="alert" style="margin-top:16px;padding:12px 16px;background:#F6E3E1;border-left:3px solid #8A1F18;border-radius:2px;font-size:14px;color:#8A1F18">Your latest changes could not be saved in this browser (storage is full or blocked). Try a smaller photo, or delete unused photos.</div></template>
+    <template data-sc="if" value="{{ saveWarn }}" hint-placeholder-val="{{ false }}"><div role="alert" style="margin-top:16px;padding:12px 16px;background:#F6E3E1;border-left:3px solid #8A1F18;border-radius:2px;font-size:14px;color:#8A1F18">{{ saveMsg }}</div></template>
 
     <!-- ============ BOOKINGS ============ -->
     <template data-sc="if" value="{{ isBookings }}" hint-placeholder-val="{{ true }}">
@@ -134,7 +136,7 @@ a[style*="background:#C9A66B"]:hover,button[style*="background:#C9A66B"]:hover,a
           <template data-sc="for" list="{{ rows }}" as="b" hint-placeholder-count="3">
             <article style="{{ b.cardStyle }}">
               <button type="button" class="row-btn" onClick="{{ b.toggle }}" aria-expanded="{{ b.isOpen }}" style="display:flex;flex-wrap:wrap;align-items:center;gap:8px 20px;width:100%;box-sizing:border-box;padding:16px 20px;background:transparent;border:0;font:inherit;color:inherit;text-align:left;cursor:pointer">
-                <span style="flex:0 0 96px;font-size:12px;font-weight:600;letter-spacing:.08em;color:#8F6B2E">{{ b.ref }}</span>
+                <span style="flex:0 0 96px;font-size:12px;font-weight:600;letter-spacing:.08em;color:#8F6B2E">{{ b.ref }}<template data-sc="if" value="{{ b.hasReceipt }}" hint-placeholder-val="{{ false }}"><span style="display:block;margin-top:3px;font-size:10px;letter-spacing:.12em;color:#2F7D4F">RECEIPT</span></template></span>
                 <span style="flex:1 1 200px;min-width:0"><span style="display:block;font-weight:600;font-size:15px">{{ b.name }}</span><span style="display:block;margin-top:2px;font-size:13px;color:#4A5D70">{{ b.route }}</span></span>
                 <span style="flex:1 1 150px;min-width:0"><span style="display:block;font-size:14px">{{ b.when }}</span><span style="display:block;margin-top:2px;font-size:13px;color:#4A5D70">{{ b.vehicle }} &middot; {{ b.pax }} pax</span></span>
                 <span style="flex:0 0 130px;text-align:right"><span class="amt" style="display:block;font-size:16px">{{ b.quoteText }}</span><span style="display:block;margin-top:3px;font-size:11px;font-weight:600;letter-spacing:.02em;color:#8F6B2E">{{ b.payChip }}</span></span>
@@ -151,6 +153,7 @@ a[style*="background:#C9A66B"]:hover,button[style*="background:#C9A66B"]:hover,a
                     <dt class="lbl">Requested</dt><dd style="margin:0">{{ b.vehicle }}</dd>
                     <dt class="lbl">Pay by</dt><dd style="margin:0">{{ b.payPref }}</dd>
                     <dt class="lbl">Payment</dt><dd style="margin:0">{{ b.payState }}</dd>
+                    <template data-sc="if" value="{{ b.hasReceipt }}" hint-placeholder-val="{{ false }}"><dt class="lbl">Proof of payment</dt><dd style="margin:0;display:flex;flex-direction:column;gap:8px;align-items:flex-start"><span style="color:#2B3F55;overflow-wrap:anywhere">{{ b.rcptName }}</span><template data-sc="if" value="{{ b.rcptLoading }}" hint-placeholder-val="{{ false }}"><span style="color:#4A5D70">Loading the receipt&hellip;</span></template><template data-sc="if" value="{{ b.rcptFailed }}" hint-placeholder-val="{{ false }}"><span style="color:#8A1F18">The receipt could not be opened. Please refresh and try again.</span></template><template data-sc="if" value="{{ b.rcptImgShow }}" hint-placeholder-val="{{ false }}"><a href="{{ b.rcptUrl }}" target="_blank" rel="noopener"><img src="{{ b.rcptUrl }}" alt="Payment receipt uploaded by the client" style="display:block;max-width:100%;max-height:380px;border:1px solid #D8CFBA;border-radius:2px;background:#FFFFFF"></a></template><template data-sc="if" value="{{ b.rcptReady }}" hint-placeholder-val="{{ false }}"><a href="{{ b.rcptUrl }}" target="_blank" rel="noopener" style="color:#8F6B2E;font-weight:600;text-decoration:underline">Open full size in a new tab</a></template></dd></template>
                     <template data-sc="if" value="{{ b.rebooked }}" hint-placeholder-val="{{ false }}"><dt class="lbl">Rebooked</dt><dd style="margin:0">From {{ b.origWhen }}</dd></template>
                     <dt class="lbl">Notes</dt><dd style="margin:0;color:#2B3F55">{{ b.notes }}</dd>
                   </dl>
@@ -219,7 +222,7 @@ a[style*="background:#C9A66B"]:hover,button[style*="background:#C9A66B"]:hover,a
 
                     <template data-sc="if" value="{{ b.hasLink }}" hint-placeholder-val="{{ false }}">
                       <div style="padding:16px;border:1px solid #E3DCCB;border-radius:4px;background:#FFFFFF;display:flex;flex-direction:column;gap:12px">
-                        <p class="lbl" style="margin:0">Card payment link (Visa or Mastercard)</p>
+                        <p class="lbl" style="margin:0">Client payment link</p>
                         <div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px"><span style="{{ b.linkBadge }}">{{ b.linkLabel }}</span><span style="font-size:13px;color:#4A5D70">{{ b.linkExpiry }}</span></div>
                         <template data-sc="if" value="{{ b.linkIsActive }}" hint-placeholder-val="{{ false }}">
                           <p style="margin:0;padding:10px 12px;background:#FBF8F1;border:1px solid #E3DCCB;border-radius:2px;font-size:13px;overflow-wrap:anywhere;user-select:all">{{ b.linkUrl }}</p>
@@ -563,21 +566,119 @@ a[style*="background:#C9A66B"]:hover,button[style*="background:#C9A66B"]:hover,a
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":1500}}'>
 class Component extends DCLogic {
+sb() { return !!(window.MPGT && window.MPGT.on); }
 componentDidMount() {
+this.cfgReady = false; this.syncedCfg = {}; this.syncedBk = {}; this.rcpt = {};
 this.pullInbox();
 this.ticks = 0;
-try { this.timer = setInterval(() => { this.pullInbox(); this.ticks += 1; if (this.ticks % 6 === 0) this.setState({ nowTick: Date.now() }); }, 5000); } catch (err) {}
+try { this.timer = setInterval(() => { this.pullInbox(); this.ticks += 1; if (this.ticks % (this.sb() ? 2 : 6) === 0) this.setState({ nowTick: Date.now() }); }, this.sb() ? 15000 : 5000); } catch (err) {}
 try { this.onStorage = () => this.pullInbox(); window.addEventListener('storage', this.onStorage); } catch (err) {}
+if (this.sb()) this.bootRemote();
 }
-componentWillUnmount() { try { clearInterval(this.timer); window.removeEventListener('storage', this.onStorage); } catch (err) {} }
-componentDidUpdate() { this.persist(); }
+componentWillUnmount() { try { clearInterval(this.timer); clearTimeout(this.syncT); clearTimeout(this.syncRetry); window.removeEventListener('storage', this.onStorage); } catch (err) {} }
+componentDidUpdate() { this.persist(); this.loadReceipt(); }
 persist() {
+if (this.sb() && !this.cfgReady) return;
 try {
 const st = this.state;
-const txt = JSON.stringify({ rates: st.rates, extras: st.extras, vehicles: st.vehicles, destinations: st.destinations, bookings: st.bookings });
+const body = this.sb() ? { rates: st.rates, extras: st.extras, vehicles: st.vehicles, destinations: st.destinations } : { rates: st.rates, extras: st.extras, vehicles: st.vehicles, destinations: st.destinations, bookings: st.bookings };
+const txt = JSON.stringify(body);
 if (txt !== this.lastSaved) { localStorage.setItem('mpgt.admin.v1', txt); this.lastSaved = txt; }
 this.saveFail = false;
 } catch (err) { this.saveFail = true; }
+if (this.sb()) this.queueSync();
+}
+canon(v) { return window.MPGT.canon(v); }
+setSync(v) { if (this.state.syncState !== v) this.setState({ syncState: v }); }
+queueSync() { clearTimeout(this.syncT); this.syncT = setTimeout(() => this.runSync(), 700); }
+runSync() {
+if (!this.sb() || !this.cfgReady || !this.state.authed) return;
+if (this.syncing) { this.queueSync(); return; }
+const M = window.MPGT, st = this.state;
+const cfgRows = [], bkRows = [];
+['rates', 'extras', 'vehicles', 'destinations'].forEach((k) => {
+if ((k === 'rates' || k === 'extras') && st.rateDirty) return;
+const c = this.canon(st[k]);
+if (c !== this.syncedCfg[k]) cfgRows.push({ key: k, value: st[k], c });
+});
+st.bookings.forEach((b) => {
+if (!b || !b.ref) return;
+const c = this.canon(b);
+if (c !== this.syncedBk[b.ref]) bkRows.push({ ref: b.ref, status: b.status || 'new', data: b, c });
+});
+if (!cfgRows.length && !bkRows.length) return;
+this.syncing = true; this.setSync('saving');
+const prefer = { prefer: 'resolution=merge-duplicates,return=minimal' };
+const jobs = [];
+if (cfgRows.length) jobs.push(M.areq('POST', '/rest/v1/site_config?on_conflict=key', cfgRows.map((x) => ({ key: x.key, value: x.value })), prefer).then(() => { cfgRows.forEach((x) => { this.syncedCfg[x.key] = x.c; }); }));
+if (bkRows.length) jobs.push(M.areq('POST', '/rest/v1/bookings?on_conflict=ref', bkRows.map((x) => ({ ref: x.ref, status: x.status, data: x.data })), prefer).then(() => { bkRows.forEach((x) => { this.syncedBk[x.ref] = x.c; }); }));
+Promise.all(jobs).then(() => { this.syncing = false; this.setSync('saved'); this.queueSync(); }).catch((err) => {
+this.syncing = false;
+if (err && (err.status === 401 || err.status === 403) && !err.net) { this.setSync('error'); this.signOutRemote('Your session ended. Please log in again.'); return; }
+this.setSync('error');
+clearTimeout(this.syncRetry); this.syncRetry = setTimeout(() => this.runSync(), 8000);
+});
+}
+bootRemote() {
+const M = window.MPGT;
+try {
+const h = location.hash || '';
+if (/type=recovery/.test(h) && /access_token=/.test(h)) {
+const p = new URLSearchParams(h.replace(/^#/, ''));
+try { history.replaceState(null, '', location.pathname); } catch (err) {}
+this.setState({ booting: false, authed: false, recoveryToken: p.get('access_token') || '', loginInfo: 'Reset link verified. Type a new password (8+ characters) in the Password box, then press Login.' });
+return;
+}
+} catch (err) {}
+if (!M.session()) { this.setState({ booting: false, authed: false }); return; }
+M.token().then(() => M.isAdmin()).then((ok) => {
+if (!ok) { M.logout(); this.setState({ booting: false, authed: false, loginErr: 'This account is not an administrator.' }); return; }
+this.setState({ booting: false, authed: true });
+this.loadRemote();
+}).catch((err) => {
+this.setState({ booting: false, authed: false, loginErr: err && err.net ? 'Cannot reach the server. Check your internet connection and try again.' : '' });
+});
+}
+loadRemote() {
+const M = window.MPGT;
+return Promise.all([
+M.areq('GET', '/rest/v1/site_config?select=key,value'),
+M.areq('GET', '/rest/v1/bookings?select=ref,data&order=created_at.desc&limit=1000')
+]).then((r) => {
+const cfg = {}; (r[0] || []).forEach((x) => { cfg[x.key] = x.value; });
+const IMGMIG = {"/assets/43a34c26030adece67c21ac79f3f96e0.jpg": "/assets/8eeaf8899d4febdb3bc89174abf0552e.jpg", "/assets/6ab722698b2020a04a7914b34213061c.jpg": "/assets/6c56b61a14b76fb0df220cf1928818ce.jpg", "/assets/705fb8381a3910ad624da9b1b7caab3f.jpg": "/assets/6f23e6069027b0fa08409bbc70479693.jpg"};
+if (Array.isArray(cfg.destinations)) cfg.destinations = cfg.destinations.map((d) => (d && IMGMIG[d.img] && !d.imgCustom ? Object.assign({}, d, { img: IMGMIG[d.img] }) : d));
+const patch = {};
+['rates', 'extras', 'vehicles', 'destinations'].forEach((k) => { if (Array.isArray(cfg[k])) { patch[k] = cfg[k]; this.syncedCfg[k] = this.canon(cfg[k]); } });
+const bks = (r[1] || []).map((x) => x.data).filter((d) => d && d.ref);
+bks.forEach((b) => { this.syncedBk[b.ref] = this.canon(b); });
+this.cfgReady = true;
+this.setState(Object.assign({ bookings: bks, syncState: 'saved' }, patch));
+this.pullRemote(true);
+}).catch((err) => {
+if (err && (err.status === 401 || err.status === 403) && !err.net) { this.signOutRemote('Your session ended. Please log in again.'); return; }
+this.setSync('error');
+clearTimeout(this.syncRetry); this.syncRetry = setTimeout(() => this.loadRemote(), 6000);
+});
+}
+signOutRemote(msg) {
+try { window.MPGT.logout(); } catch (err) {}
+this.cfgReady = false; this.syncedBk = {}; this.syncedCfg = {};
+this.setState({ authed: false, bookings: [], reviews: [], loginPass: '', loginErr: msg || '', loginInfo: '', syncState: '' });
+}
+loadReceipt() {
+if (!this.sb() || !this.state.authed || !this.rcpt) return;
+const b = this.state.bookings.find((x) => x.id === this.state.open);
+if (!b || !b.receipt || this.rcpt[b.receipt] !== undefined) return;
+const path = b.receipt;
+this.rcpt[path] = '';
+window.MPGT.signedUrl('receipts', path).then((u) => { this.rcpt[path] = u; this.setState({ rcptTick: Date.now() }); }).catch(() => { this.rcpt[path] = 'error'; this.setState({ rcptTick: Date.now() }); });
+}
+hostImg(dataUrl, cb) {
+if (!this.sb() || !/^data:image\//.test(dataUrl)) { cb(dataUrl); return; }
+const M = window.MPGT;
+const name = new Date().toISOString().slice(0, 7) + '/' + M.rid(8) + '.jpg';
+M.token().then((t) => M.upload('site-media', name, M.dataUrlToBlob(dataUrl), 'image/jpeg', t)).then(() => cb(M.publicUrl('site-media', name))).catch(() => cb(dataUrl));
 }
 hashPw(t) {
 const fb = () => 'x' + Array.from(t).reduce((a, c) => ((a * 31 + c.charCodeAt(0)) >>> 0), 7).toString(16);
@@ -590,6 +691,34 @@ return Promise.resolve(fb());
 }
 getCred() { try { const j = JSON.parse(localStorage.getItem('mpgt.admin.cred')); if (j && j.u && j.h) return j; } catch (err) {} return null; }
 doLogin() {
+if (this.sb()) { this.doLoginRemote(); return; }
+this.doLoginLocal();
+}
+doLoginRemote() {
+const M = window.MPGT;
+const email = (this.state.loginUser || '').trim(), pw = this.state.loginPass || '';
+const done = () => M.isAdmin().then((ok) => {
+if (!ok) { M.logout(); const e = new Error('not admin'); e.notAdmin = true; throw e; }
+this.setState({ authed: true, booting: false, loginPass: '', loginErr: '', loginInfo: '', recoveryToken: '' });
+this.loadRemote();
+});
+const fail = (err) => {
+let msg = 'Incorrect email or password.';
+if (err && err.net) msg = 'Cannot reach the server. Check your internet connection and try again.';
+else if (err && err.notAdmin) msg = 'This account is not an administrator.';
+this.setState({ loginErr: msg, loginInfo: '' });
+};
+if (this.state.recoveryToken) {
+if (pw.length < 8) { this.setState({ loginErr: 'Choose a new password with at least 8 characters.', loginInfo: '' }); return; }
+this.setState({ loginErr: '', loginInfo: 'Saving your new password\u2026' });
+M.req('PUT', '/auth/v1/user', { password: pw }, { token: this.state.recoveryToken }).then((u) => M.login(u.email, pw)).then(done).catch(fail);
+return;
+}
+if (!email || !pw) { this.setState({ loginErr: 'Enter your email and password.', loginInfo: '' }); return; }
+this.setState({ loginErr: '', loginInfo: 'Signing in\u2026' });
+M.login(email, pw).then(done).catch(fail);
+}
+doLoginLocal() {
 const u = (this.state.loginUser || '').trim().toLowerCase(), pw = this.state.loginPass || '';
 if (!u || !pw) { this.setState({ loginErr: 'Enter your username and password.', loginInfo: '' }); return; }
 const cred = this.getCred();
@@ -611,6 +740,7 @@ this.setState({ authed: true, loginPass: '', loginErr: '', loginInfo: '' });
 });
 }
 pullReviews() {
+if (this.sb()) return;
 let list = [];
 try { const j = JSON.parse(localStorage.getItem('mpgt.reviews.v1')); if (Array.isArray(j)) list = j; } catch (err) {}
 if (JSON.stringify(list) !== JSON.stringify(this.state.reviews || [])) this.setState({ reviews: list });
@@ -619,9 +749,31 @@ writeReviews(list) {
 try { localStorage.setItem('mpgt.reviews.v1', JSON.stringify(list)); } catch (err) { this.saveFail = true; }
 this.setState({ reviews: list });
 }
-setReview(id, status) { this.writeReviews((this.state.reviews || []).map((r) => r.id === id ? Object.assign({}, r, { status }) : r)); }
-removeReview(id) { this.writeReviews((this.state.reviews || []).filter((r) => r.id !== id)); }
+setReview(id, status) {
+if (this.sb()) {
+const prev = this.state.reviews || [];
+this.setState({ reviews: prev.map((r) => r.id === id ? Object.assign({}, r, { status }) : r) });
+window.MPGT.areq('PATCH', '/rest/v1/reviews?id=eq.' + encodeURIComponent(id), { status }, { prefer: 'return=minimal' }).catch(() => { this.setState({ reviews: prev }); this.setSync('error'); });
+return;
+}
+this.writeReviews((this.state.reviews || []).map((r) => r.id === id ? Object.assign({}, r, { status }) : r));
+}
+removeReview(id) {
+if (this.sb()) {
+const prev = this.state.reviews || [];
+const rv = prev.find((r) => r.id === id);
+this.setState({ reviews: prev.filter((r) => r.id !== id) });
+const M = window.MPGT;
+M.areq('DELETE', '/rest/v1/reviews?id=eq.' + encodeURIComponent(id), undefined, { prefer: 'return=minimal' }).then(() => {
+const m = rv && /\/object\/public\/review-photos\/(.+)$/.exec(rv.photo || '');
+if (m) { try { M.removeFile('review-photos', decodeURIComponent(m[1])).catch(() => {}); } catch (err) {} }
+}).catch(() => { this.setState({ reviews: prev }); this.setSync('error'); });
+return;
+}
+this.writeReviews((this.state.reviews || []).filter((r) => r.id !== id));
+}
 pullRebook() {
+if (this.sb()) return;
 let list = [];
 try { const j = JSON.parse(localStorage.getItem('mpgt.rebook.v1')); if (Array.isArray(j)) list = j; } catch (err) {}
 if (!list.length) return;
@@ -638,7 +790,55 @@ if (!changed) return;
 try { localStorage.setItem('mpgt.rebook.v1', JSON.stringify(keep)); } catch (err) {}
 this.setState({ bookings: bks, newFlash: this.state.newFlash + 0, rebookFlash: (this.state.rebookFlash || 0) + (list.length - keep.length) });
 }
+applyRebook(list) {
+if (!list.length) return;
+const bks = this.state.bookings.slice();
+let n = 0;
+list.forEach((r) => {
+const at = Date.parse(r.created_at) || Date.now();
+const i = bks.findIndex((b) => String(b.ref).replace(/\D/g, '') === String(r.digits) && b.status === 'rejected' && b.rebookToken && at > ((b.reject && b.reject.at) || 0));
+if (i < 0) return;
+const b = bks[i];
+bks[i] = Object.assign({}, b, { status: 'rebooking', rebook: { date: r.date, time: r.time, note: r.note || '', at }, origDate: b.origDate || b.date, origTime: b.origTime || b.time });
+n += 1;
+});
+if (n) this.setState({ bookings: bks, rebookFlash: (this.state.rebookFlash || 0) + n });
+}
+mergeBookings(remote, quiet) {
+const byRef = {}; this.state.bookings.forEach((b) => { byRef[b.ref] = b; });
+const next = this.state.bookings.slice(), fresh = [];
+let changed = false;
+remote.forEach((d) => {
+const rc = this.canon(d), l = byRef[d.ref];
+if (!l) { fresh.push(d); this.syncedBk[d.ref] = rc; return; }
+if (rc !== this.syncedBk[d.ref] && this.canon(l) === this.syncedBk[d.ref]) {
+next[next.findIndex((b) => b.ref === d.ref)] = d; this.syncedBk[d.ref] = rc; changed = true;
+}
+});
+if (fresh.length || changed) this.setState({ bookings: fresh.concat(next), newFlash: this.state.newFlash + (quiet ? 0 : fresh.filter((b) => b.status === 'new').length) });
+}
+pullRemote(quiet) {
+if (!this.cfgReady || this.pulling || !this.state.authed) return;
+const M = window.MPGT;
+this.pulling = true;
+Promise.all([
+M.areq('GET', '/rest/v1/bookings?select=ref,data&order=created_at.desc&limit=1000'),
+M.areq('GET', '/rest/v1/reviews?select=*&order=created_at.desc&limit=300'),
+M.areq('GET', '/rest/v1/rebook_requests?select=*&order=created_at.asc&limit=300')
+]).then((r) => {
+this.pulling = false;
+if (!this.state.authed) return;
+this.mergeBookings((r[0] || []).map((x) => x.data).filter((d) => d && d.ref), quiet);
+const rv = (r[1] || []).map((x) => ({ id: x.id, name: x.name, trip: x.trip || '', rating: x.rating, text: x.text || '', photo: x.photo || '', date: x.created_at, status: x.status }));
+if (this.canon(rv) !== this.canon(this.state.reviews || [])) this.setState({ reviews: rv });
+this.applyRebook(r[2] || []);
+}).catch((err) => {
+this.pulling = false;
+if (err && (err.status === 401 || err.status === 403) && !err.net) this.signOutRemote('Your session ended. Please log in again.');
+});
+}
 pullInbox() {
+if (this.sb()) { this.pullRemote(false); return; }
 this.pullReviews();
 this.pullRebook();
 let inbox = null;
@@ -665,7 +865,7 @@ bookings: [
 { id: 'b9', ref: 'MPG-1049', name: 'Kim Soo-yeon', wa: '', kakao: 'sooyeon_k', email: '', trip: 'One-way', route: 'Pampanga to Metro Manila', date: '2026-11-28', time: '10:00', pax: 2, vehicle: 'Toyota Vios', status: 'confirmed', quote: '5500', pay: 'bank', paid: true, link: null, notes: 'Fixed fare.' }
 ],
 rates: [
-{ id: 'r0', name: 'Pampanga to Metro Manila (fixed fare)', sedan: '5500', mpv: '5800', van: '8500' },
+{ id: 'r0', name: 'Pampanga to Metro Manila (fixed fare)', sedan: '5500', mpv: '5800', van: '' },
 { id: 'r1', name: 'NAIA / Manila to Pampanga', sedan: '3500', mpv: '4200', van: '5200' },
 { id: 'r2', name: 'Pampanga to Clark Airport', sedan: '1200', mpv: '1500', van: '2000' },
 { id: 'r3', name: 'Pampanga to Subic', sedan: '3000', mpv: '3600', van: '4500' },
@@ -691,11 +891,11 @@ destinations: [
 { id: 'dest1', name: "La Union", page: '/routes/manila-to-la-union', img: '/assets/f960cf664102a1490035dae8ef9cdcce.jpg' },
 { id: 'dest2', name: "Cavite", page: '/routes/manila-to-cavite', img: '/assets/6e039ab6490916cad189c37a9478bcea.jpg' },
 { id: 'dest3', name: "Laguna", page: '/routes/manila-to-laguna', img: '/assets/3bc0807e30fe46963152b812127f6334.jpg' },
-{ id: 'dest4', name: "Dingalan, Aurora", page: '/routes/manila-to-dingalan', img: '/assets/6ab722698b2020a04a7914b34213061c.jpg' },
+{ id: 'dest4', name: "Dingalan, Aurora", page: '/routes/manila-to-dingalan', img: '/assets/6c56b61a14b76fb0df220cf1928818ce.jpg' },
 { id: 'dest5', name: "Pampanga & Clark", page: '/routes/manila-to-clark-airport', img: '/assets/b95a56582c2dedc9b0f1334e6014dc3e.jpg' },
-{ id: 'dest6', name: "Batangas", page: '/routes/manila-to-batangas', img: '/assets/705fb8381a3910ad624da9b1b7caab3f.jpg' },
+{ id: 'dest6', name: "Batangas", page: '/routes/manila-to-batangas', img: '/assets/6f23e6069027b0fa08409bbc70479693.jpg' },
 { id: 'dest7', name: "Pangasinan", page: '/routes/manila-to-pangasinan', img: '/assets/9f95023620a0ad52441513b709c1c34f.jpg' },
-{ id: 'dest8', name: "Subic & Zambales", page: '/routes/manila-to-zambales', img: '/assets/43a34c26030adece67c21ac79f3f96e0.jpg' },
+{ id: 'dest8', name: "Subic & Zambales", page: '/routes/manila-to-zambales', img: '/assets/8eeaf8899d4febdb3bc89174abf0552e.jpg' },
 { id: 'dest9', name: "Tagaytay", page: '/routes/manila-to-tagaytay', img: '/assets/4d01a6f174b2b2f4c2f0c77dee53852e.jpg' },
 { id: 'dest10', name: "Baguio", page: '/routes/manila-to-baguio', img: '/assets/39c2bf028036efef87a907ab5ce17116.jpg' }
 ],
@@ -705,10 +905,11 @@ this.initial = {};
 ['rates', 'extras', 'vehicles', 'destinations', 'bookings'].forEach((k) => { this.initial[k] = JSON.parse(JSON.stringify(this.state[k])); });
 try {
 const sv = JSON.parse(localStorage.getItem('mpgt.admin.v1'));
-if (sv) ['rates', 'extras', 'vehicles', 'destinations', 'bookings'].forEach((k) => { if (Array.isArray(sv[k])) this.state[k] = sv[k]; });
+if (sv) (this.sb() ? ['rates', 'extras', 'vehicles', 'destinations'] : ['rates', 'extras', 'vehicles', 'destinations', 'bookings']).forEach((k) => { if (Array.isArray(sv[k])) this.state[k] = sv[k]; });
 this.state.bookings = this.state.bookings.map((b) => b.status === 'cancelled' ? Object.assign({}, b, { status: 'rejected', reject: { reason: 'o', note: b.notes || '', at: 0 }, rebookToken: '' }) : b);
 } catch (err) {}
-try { this.state.authed = sessionStorage.getItem('mpgt.admin.auth') === '1'; } catch (err) {}
+if (this.sb()) { this.state.authed = false; this.state.booting = !!window.MPGT.session(); this.state.bookings = []; }
+else { try { this.state.authed = sessionStorage.getItem('mpgt.admin.auth') === '1'; } catch (err) {} }
 const nd = new Date();
 this.state.calMonth = nd.getFullYear() + '-' + (nd.getMonth() < 9 ? '0' : '') + (nd.getMonth() + 1);
 }
@@ -785,7 +986,7 @@ const pill = (on) => 'min-height:40px;padding:0 18px;border-radius:2px;font:inhe
 const filterDefs = [{ id: 'all', label: 'All (' + all.length + ')' }].concat(statusDefs.map((d) => ({ id: d.id, label: d.label + ' (' + countOf(d.id) + ')' })));
 const filters = filterDefs.map((f) => ({ ...f, on: s.filter === f.id, style: pill(s.filter === f.id), pick: () => this.setState({ filter: f.id, open: '' }) }));
 const shown = all.filter((b) => s.filter === 'all' || b.status === s.filter);
-const PAYLBL = { card: 'Visa or Mastercard', gcash: 'GCash or Maya', bank: 'Bank transfer', cash: 'Cash', intl: 'PayPal or Wise' };
+const PAYLBL = { card: 'Visa or Mastercard', gcash: 'GCash or Maya', bank: 'Bank transfer', cash: 'Cash', intl: 'PayPal' };
 const REJ_OPTS = [{ v: 'd', label: 'Date not available' }, { v: 'g', label: 'Date range not available' }, { v: 'v', label: 'Vehicle not available' }, { v: 'o', label: 'Other reason' }];
 const REJ_LBL = { v: 'Vehicle not available', d: 'Date not available', g: 'Date range not available', o: 'Other reason' };
 const REJ_WHY = { v: 'the vehicle you requested is not available', d: 'we are not available on your travel date', g: 'we are not available on your date range', o: 'we are unable to accept this request' };
@@ -825,11 +1026,14 @@ let msg = '';
 if (b.status === 'new') {
 msg = hi + ' We received your request ' + b.ref + ' (' + tripLine + '). We will send your quotation shortly.';
 } else if (b.status === 'quoted') {
+const act = lkState === 'active';
+const LINKTXT = act ? ' Please complete your payment here: ' + linkUrl + ' (this link is valid for 24 hours, until ' + expText + '). It shows the bank, GCash, Maya and PayPal details.' : '';
+const AFTER = ' After paying, please send your receipt in this chat.';
 const HOW = {
-card: lkState === 'active' ? ' Please pay by Visa or Mastercard here: ' + linkUrl + ' (this link is valid for 24 hours, until ' + expText + ').' : ' We will send you a secure Visa or Mastercard payment link.',
-gcash: ' Please pay by GCash or Maya and send your payment receipt in this chat.',
-bank: ' Please pay by bank transfer and send your transfer receipt in this chat.',
-intl: ' Please pay by PayPal or Wise and send your payment receipt in this chat.',
+card: ' Visa and Mastercard payments are coming soon. Please pay by bank transfer, GCash, Maya or PayPal.' + LINKTXT + AFTER,
+gcash: (act ? LINKTXT : ' Please pay by GCash or Maya (account name John Karlo Ty).') + AFTER,
+bank: (act ? LINKTXT : ' Please pay by bank transfer to BDO, Gelyn Cabingan, account number 000030166810.') + AFTER,
+intl: (act ? LINKTXT : ' Please pay by PayPal: https://paypal.me/mpgtaxi' + (qNum ? '/' + qNum + 'PHP' : '') + '.') + AFTER,
 cash: ' You can pay in cash on the day of your trip.'
 };
 msg = hi + ' Thank you for your request ' + b.ref + ' (' + tripLine + '). Our quotation is ' + (amt || 'to follow') + '.' + (HOW[b.pay] || '');
@@ -859,7 +1063,7 @@ const patchB = (patch, extra) => this.setState(Object.assign({ bookings: this.st
 const sendQuote = () => {
 if (!qNum) { fail('Enter the quote amount first.'); return; }
 const patch = { status: 'quoted' };
-if (b.pay === 'card' && lkState !== 'paid') {
+if (b.pay !== 'cash' && lkState !== 'paid') {
 const tokAmt = lk && lk.token ? Number(String(lk.token).split('-')[1]) : 0;
 if (!(lkState === 'active' && tokAmt === Math.round(qNum))) {
 const ex = Date.now() + 24 * 3600 * 1000;
@@ -893,7 +1097,7 @@ actions.push({ label: 'Reject', style: BTN.danger, pick: () => this.setState({ r
 }
 const hints = [];
 if (b.status === 'new' || b.status === 'quoted') {
-hints.push({ label: 'Send quote', text: b.pay === 'card' ? 'The client gets the amount and a 24-hour Visa or Mastercard payment link.' : 'The client gets the quoted amount and how to pay.' });
+hints.push({ label: 'Send quote', text: b.pay === 'cash' ? 'The client gets the quoted amount and pays cash on the day.' : 'The client gets the quoted amount and a 24-hour payment link with the bank, GCash, Maya and PayPal details.' });
 hints.push({ label: b.pay === 'cash' ? 'Confirm booking' : 'Confirm payment and booking', text: b.pay === 'cash' ? 'The client is told the booking is successful and pays cash on the day.' : 'The client is told their payment was received and the booking is successful.' });
 hints.push({ label: 'Reject', text: 'Pick a reason. The client is notified' + (b.pay === 'cash' ? '.' : ', and gets a rebooking link if they already paid by GCash, Maya or bank transfer.') });
 } else if (b.status === 'rebooking') {
@@ -916,6 +1120,12 @@ quoteText: peso(b.quote),
 payChip: lkState === 'active' && b.status === 'quoted' ? 'Link ' + leftText : b.status === 'confirmed' || b.status === 'completed' ? (b.pay === 'cash' ? 'Cash on the day' : 'Paid') : b.paid ? 'Paid' : lkState === 'expired' ? 'Link expired' : '',
 payPref: PAYLBL[b.pay] || 'Not stated',
 payState: b.pay === 'cash' ? 'Cash on the day of the trip' : b.paid ? 'Payment received' : 'Not received yet',
+hasReceipt: !!b.receipt, rcptName: b.receiptName || 'Receipt',
+rcptUrl: (this.rcpt && this.rcpt[b.receipt] && this.rcpt[b.receipt] !== 'error') ? this.rcpt[b.receipt] : '',
+rcptLoading: !!b.receipt && !!this.rcpt && this.rcpt[b.receipt] === '',
+rcptFailed: !!b.receipt && !!this.rcpt && this.rcpt[b.receipt] === 'error',
+rcptReady: !!b.receipt && !!this.rcpt && !!this.rcpt[b.receipt] && this.rcpt[b.receipt] !== 'error',
+rcptImgShow: !!b.receipt && !!this.rcpt && !!this.rcpt[b.receipt] && this.rcpt[b.receipt] !== 'error' && !/\.pdf$/i.test(b.receipt),
 rebooked: !!b.rebooked,
 origWhen: b.origDate ? fmtDate(b.origDate) + ', ' + fmtTime(b.origTime) : '',
 // info boxes
@@ -1092,14 +1302,26 @@ calPrev: () => shiftMonth(-1), calNext: () => shiftMonth(1),
 calToday: () => this.setState({ calMonth: todayStr.slice(0, 7), calSel: todayStr }),
 calSummary: monthBk.length + (monthBk.length === 1 ? ' confirmed trip' : ' confirmed trips') + ' this month \u00B7 \u20B1' + monthVal.toLocaleString('en-PH'),
 selTitle, selRows, selEmpty: selRows.length === 0,
-isAuthed: !!s.authed, notAuthed: !s.authed,
+isAuthed: !!s.authed, notAuthed: !s.authed && !s.booting, isBooting: !!s.booting && !s.authed,
+testMode: !this.sb(), userPh: this.sb() ? 'Email' : 'Username',
+modeNote: this.sb() ? (s.syncState === 'saving' ? 'Saving your changes\u2026' : s.syncState === 'error' ? 'Not saved yet. Retrying\u2026' : 'Live: changes are saved online and show on the website.') : 'Test mode: what you change here is saved in this browser and shows on the website.',
+saveMsg: this.sb() ? 'Your latest changes could not be saved online yet. We keep retrying. Please check your internet connection.' : 'Your latest changes could not be saved in this browser (storage is full or blocked). Try a smaller photo, or delete unused photos.',
 loginUser: s.loginUser, loginPass: s.loginPass, loginErr: s.loginErr, loginInfo: s.loginInfo,
 setLoginUser: (ev) => this.setState({ loginUser: ev.target.value, loginErr: '' }),
 setLoginPass: (ev) => this.setState({ loginPass: ev.target.value, loginErr: '' }),
 login: (ev) => { if (ev && ev.preventDefault) ev.preventDefault(); this.doLogin(); },
 showSignup: () => this.doSignup(),
-showForgot: () => this.setState({ loginErr: '', loginInfo: 'Password reset by email will work once the live database is connected. For now, clear this site\u2019s browser data to reset the test login.' }),
-signOut: () => { try { sessionStorage.removeItem('mpgt.admin.auth'); } catch (err) {} this.setState({ authed: false, loginPass: '', loginErr: '', loginInfo: '' }); },
+showForgot: () => {
+if (this.sb()) {
+const email = (this.state.loginUser || '').trim();
+if (!email) { this.setState({ loginErr: 'Type your admin email in the first box, then press Forgot Password.', loginInfo: '' }); return; }
+const note = 'If that email belongs to the admin account, a reset link is on its way. Open the link on this device.';
+window.MPGT.req('POST', '/auth/v1/recover?redirect_to=' + encodeURIComponent(location.origin + '/admin'), { email }).then(() => this.setState({ loginErr: '', loginInfo: note }), (err) => this.setState({ loginErr: err && err.net ? 'Cannot reach the server. Check your internet connection.' : '', loginInfo: err && err.net ? '' : note }));
+return;
+}
+this.setState({ loginErr: '', loginInfo: 'Password reset by email only works on the live site. For the test version, clear this site\u2019s browser data to reset the test login.' });
+},
+signOut: () => { if (this.sb()) { this.signOutRemote(''); return; } try { sessionStorage.removeItem('mpgt.admin.auth'); } catch (err) {} this.setState({ authed: false, loginPass: '', loginErr: '', loginInfo: '' }); },
 showDestForm: !!s.destEditing,
 destForm, dests, noDests: dests.length === 0, destPageOpts,
 destFormTitle: s.destEditing === 'new' ? 'Add a destination' : 'Edit destination',
@@ -1123,7 +1345,7 @@ const g = c.getContext('2d');
 g.fillStyle = '#FFFFFF'; g.fillRect(0, 0, c.width, c.height); g.drawImage(img, 0, 0, c.width, c.height);
 out = c.toDataURL('image/jpeg', 0.82);
 } catch (err) {}
-this.setState({ destForm: Object.assign({}, this.state.destForm, { img: out }) });
+this.hostImg(out, (u) => this.setState({ destForm: Object.assign({}, this.state.destForm, { img: u }) }));
 };
 img.src = reader.result;
 };
@@ -1145,7 +1367,7 @@ resetData: () => { const ini = this.initial; this.setState({ rates: JSON.parse(J
 checkInbox: () => { this.pullInbox(); this.setState({ nowTick: Date.now() }); },
 clearFlash: () => this.setState({ newFlash: 0 }),
 hasFlash: s.newFlash > 0, flashText: s.newFlash + (s.newFlash === 1 ? ' new request received from the website.' : ' new requests received from the website.'),
-saveWarn: !!this.saveFail,
+saveWarn: !!this.saveFail || s.syncState === 'error',
 
 isDest: s.tab === 'destinations',
 isReviews: s.tab === 'reviews',
@@ -1191,7 +1413,7 @@ const g = c.getContext('2d');
 g.fillStyle = '#FFFFFF'; g.fillRect(0, 0, c.width, c.height); g.drawImage(img, 0, 0, c.width, c.height);
 out = c.toDataURL('image/jpeg', 0.82);
 } catch (err) {}
-this.setState({ form: Object.assign({}, this.state.form, { img: out }) });
+this.hostImg(out, (u) => this.setState({ form: Object.assign({}, this.state.form, { img: u }) }));
 };
 img.src = reader.result;
 };
@@ -1209,7 +1431,7 @@ const id = this.state.editing;
 this.setState({ vehicles: this.state.vehicles.map((x) => x.id === id ? Object.assign({}, x, data) : x), editing: '', form: {} });
 }
 },
-rateStatus: s.rateSaved ? 'Saved at ' + s.rateSaved : 'Changes save automatically in this browser',
+rateStatus: this.sb() ? (s.rateDirty ? 'Unsaved changes. Press Save rates to publish them to the website.' : s.rateSaved ? 'Saved at ' + s.rateSaved + '. Live on the website.' : 'Rates shown here are live on the website.') : (s.rateSaved ? 'Saved at ' + s.rateSaved : 'Changes save automatically in this browser'),
 addRate: () => this.setState({ rates: this.state.rates.concat([{ id: 'r' + (uid++), name: 'New route', sedan: '', mpv: '', van: '' }]), rateDirty: true, rateSaved: '' }),
 addExtra: () => this.setState({ extras: this.state.extras.concat([{ id: 'x' + (uid++), name: 'New extra', amount: '', unit: 'per trip' }]), rateDirty: true, rateSaved: '' }),
 saveRates: () => { let t = ''; try { t = new Date().toLocaleTimeString('en-PH', { hour: 'numeric', minute: '2-digit' }); } catch (err) { t = 'now'; } this.setState({ rateDirty: false, rateSaved: t }); }

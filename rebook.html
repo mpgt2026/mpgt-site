@@ -11,6 +11,7 @@
 <meta name="theme-color" content="#102A43">
 <link rel="icon" type="image/png" href="/assets/69fafbe15d88b8ca53de7f08169a767b.png">
 <meta name="robots" content="noindex, nofollow">
+<script src="/mpgt-sb.js"></script>
 <script src="/dc.js"></script>
 <script src="/i18n.js"></script>
 </head>
@@ -116,6 +117,12 @@ const st = this.state;
 if (!m) return;
 if (!st.date || !st.time) { this.setState({ err: 'Please choose a new date and pickup time.', tried: true }); return; }
 if (st.date < minDate) { this.setState({ err: 'Please choose a date that is today or later.', tried: true }); return; }
+if (window.MPGT && window.MPGT.on) {
+if (st.busy) return;
+this.setState({ busy: true, err: '' });
+window.MPGT.submitRebook({ digits: m[1], date: st.date, time: st.time, note: st.note.trim() }).then(() => this.setState({ done: true, busy: false, err: '' })).catch(() => this.setState({ busy: false, err: 'We could not send your request. Please check your connection and try again.' }));
+return;
+}
 let list = [];
 try { const j = JSON.parse(localStorage.getItem('mpgt.rebook.v1')); if (Array.isArray(j)) list = j; } catch (err) {}
 list.push({ ref, digits: m[1], date: st.date, time: st.time, note: st.note.trim(), at: Date.now() });
