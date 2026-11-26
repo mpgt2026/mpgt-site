@@ -150,6 +150,14 @@ header>nav[aria-label="Main"]{order:3;flex:1 1 100% !important;flex-wrap:nowrap 
 header>nav[aria-label="Main"]::-webkit-scrollbar{display:none}
 header>nav[aria-label="Main"] a{flex:none;white-space:nowrap;padding:8px 0 !important}
 }
+.place{display:block;background:#FFFFFF;border:1px solid #E3DCCB;border-radius:4px;overflow:hidden;color:#102A43;transition:transform .35s ease,box-shadow .35s ease,border-color .35s ease}
+.place:hover{transform:translateY(-6px);box-shadow:0 18px 36px rgba(16,42,67,.16);border-color:#C9A66B;color:#102A43}
+.place .ph{position:relative;aspect-ratio:4/3;overflow:hidden;background:#102A43}
+.place .ph img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .8s ease}
+.place:hover .ph img{transform:scale(1.08)}
+.place .ph::after{content:"";position:absolute;left:0;right:0;bottom:0;height:3px;background:#C9A66B;transform:scaleX(0);transform-origin:left;transition:transform .45s ease}
+.place:hover .ph::after{transform:scaleX(1)}
+@media (prefers-reduced-motion:reduce){.place,.place .ph img,.place .ph::after{transition:none}.place:hover{transform:none}.place:hover .ph img{transform:none}}
 </style>
 </helmet>
 
@@ -278,14 +286,18 @@ header>nav[aria-label="Main"] a{flex:none;white-space:nowrap;padding:8px 0 !impo
       <div style="width:56px;height:1px;background:#C9A66B"></div>
       <p style="margin:0;font-size:17px;font-style:italic;color:#4A5D70">We've got you covered across the Philippines.</p>
     </div>
-    <ul style="list-style:none;margin:32px 0 0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:14px">
-      <li style="position:relative;height:150px;border-radius:4px;overflow:hidden;background:#102A43 url(/assets/fec9416d70e42c8752d2b0a48a98d846.jpg) center 70%/cover no-repeat"><a href="/book" style="position:absolute;inset:0;display:flex;align-items:flex-end;padding:12px;box-sizing:border-box;background:linear-gradient(to top,rgba(16,42,67,0.92) 0%,rgba(16,42,67,0) 60%);color:#FFFFFF;font-weight:600;font-size:11.5px;letter-spacing:0.22em;text-transform:uppercase">Manila</a></li>
-      <li style="position:relative;height:150px;border-radius:4px;overflow:hidden;background:#102A43 url(/assets/440c0a48e7022e367f961d2bb8ab0af3.jpg) center 45%/cover no-repeat"><a href="/book" style="position:absolute;inset:0;display:flex;align-items:flex-end;padding:12px;box-sizing:border-box;background:linear-gradient(to top,rgba(16,42,67,0.92) 0%,rgba(16,42,67,0) 60%);color:#FFFFFF;font-weight:600;font-size:11.5px;letter-spacing:0.22em;text-transform:uppercase">Pampanga</a></li>
-      <li style="position:relative;height:150px;border-radius:4px;overflow:hidden;background:#102A43 url(/assets/d357525d96e296626c13a3092747c97b.jpg) center/cover no-repeat"><a href="/book" style="position:absolute;inset:0;display:flex;align-items:flex-end;padding:12px;box-sizing:border-box;background:linear-gradient(to top,rgba(16,42,67,0.92) 0%,rgba(16,42,67,0) 60%);color:#FFFFFF;font-weight:600;font-size:11.5px;letter-spacing:0.22em;text-transform:uppercase">Clark</a></li>
-      <li style="position:relative;height:150px;border-radius:4px;overflow:hidden;background:#102A43 url(/assets/9112389a49a99a613929a905de9c113d.jpg) center 40%/cover no-repeat"><a href="/book" style="position:absolute;inset:0;display:flex;align-items:flex-end;padding:12px;box-sizing:border-box;background:linear-gradient(to top,rgba(16,42,67,0.92) 0%,rgba(16,42,67,0) 60%);color:#FFFFFF;font-weight:600;font-size:11.5px;letter-spacing:0.22em;text-transform:uppercase">Bulacan</a></li>
-      <li style="position:relative;height:150px;border-radius:4px;overflow:hidden;background:#102A43 url(/assets/05a0c276f130a480099437fcca13e767.jpg) center/cover no-repeat"><a href="/book" style="position:absolute;inset:0;display:flex;align-items:flex-end;padding:12px;box-sizing:border-box;background:linear-gradient(to top,rgba(16,42,67,0.92) 0%,rgba(16,42,67,0) 60%);color:#FFFFFF;font-weight:600;font-size:11.5px;letter-spacing:0.22em;text-transform:uppercase">Subic</a></li>
-      <li style="position:relative;height:150px;border-radius:4px;overflow:hidden;background:#102A43 url(/assets/8318e50b37e7321bd74758ab999ddf44.jpg) center 60%/cover no-repeat"><a href="/book" style="position:absolute;inset:0;display:flex;align-items:flex-end;padding:12px;box-sizing:border-box;background:linear-gradient(to top,rgba(16,42,67,0.92) 0%,rgba(16,42,67,0) 60%);color:#FFFFFF;font-weight:600;font-size:11.5px;letter-spacing:0.22em;text-transform:uppercase">Baguio</a></li>
-      <li style="position:relative;height:150px;border-radius:4px;overflow:hidden;background:#102A43 url(/assets/130080088063d6f7f70a5ea90e6df691.jpg) center/cover no-repeat"><a href="/book" style="position:absolute;inset:0;display:flex;align-items:flex-end;padding:12px;box-sizing:border-box;background:linear-gradient(to top,rgba(16,42,67,0.92) 0%,rgba(16,42,67,0) 60%);color:#FFFFFF;font-weight:600;font-size:11.5px;letter-spacing:0.22em;text-transform:uppercase">and More…</a></li>
+    <ul style="list-style:none;margin:32px 0 0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,230px),1fr));gap:22px">
+      <template data-sc="for" list="{{ places }}" as="pl" hint-placeholder-count="10">
+        <li>
+          <a class="place" href="{{ pl.href }}">
+            <span class="ph"><img src="{{ pl.img }}" alt="{{ pl.alt }}" loading="lazy"></span>
+            <span style="display:block;padding:16px 18px 18px">
+              <span style="display:block;font-family:'Cormorant Garamond',Georgia,serif;font-weight:600;font-size:25px;line-height:1.15;color:#102A43">{{ pl.name }}</span>
+              <span style="display:block;margin-top:10px;font-size:11.5px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:#8F6B2E">Read the route guide <span aria-hidden="true">&rarr;</span></span>
+            </span>
+          </a>
+        </li>
+      </template>
     </ul>
   </section>
 
@@ -606,6 +618,12 @@ try { this.onStorage = () => this.loadReviews(); window.addEventListener('storag
 componentWillUnmount() { try { window.removeEventListener('storage', this.onStorage); window.removeEventListener('keydown', this.onKey); } catch (err) {} }
 lbMove(d) { const n = 4; this.setState({ lb: (this.state.lb + d + n) % n }); }
 renderVals() {
+let places = [{"name": "La Union", "href": "/routes/manila-to-la-union", "img": "/assets/f960cf664102a1490035dae8ef9cdcce.jpg", "alt": "Surfboard sign on a La Union beach"}, {"name": "Cavite", "href": "/routes/manila-to-cavite", "img": "/assets/6e039ab6490916cad189c37a9478bcea.jpg", "alt": "Winding road through the Cavite countryside"}, {"name": "Laguna", "href": "/routes/manila-to-laguna", "img": "/assets/3bc0807e30fe46963152b812127f6334.jpg", "alt": "View over Laguna de Bay"}, {"name": "Dingalan, Aurora", "href": "/routes/manila-to-dingalan", "img": "/assets/6c56b61a14b76fb0df220cf1928818ce.jpg", "alt": "Green coastal cliffs near Dingalan, Aurora"}, {"name": "Pampanga & Clark", "href": "/routes/manila-to-clark-airport", "img": "/assets/b95a56582c2dedc9b0f1334e6014dc3e.jpg", "alt": "Mount Arayat and fairways near Clark"}, {"name": "Batangas", "href": "/routes/manila-to-batangas", "img": "/assets/6f23e6069027b0fa08409bbc70479693.jpg", "alt": "White-sand beach with Greek-style ruins in Batangas"}, {"name": "Pangasinan", "href": "/routes/manila-to-pangasinan", "img": "/assets/9f95023620a0ad52441513b709c1c34f.jpg", "alt": "Islands of Hundred Islands, Pangasinan"}, {"name": "Subic & Zambales", "href": "/routes/manila-to-zambales", "img": "/assets/8eeaf8899d4febdb3bc89174abf0552e.jpg", "alt": "Bay and beach in Zambales"}, {"name": "Tagaytay", "href": "/routes/manila-to-tagaytay", "img": "/assets/4d01a6f174b2b2f4c2f0c77dee53852e.jpg", "alt": "Ferris wheel above Taal Lake, Tagaytay"}, {"name": "Baguio", "href": "/routes/manila-to-baguio", "img": "/assets/39c2bf028036efef87a907ab5ce17116.jpg", "alt": "Baguio city above the morning clouds"}];
+try {
+const adm = JSON.parse(localStorage.getItem('mpgt.admin.v1'));
+if (adm && Array.isArray(adm.destinations)) places = adm.destinations.filter((d) => d && d.name).map((d) => ({ name: d.name, href: d.page || '/book', img: d.img || '', alt: d.name }));
+} catch (err) {}
+
 const s = this.state;
 const GAL = [
 { src: '/assets/e6128d258e65e906a65ccd6d96393053.jpg', alt: 'White Mitsubishi Xpander parked near wind turbines', cap: 'Windmill viewpoint' },
@@ -656,7 +674,7 @@ img.src = reader.result;
 };
 reader.readAsDataURL(file);
 };
-return {
+return { places,
 gallery,
 lbOpen: s.lb >= 0, lbSrc: s.lb >= 0 ? GAL[s.lb].src : '', lbAlt: s.lb >= 0 ? GAL[s.lb].alt : '', lbCap: s.lb >= 0 ? GAL[s.lb].cap : '',
 lbClose: () => this.setState({ lb: -1 }), lbStay: (ev) => { if (ev && ev.stopPropagation) ev.stopPropagation(); },
