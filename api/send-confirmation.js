@@ -17,11 +17,11 @@ const T = {
     hi: (n) => 'Hello ' + n + ',',
     paid: 'Good news! We received your payment and your booking is confirmed.',
     cash: 'Good news! Your booking is confirmed. You will pay in cash on the day of your trip.',
-    rows: { ref: 'Booking number', trip: 'Trip', date: 'Date and time', pax: 'Passengers', vehicle: 'Vehicle', amount: 'Amount', pay: 'Payment' },
+    rows: { driver: 'Driver', car: 'Car', plate: 'Plate number', ref: 'Booking number', trip: 'Trip', date: 'Date and time', pax: 'Passengers', vehicle: 'Vehicle', amount: 'Amount', pay: 'Payment' },
     payPaid: 'Paid', payCash: 'Cash on the day',
     driver: 'Your driver will contact you before pickup.',
     track: 'Check your booking status anytime:',
-    help: 'Questions? Reply to this email or message us on WhatsApp, Viber or KakaoTalk at +63 985 390 0002.',
+    help: 'Questions? Reply to this email or message us on WhatsApp, Viber or KakaoTalk at +63 934 598 6176.',
     thanks: 'Thank you for choosing Manila Pampanga Go Taxi.'
   },
   zh: {
@@ -29,11 +29,11 @@ const T = {
     hi: (n) => '您好 ' + n + '，',
     paid: '好消息！我们已收到您的付款，您的预订已确认。',
     cash: '好消息！您的预订已确认。请在出行当天以现金支付。',
-    rows: { ref: '预订编号', trip: '行程', date: '日期和时间', pax: '乘客人数', vehicle: '车型', amount: '金额', pay: '付款' },
+    rows: { driver: '司机', car: '车辆', plate: '车牌号', ref: '预订编号', trip: '行程', date: '日期和时间', pax: '乘客人数', vehicle: '车型', amount: '金额', pay: '付款' },
     payPaid: '已付款', payCash: '当天现金支付',
     driver: '司机将在接送前联系您。',
     track: '您可以随时查询预订状态：',
-    help: '有疑问？请直接回复此邮件，或通过 WhatsApp、Viber 或 KakaoTalk 联系我们：+63 985 390 0002。',
+    help: '有疑问？请直接回复此邮件，或通过 WhatsApp、Viber 或 KakaoTalk 联系我们：+63 934 598 6176。',
     thanks: '感谢您选择 Manila Pampanga Go Taxi。'
   },
   ko: {
@@ -41,11 +41,11 @@ const T = {
     hi: (n) => n + '님, 안녕하세요.',
     paid: '결제가 확인되어 예약이 확정되었습니다.',
     cash: '예약이 확정되었습니다. 여행 당일 현금으로 결제해 주세요.',
-    rows: { ref: '예약 번호', trip: '여정', date: '날짜 및 시간', pax: '승객 수', vehicle: '차량', amount: '금액', pay: '결제' },
+    rows: { driver: '기사님', car: '차량', plate: '차량 번호', ref: '예약 번호', trip: '여정', date: '날짜 및 시간', pax: '승객 수', vehicle: '차량', amount: '금액', pay: '결제' },
     payPaid: '결제 완료', payCash: '당일 현금 결제',
     driver: '기사님이 탑승 전에 연락드립니다.',
     track: '예약 상태는 언제든 확인하실 수 있습니다:',
-    help: '문의사항은 이 메일에 회신하시거나 WhatsApp, Viber, KakaoTalk +63 985 390 0002 로 연락해 주세요.',
+    help: '문의사항은 이 메일에 회신하시거나 WhatsApp, Viber, KakaoTalk +63 934 598 6176 로 연락해 주세요.',
     thanks: 'Manila Pampanga Go Taxi를 이용해 주셔서 감사합니다.'
   }
 };
@@ -70,6 +70,9 @@ function build(b) {
   ];
   if (q > 0) rows.push([L.rows.amount, 'PHP ' + q.toLocaleString('en-US')]);
   rows.push([L.rows.pay, isCash ? L.payCash : L.payPaid]);
+  if (b.driver) rows.push([L.rows.driver, b.driver]);
+  if (b.car) rows.push([L.rows.car, b.car]);
+  if (b.plate) rows.push([L.rows.plate, b.plate]);
   const intro = isCash ? L.cash : L.paid;
   const trackUrl = SITE + '/track';
   const text = [L.hi(b.name), '', intro, ''].concat(rows.map((r) => r[0] + ': ' + r[1]), ['', L.driver, '', L.track + ' ' + trackUrl, '', L.help, '', L.thanks]).join('\n');

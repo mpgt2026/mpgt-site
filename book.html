@@ -22,6 +22,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Book a Private Car with Driver | Manila Pampanga Go Taxi">
 <meta name="twitter:description" content="Request a quotation or book a fixed-fare private car with a driver in Pampanga, Metro Manila and across Luzon. Choose your vehicle and pay online or by your preferred method.">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.manilapampangagotaxi.com/"}, {"@type": "ListItem", "position": 2, "name": "Book a Private Car with Driver", "item": "https://www.manilapampangagotaxi.com/book"}]}</script>
 <script src="/mpgt-sb.js"></script>
 <script src="/dc.js"></script>
 <script src="/i18n.js"></script>
@@ -347,7 +348,7 @@ header>nav[aria-label="Main"] a{flex:none;white-space:nowrap;padding:8px 0 !impo
                   <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,210px),1fr));gap:14px">
                     <template data-sc="for" list="{{ models }}" as="m" hint-placeholder-count="2">
                       <button type="button" onClick="{{ m.pick }}" aria-pressed="{{ m.on }}" style="{{ m.cardStyle }}">
-                        <span style="{{ m.photoStyle }}"><img src="{{ m.img }}" alt="{{ m.alt }}" style="{{ m.imgStyle }}"></span>
+                        <span style="{{ m.photoStyle }}"><img src="{{ m.img }}" alt="{{ m.alt }}" style="{{ m.imgStyle }}" loading="lazy" decoding="async"></span>
                         <span style="display:flex;align-items:center;justify-content:space-between;gap:8px;padding:12px 14px">
                           <span style="font-size:15px;font-weight:700;color:#102A43;line-height:1.3">{{ m.name }}</span>
                           <span style="{{ m.tagStyle }}">{{ m.tag }}</span>
@@ -472,7 +473,7 @@ header>nav[aria-label="Main"] a{flex:none;white-space:nowrap;padding:8px 0 !impo
               <template data-sc="if" value="{{ submitted }}" hint-placeholder-val="{{ false }}">
                 <div id="bf-summary" role="status" style="margin-top:28px;padding:24px;border-radius:4px;background:#F5F1E8;border:2px solid #C9A66B">
                   <h2 style="font-family:'Cormorant Garamond',Georgia,serif;margin:0;font-size:28px;font-weight:600;color:#102A43">Your request is ready to send</h2>
-                  <p style="margin:8px 0 0;font-size:14px;line-height:1.55;color:#4A5D70">Send it on WhatsApp and we reply with a personalized quotation. If WhatsApp does not open, copy the details and send them to +63 985 390 0002.</p>
+                  <p style="margin:8px 0 0;font-size:14px;line-height:1.55;color:#4A5D70">Send it on WhatsApp and we reply with a personalized quotation. If WhatsApp does not open, copy the details and send them to +63 934 598 6176.</p>
                   <pre style="margin:16px 0 0;padding:16px;border-radius:2px;background:#FFFFFF;border:1px solid #E3DCCB;font:inherit;font-size:14px;line-height:1.65;color:#102A43;white-space:pre-wrap;word-break:break-word;user-select:all">{{ summaryText }}</pre>
                   <div style="margin-top:16px;display:flex;flex-wrap:wrap;align-items:center;gap:12px">
                     <a href="{{ waUrl }}" target="_blank" rel="noopener" class="route-btn" style="display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:52px;box-sizing:border-box;padding:0 28px;border-radius:2px;background:#102A43;color:#C9A66B;font-weight:700;font-size:15px">Request quote on WhatsApp <span aria-hidden="true">&#8599;</span></a>
@@ -596,7 +597,7 @@ header>nav[aria-label="Main"] a{flex:none;white-space:nowrap;padding:8px 0 !impo
                     <span style="padding:4px 12px;border-radius:999px;background:#102A43;color:#F5F1E8;font-size:12px;font-weight:700;letter-spacing:0.04em">{{ ref }}</span>
                     <span style="{{ statusStyle }}">{{ statusLabel }}</span>
                   </div>
-                  <p style="margin:8px 0 0;font-size:14px;line-height:1.55;color:#4A5D70">Send your booking details on WhatsApp so we can confirm your driver and vehicle. If WhatsApp does not open, copy the details and send them to +63 985 390 0002.</p>
+                  <p style="margin:8px 0 0;font-size:14px;line-height:1.55;color:#4A5D70">Send your booking details on WhatsApp so we can confirm your driver and vehicle. If WhatsApp does not open, copy the details and send them to +63 934 598 6176.</p>
                   <pre style="margin:16px 0 0;padding:16px;border-radius:2px;background:#FFFFFF;border:1px solid #E3DCCB;font:inherit;font-size:14px;line-height:1.65;color:#102A43;white-space:pre-wrap;word-break:break-word;user-select:all">{{ summaryText }}</pre>
                   <div style="margin-top:16px;display:flex;flex-wrap:wrap;align-items:center;gap:12px">
                     <a href="{{ waUrl }}" target="_blank" rel="noopener" class="route-btn" style="display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:52px;box-sizing:border-box;padding:0 28px;border-radius:2px;background:#102A43;color:#C9A66B;font-weight:700;font-size:15px">Send booking on WhatsApp <span aria-hidden="true">&#8599;</span></a>
@@ -625,7 +626,7 @@ header>nav[aria-label="Main"] a{flex:none;white-space:nowrap;padding:8px 0 !impo
           </dl>
           <div style="margin-top:8px;padding-top:18px;border-top:1px solid rgba(245,241,232,0.18)">
             <p style="margin:0;font-size:13px;color:#D9CDB4">Prefer to talk first? Reach us 24/7</p>
-            <p style="margin:6px 0 0;font-size:20px;font-weight:700;color:#C9A66B">+63 985 390 0002</p>
+            <p style="margin:6px 0 0;font-size:20px;font-weight:700;color:#C9A66B">+63 934 598 6176</p>
           </div>
         </aside>
 
@@ -638,7 +639,7 @@ header>nav[aria-label="Main"] a{flex:none;white-space:nowrap;padding:8px 0 !impo
     <div style="max-width:1200px;margin:0 auto">
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,270px),1fr));gap:48px 72px">
         <div>
-          <div style="display:inline-flex;background:#F5F1E8;border-radius:2px;padding:8px 16px"><img src="/assets/69fafbe15d88b8ca53de7f08169a767b.png" alt="Manila Pampanga Go Taxi" style="height:52px;width:auto;max-width:100%"></div>
+          <div style="display:inline-flex;background:#F5F1E8;border-radius:2px;padding:8px 16px"><img src="/assets/69fafbe15d88b8ca53de7f08169a767b.png" alt="Manila Pampanga Go Taxi" style="height:52px;width:auto;max-width:100%" loading="lazy" decoding="async"></div>
           <p style="margin:14px 0 0;font-size:11px;font-weight:600;letter-spacing:0.24em;text-transform:uppercase;color:#C9A66B">Your ride. Your destination.</p>
           <p style="margin:18px 0 0;font-size:15px;line-height:1.7;color:#D9E1EA;max-width:36ch">Travel comfortably across Luzon. Private airport transfers, city rides and provincial trips with a driver.</p>
           <p style="margin:18px 0 0;font-size:13px;line-height:1.7;color:#9FB0C2">Booking inquiries welcome &middot; Rides subject to availability</p>
@@ -653,9 +654,9 @@ header>nav[aria-label="Main"] a{flex:none;white-space:nowrap;padding:8px 0 !impo
         <div>
           <p style="margin:0;font-size:11px;font-weight:600;letter-spacing:0.26em;text-transform:uppercase;color:#C9A66B">Get in touch</p>
           <p style="margin:12px 0 0;font-family:'Cormorant Garamond',Georgia,serif;font-weight:600;font-size:38px;line-height:1.1">We're here to help.</p>
-          <a href="https://wa.me/639853900002" target="_blank" rel="noopener" style="margin-top:22px;display:flex;align-items:center;gap:16px;padding:16px 20px;border:1px solid rgba(201,166,107,.65);border-radius:4px;background:rgba(255,255,255,.06);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)">
+          <a href="https://wa.me/639345986176" target="_blank" rel="noopener" style="margin-top:22px;display:flex;align-items:center;gap:16px;padding:16px 20px;border:1px solid rgba(201,166,107,.65);border-radius:4px;background:rgba(255,255,255,.06);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)">
             <span style="flex:none;display:inline-flex;color:#E6CC96"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 0 1-13.2 8L3 21l1.2-4.6A9 9 0 1 1 21 12z"/><path d="M9 9c0 3 3 6 6 6l1-2-2-1-1 1c-1-.5-2-1.5-2.5-2.5l1-1-1-2z"/></svg></span>
-            <span style="flex:1;min-width:0"><span style="display:block;font-size:11.5px;color:#D9E1EA">WhatsApp, Viber &amp; KakaoTalk</span><span style="display:block;margin-top:2px;font-size:17px;font-weight:600;letter-spacing:.02em">+63 985 390 0002</span></span>
+            <span style="flex:1;min-width:0"><span style="display:block;font-size:11.5px;color:#D9E1EA">WhatsApp, Viber &amp; KakaoTalk</span><span style="display:block;margin-top:2px;font-size:17px;font-weight:600;letter-spacing:.02em">+63 934 598 6176</span></span>
             <span aria-hidden="true" style="color:#C9A66B;font-size:18px">&rarr;</span>
           </a>
           <a href="https://www.facebook.com/profile.php?id=61563234841462" target="_blank" rel="noopener" style="margin-top:12px;display:flex;align-items:center;gap:16px;padding:14px 20px;border:1px solid rgba(201,166,107,.65);border-radius:4px;background:rgba(255,255,255,.06);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)">
@@ -749,7 +750,7 @@ header>nav[aria-label="Main"] a{flex:none;white-space:nowrap;padding:8px 0 !impo
         <p style="margin:0">Travel time can be affected by traffic, weather, road restrictions and other conditions. If a vehicle or driver change becomes necessary, we will communicate the available options where reasonably possible.</p>
 
         <h2 style="font-family:'Cormorant Garamond',Georgia,serif;margin:36px 0 10px;font-size:28px;font-weight:600;color:#102A43">Questions</h2>
-        <p style="margin:0">Contact <a href="mailto:manilapampangagotaxi@gmail.com" style="color:#8F6B2E;text-decoration:underline">manilapampangagotaxi@gmail.com</a> or <a href="https://api.whatsapp.com/send?phone=639853900002" target="_blank" rel="noopener" style="color:#8F6B2E;text-decoration:underline;text-underline-offset:3px">WhatsApp</a> and Kakao 639853900002 for quotation questions or booking clarification.</p>
+        <p style="margin:0">Contact <a href="mailto:manilapampangagotaxi@gmail.com" style="color:#8F6B2E;text-decoration:underline">manilapampangagotaxi@gmail.com</a> or <a href="https://api.whatsapp.com/send?phone=639345986176" target="_blank" rel="noopener" style="color:#8F6B2E;text-decoration:underline;text-underline-offset:3px">WhatsApp</a> and Kakao 639345986176 for quotation questions or booking clarification.</p>
       </article>
         </template>
         <div style="padding:24px 28px 32px;display:flex;flex-wrap:wrap;align-items:center;gap:14px">
@@ -765,12 +766,12 @@ header>nav[aria-label="Main"] a{flex:none;white-space:nowrap;padding:8px 0 !impo
   <details class="mpgt-chat-menu">
     <summary aria-label="Chat with us"><span class="mpgt-chat-fab-ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-12.4 7.4L3 21l2.1-5.5A8.4 8.4 0 1 1 21 11.5z"/></svg></span><span class="mpgt-chat-fab-txt">Chat with us</span></summary>
     <ul class="mpgt-chat-list">
-      <li><a class="mpgt-chat-item wa" href="https://wa.me/639853900002" target="_blank" rel="noopener"><span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-12.4 7.4L3 21l2.1-5.5A8.4 8.4 0 1 1 21 11.5z"/></svg></span>WhatsApp</a></li>
-      <li><a class="mpgt-chat-item vb" href="viber://chat?number=%2B639853900002"><span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg></span>Viber</a></li>
+      <li><a class="mpgt-chat-item wa" href="https://wa.me/639345986176" target="_blank" rel="noopener"><span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-12.4 7.4L3 21l2.1-5.5A8.4 8.4 0 1 1 21 11.5z"/></svg></span>WhatsApp</a></li>
+      <li><a class="mpgt-chat-item vb" href="viber://chat?number=%2B639345986176"><span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg></span>Viber</a></li>
       <li>
         <details class="mpgt-kk">
           <summary class="mpgt-chat-item kk"><span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-12.4 7.4L3 21l2.1-5.5A8.4 8.4 0 1 1 21 11.5z"/></svg></span>KakaoTalk</summary>
-          <p class="mpgt-kk-note">Add us on KakaoTalk with this number: +63 985 390 0002.</p>
+          <p class="mpgt-kk-note">Add us on KakaoTalk with this number: +63 934 598 6176.</p>
         </details>
       </li>
     </ul>
@@ -849,7 +850,7 @@ renderVals() {
 const s = this.state;
 const e = s.errors || {};
 // Replace with the real WhatsApp number (country code, digits only).
-const WA = '639853900002';
+const WA = '639345986176';
 const enc = encodeURIComponent;
 const set = (k) => (ev) => {
 const v = ev.target.value;

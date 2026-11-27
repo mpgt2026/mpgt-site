@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /pay
+Disallow: /rebook
+Disallow: /track
+Disallow: /api/
+
+Sitemap: https://www.manilapampangagotaxi.com/sitemap.xml

@@ -78,7 +78,7 @@ a[style*="background:#C9A66B"]:hover,button[style*="background:#C9A66B"]:hover,a
 
   <!-- SIDEBAR -->
   <aside style="flex:0 0 250px;min-width:220px;background:#0B1F33;color:#F5F1E8;display:flex;flex-direction:column;gap:28px;padding:28px 20px;box-sizing:border-box">
-    <div style="background:#F5F1E8;border-radius:2px;padding:10px 14px;display:flex;justify-content:center"><img src="/assets/69fafbe15d88b8ca53de7f08169a767b.png" alt="Manila Pampanga Go Taxi" style="height:48px;width:auto;max-width:100%"></div>
+    <div style="background:#F5F1E8;border-radius:2px;padding:10px 14px;display:flex;justify-content:center"><img src="/assets/69fafbe15d88b8ca53de7f08169a767b.png" alt="Manila Pampanga Go Taxi" style="height:48px;width:auto;max-width:100%" loading="lazy" decoding="async"></div>
     <div>
       <p style="margin:0 0 10px;font-size:11px;font-weight:600;letter-spacing:.24em;text-transform:uppercase;color:#C9A66B">Admin</p>
       <nav aria-label="Admin sections" style="display:flex;flex-direction:column;gap:4px">
@@ -153,7 +153,7 @@ a[style*="background:#C9A66B"]:hover,button[style*="background:#C9A66B"]:hover,a
                     <dt class="lbl">Requested</dt><dd style="margin:0">{{ b.vehicle }}</dd>
                     <dt class="lbl">Pay by</dt><dd style="margin:0">{{ b.payPref }}</dd>
                     <dt class="lbl">Payment</dt><dd style="margin:0">{{ b.payState }}</dd>
-                    <template data-sc="if" value="{{ b.hasReceipt }}" hint-placeholder-val="{{ false }}"><dt class="lbl">Proof of payment</dt><dd style="margin:0;display:flex;flex-direction:column;gap:8px;align-items:flex-start"><span style="color:#2B3F55;overflow-wrap:anywhere">{{ b.rcptName }}</span><template data-sc="if" value="{{ b.rcptLoading }}" hint-placeholder-val="{{ false }}"><span style="color:#4A5D70">Loading the receipt&hellip;</span></template><template data-sc="if" value="{{ b.rcptFailed }}" hint-placeholder-val="{{ false }}"><span style="color:#8A1F18">The receipt could not be opened. Please refresh and try again.</span></template><template data-sc="if" value="{{ b.rcptImgShow }}" hint-placeholder-val="{{ false }}"><a href="{{ b.rcptUrl }}" target="_blank" rel="noopener"><img src="{{ b.rcptUrl }}" alt="Payment receipt uploaded by the client" style="display:block;max-width:100%;max-height:380px;border:1px solid #D8CFBA;border-radius:2px;background:#FFFFFF"></a></template><template data-sc="if" value="{{ b.rcptReady }}" hint-placeholder-val="{{ false }}"><a href="{{ b.rcptUrl }}" target="_blank" rel="noopener" style="color:#8F6B2E;font-weight:600;text-decoration:underline">Open full size in a new tab</a></template></dd></template>
+                    <template data-sc="if" value="{{ b.hasReceipt }}" hint-placeholder-val="{{ false }}"><dt class="lbl">Proof of payment</dt><dd style="margin:0;display:flex;flex-direction:column;gap:8px;align-items:flex-start"><span style="color:#2B3F55;overflow-wrap:anywhere">{{ b.rcptName }}</span><template data-sc="if" value="{{ b.rcptLoading }}" hint-placeholder-val="{{ false }}"><span style="color:#4A5D70">Loading the receipt&hellip;</span></template><template data-sc="if" value="{{ b.rcptFailed }}" hint-placeholder-val="{{ false }}"><span style="color:#8A1F18">The receipt could not be opened. Please refresh and try again.</span></template><template data-sc="if" value="{{ b.rcptImgShow }}" hint-placeholder-val="{{ false }}"><a href="{{ b.rcptUrl }}" target="_blank" rel="noopener"><img src="{{ b.rcptUrl }}" alt="Payment receipt uploaded by the client" style="display:block;max-width:100%;max-height:380px;border:1px solid #D8CFBA;border-radius:2px;background:#FFFFFF" loading="lazy" decoding="async"></a></template><template data-sc="if" value="{{ b.rcptReady }}" hint-placeholder-val="{{ false }}"><a href="{{ b.rcptUrl }}" target="_blank" rel="noopener" style="color:#8F6B2E;font-weight:600;text-decoration:underline">Open full size in a new tab</a></template></dd></template>
                     <template data-sc="if" value="{{ b.rebooked }}" hint-placeholder-val="{{ false }}"><dt class="lbl">Rebooked</dt><dd style="margin:0">From {{ b.origWhen }}</dd></template>
                     <dt class="lbl">Notes</dt><dd style="margin:0;color:#2B3F55">{{ b.notes }}</dd>
                   </dl>
@@ -179,10 +179,19 @@ a[style*="background:#C9A66B"]:hover,button[style*="background:#C9A66B"]:hover,a
                     </template>
 
                     <div style="display:flex;flex-direction:column;gap:12px">
-                      <template data-sc="if" value="{{ b.showQuote }}" hint-placeholder-val="{{ true }}">
-                        <div style="max-width:220px;display:flex;flex-direction:column;gap:6px">
-                          <label class="lbl" for="{{ b.quoteId }}">Quote (PHP)</label>
-                          <input class="fld amt" id="{{ b.quoteId }}" type="number" min="0" step="50" placeholder="0" value="{{ b.quote }}" onChange="{{ b.setQuote }}" style="font-size:16px">
+                      <template data-sc="if" value="{{ b.showAssign }}" hint-placeholder-val="{{ true }}">
+                        <div style="padding:16px;border:1px solid #E3DCCB;border-radius:4px;background:#FFFFFF;display:flex;flex-direction:column;gap:14px">
+                          <p class="lbl" style="margin:0;color:#8F6B2E">Driver, car and rates</p>
+                          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px">
+                            <div style="display:flex;flex-direction:column;gap:6px;min-width:0"><label class="lbl" for="{{ b.fDriver }}">Driver's name</label><input class="fld" id="{{ b.fDriver }}" type="text" autocomplete="off" placeholder="e.g. Juan Dela Cruz" value="{{ b.driver }}" onChange="{{ b.setDriver }}"></div>
+                            <div style="display:flex;flex-direction:column;gap:6px;min-width:0"><label class="lbl" for="{{ b.fCar }}">Car</label><input class="fld" id="{{ b.fCar }}" type="text" autocomplete="off" placeholder="e.g. White Toyota Innova" value="{{ b.car }}" onChange="{{ b.setCar }}"></div>
+                            <div style="display:flex;flex-direction:column;gap:6px;min-width:0"><label class="lbl" for="{{ b.fPlate }}">Plate number</label><input class="fld" id="{{ b.fPlate }}" type="text" autocomplete="off" placeholder="e.g. ABC 1234" value="{{ b.plate }}" onChange="{{ b.setPlate }}" style="text-transform:uppercase"></div>
+                            <div style="display:flex;flex-direction:column;gap:6px;min-width:0"><label class="lbl" for="{{ b.quoteId }}">Quotation rate (PHP)</label><input class="fld amt" id="{{ b.quoteId }}" type="number" min="0" step="50" placeholder="0" value="{{ b.quote }}" onChange="{{ b.setQuote }}" style="font-size:16px"></div>
+                            <div style="display:flex;flex-direction:column;gap:6px;min-width:0"><label class="lbl" for="{{ b.fDFee }}">Driver's fee (PHP)</label><input class="fld amt" id="{{ b.fDFee }}" type="number" min="0" step="50" placeholder="0" value="{{ b.driverFee }}" onChange="{{ b.setDriverFee }}" style="font-size:16px"></div>
+                            <div style="display:flex;flex-direction:column;gap:6px;min-width:0"><label class="lbl" for="{{ b.fOFee }}">Operator's fee (PHP)</label><input class="fld amt" id="{{ b.fOFee }}" type="number" min="0" step="50" placeholder="0" value="{{ b.operatorFee }}" onChange="{{ b.setOperatorFee }}" style="font-size:16px"></div>
+                          </div>
+                          <p style="margin:0;font-size:12.5px;line-height:1.55;color:#4A5D70">{{ b.feeNote }}</p>
+                          <p style="margin:0;font-size:12.5px;line-height:1.55;color:#4A5D70">Driver, car and plate are shown to the client in the confirmation. The fees are private and only visible here in Admin.</p>
                         </div>
                       </template>
                       <template data-sc="if" value="{{ b.hasMail }}" hint-placeholder-val="{{ false }}"><p role="status" style="{{ b.mailStyle }}">{{ b.mailText }}</p></template>
@@ -372,7 +381,7 @@ a[style*="background:#C9A66B"]:hover,button[style*="background:#C9A66B"]:hover,a
             <div style="flex:0 1 300px;min-width:0;display:flex;flex-direction:column;gap:10px">
               <p class="lbl" style="margin:0">Photo</p>
               <div style="aspect-ratio:16/10;background:#FBF8F1;border:1px dashed #D8CFBA;border-radius:2px;display:flex;align-items:center;justify-content:center;overflow:hidden">
-                <template data-sc="if" value="{{ form.hasImg }}" hint-placeholder-val="{{ false }}"><img src="{{ form.img }}" alt="Vehicle photo preview" style="width:100%;height:100%;object-fit:contain;padding:8px;box-sizing:border-box"></template>
+                <template data-sc="if" value="{{ form.hasImg }}" hint-placeholder-val="{{ false }}"><img src="{{ form.img }}" alt="Vehicle photo preview" style="width:100%;height:100%;object-fit:contain;padding:8px;box-sizing:border-box" loading="lazy" decoding="async"></template>
                 <template data-sc="if" value="{{ form.noImg }}" hint-placeholder-val="{{ true }}"><span style="font-size:13px;color:#4A5D70;padding:12px;text-align:center">No photo yet</span></template>
               </div>
               <label for="veh-photo" style="display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 18px;border:1px solid #D8CFBA;border-radius:2px;background:#FFFFFF;font-size:13px;font-weight:600;cursor:pointer">Upload photo</label>
@@ -421,7 +430,7 @@ a[style*="background:#C9A66B"]:hover,button[style*="background:#C9A66B"]:hover,a
         <ul style="list-style:none;margin:16px 0 0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:16px">
           <template data-sc="for" list="{{ vehicles }}" as="v" hint-placeholder-count="6">
             <li class="tile" style="background:#FFFFFF;border:1px solid #E3DCCB;border-radius:4px;overflow:hidden;display:flex;flex-direction:column">
-              <div style="aspect-ratio:16/10;background:#FFFFFF;display:flex;align-items:center;justify-content:center"><img src="{{ v.img }}" alt="{{ v.name }}" style="width:100%;height:100%;object-fit:contain;padding:8px;box-sizing:border-box"></div>
+              <div style="aspect-ratio:16/10;background:#FFFFFF;display:flex;align-items:center;justify-content:center"><img src="{{ v.img }}" alt="{{ v.name }}" style="width:100%;height:100%;object-fit:contain;padding:8px;box-sizing:border-box" loading="lazy" decoding="async"></div>
               <div style="padding:14px 16px 16px;display:flex;flex-direction:column;gap:10px;border-top:1px solid #E3DCCB;flex:1">
                 <div style="display:flex;justify-content:space-between;align-items:baseline;gap:8px"><span style="font-family:'Cormorant Garamond',Georgia,serif;font-size:22px;font-weight:600;line-height:1.15">{{ v.name }}</span><span class="lbl">{{ v.cat }}</span></div>
                 <p style="margin:0;font-size:13px;font-weight:600;color:#8F6B2E">{{ v.facts }}</p>
@@ -468,7 +477,7 @@ a[style*="background:#C9A66B"]:hover,button[style*="background:#C9A66B"]:hover,a
         <ul style="list-style:none;margin:16px 0 0;padding:0;display:flex;flex-direction:column;gap:14px">
           <template data-sc="for" list="{{ reviewRows }}" as="r" hint-placeholder-count="3">
             <li style="display:flex;flex-wrap:wrap;gap:16px;background:#FFFFFF;border:1px solid #E3DCCB;border-radius:4px;padding:16px">
-              <div style="flex:0 0 150px;aspect-ratio:4/3;background:#102A43;border-radius:2px;overflow:hidden"><img src="{{ r.photo }}" alt="Photo from {{ r.name }}" style="display:block;width:100%;height:100%;object-fit:cover"></div>
+              <div style="flex:0 0 150px;aspect-ratio:4/3;background:#102A43;border-radius:2px;overflow:hidden"><img src="{{ r.photo }}" alt="Photo from {{ r.name }}" style="display:block;width:100%;height:100%;object-fit:cover" loading="lazy" decoding="async"></div>
               <div style="flex:1 1 260px;min-width:0;display:flex;flex-direction:column;gap:6px">
                 <div style="display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center"><span style="color:#C9A66B;font-size:18px;letter-spacing:2px" aria-label="{{ r.label }}">{{ r.stars }}</span><span style="{{ r.badge }}">{{ r.statusLabel }}</span></div>
                 <p style="margin:0;font-size:15px;line-height:1.5">{{ r.text }}</p>
@@ -499,7 +508,7 @@ a[style*="background:#C9A66B"]:hover,button[style*="background:#C9A66B"]:hover,a
             <div style="flex:0 1 300px;min-width:0;display:flex;flex-direction:column;gap:10px">
               <p class="lbl" style="margin:0">Photo</p>
               <div style="aspect-ratio:4/3;background:#FBF8F1;border:1px dashed #D8CFBA;border-radius:2px;display:flex;align-items:center;justify-content:center;overflow:hidden">
-                <template data-sc="if" value="{{ destForm.hasImg }}" hint-placeholder-val="{{ false }}"><img src="{{ destForm.img }}" alt="Destination photo preview" style="width:100%;height:100%;object-fit:cover"></template>
+                <template data-sc="if" value="{{ destForm.hasImg }}" hint-placeholder-val="{{ false }}"><img src="{{ destForm.img }}" alt="Destination photo preview" style="width:100%;height:100%;object-fit:cover" loading="lazy" decoding="async"></template>
                 <template data-sc="if" value="{{ destForm.noImg }}" hint-placeholder-val="{{ true }}"><span style="font-size:13px;color:#4A5D70;padding:12px;text-align:center">No photo yet</span></template>
               </div>
               <input id="dest-photo" type="file" accept="image/*" onChange="{{ pickDestPhoto }}" style="font-size:12px">
@@ -533,7 +542,7 @@ a[style*="background:#C9A66B"]:hover,button[style*="background:#C9A66B"]:hover,a
         <ul style="list-style:none;margin:16px 0 0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px">
           <template data-sc="for" list="{{ dests }}" as="d" hint-placeholder-count="6">
             <li class="tile" style="background:#FFFFFF;border:1px solid #E3DCCB;border-radius:4px;overflow:hidden;display:flex;flex-direction:column">
-              <div style="aspect-ratio:4/3;background:#102A43"><img src="{{ d.img }}" alt="{{ d.name }}" style="display:block;width:100%;height:100%;object-fit:cover"></div>
+              <div style="aspect-ratio:4/3;background:#102A43"><img src="{{ d.img }}" alt="{{ d.name }}" style="display:block;width:100%;height:100%;object-fit:cover" loading="lazy" decoding="async"></div>
               <div style="padding:14px 16px 16px;display:flex;flex-direction:column;gap:10px;flex:1">
                 <span style="font-family:'Cormorant Garamond',Georgia,serif;font-size:24px;font-weight:600;line-height:1.15">{{ d.name }}</span>
                 <p style="margin:0;font-size:13px;color:#4A5D70">Opens: {{ d.pageLabel }}</p>
@@ -1090,8 +1099,10 @@ patch.link = { created: Date.now(), expires: ex, paid: false, cancelled: false, 
 }
 patchB(patch);
 };
+const setF = (k, fn) => (ev) => { const v = fn ? fn(ev.target.value) : ev.target.value; this.setState({ bookings: this.state.bookings.map((x) => x.id === b.id ? Object.assign({}, x, { [k]: v }) : x) }); };
 const confirmIt = () => {
-if (b.status !== 'rebooking' && !qNum) { fail('Enter the quote amount first.'); return; }
+if (b.status !== 'rebooking' && !qNum) { fail('Enter the quotation rate first.'); return; }
+if (!String(b.driver || '').trim() || !String(b.car || '').trim() || !String(b.plate || '').trim()) { fail('Enter the driver\'s name, car and plate number first. The client receives them in the confirmation.'); return; }
 const patch = { status: 'confirmed', paid: b.pay !== 'cash' };
 if (b.link && !b.link.cancelled) patch.link = Object.assign({}, b.link, { paid: true });
 if (b.status === 'rebooking' && rb) { patch.origDate = b.origDate || b.date; patch.origTime = b.origTime || b.time; patch.date = rb.date; patch.time = rb.time; patch.rebooked = true; patch.rebook = null; }
@@ -1163,7 +1174,11 @@ rebookWhen: rb ? fmtDate(rb.date) + ', ' + fmtTime(rb.time) : '',
 hasRebookNote: !!(rb && rb.note),
 rebookNote: rb ? rb.note : '',
 // actions
-showQuote: b.status === 'new' || b.status === 'quoted',
+showAssign: b.status !== 'rejected',
+fDriver: 'dr-' + b.id, fCar: 'car-' + b.id, fPlate: 'pl-' + b.id, fDFee: 'df-' + b.id, fOFee: 'of-' + b.id,
+driver: b.driver || '', car: b.car || '', plate: b.plate || '', driverFee: b.driverFee == null ? '' : b.driverFee, operatorFee: b.operatorFee == null ? '' : b.operatorFee,
+setDriver: setF('driver'), setCar: setF('car'), setPlate: setF('plate', (v) => v.toUpperCase()), setDriverFee: setF('driverFee'), setOperatorFee: setF('operatorFee'),
+feeNote: (() => { const df = Number(b.driverFee) || 0, of = Number(b.operatorFee) || 0; if (!df && !of) return 'Enter the fees to see what is left from the quotation rate.'; const left = qNum - df - of; return 'Fees total ' + peso(df + of) + '. ' + (qNum ? (left >= 0 ? 'Left from the quotation rate: ' + peso(left) + '.' : 'The fees are higher than the quotation rate by ' + peso(-left) + '.') : ''); })(),
 hasActions: actions.length > 0,
 actions, hints,
 hasMail: !!(s.mail && s.mail[b.id]), mailText: s.mail && s.mail[b.id] ? s.mail[b.id].text : '', mailStyle: 'margin:0;font-size:13.5px;line-height:1.5;color:' + (s.mail && s.mail[b.id] && s.mail[b.id].state === 'ok' ? '#2F7D4F' : s.mail && s.mail[b.id] && s.mail[b.id].state === 'warn' ? '#8A5A00' : '#4A5D70'),
