@@ -220,7 +220,6 @@ a[style*="background:#C9A66B"]:hover,button[style*="background:#C9A66B"]:hover,a
                         </div>
                       </template>
                       <div><button type="button" onClick="{{ b.askDelete }}" style="min-height:40px;padding:0 16px;border:1px solid #B3261E;border-radius:2px;background:transparent;color:#B3261E;font:inherit;font-weight:600;font-size:13.5px;cursor:pointer">Delete booking</button></div>
-                      <template data-sc="if" value="{{ b.hasMail }}" hint-placeholder-val="{{ false }}"><p role="status" style="{{ b.mailStyle }}">{{ b.mailText }}</p></template>
                       <template data-sc="if" value="{{ b.hasActions }}" hint-placeholder-val="{{ true }}">
                         <div style="display:flex;flex-direction:column;gap:8px">
                           <p class="lbl" style="margin:0">Actions</p>
@@ -281,6 +280,7 @@ a[style*="background:#C9A66B"]:hover,button[style*="background:#C9A66B"]:hover,a
                             <span style="flex:1 1 140px;min-width:0;font-size:14px;overflow-wrap:anywhere">{{ c.value }}</span>
                             <template data-sc="if" value="{{ c.isLink }}" hint-placeholder-val="{{ true }}">
                               <a href="{{ c.href }}" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;justify-content:center;min-height:40px;box-sizing:border-box;padding:0 18px;border-radius:2px;background:#C9A66B;color:#102A43;font-weight:600;font-size:12.5px">{{ c.action }}</a>
+                              <template data-sc="if" value="{{ c.href2 }}" hint-placeholder-val="{{ false }}"><a href="{{ c.href2 }}" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;justify-content:center;min-height:40px;box-sizing:border-box;padding:0 18px;border-radius:2px;background:#C9A66B;color:#102A43;font-weight:600;font-size:12.5px">{{ c.action2 }}</a></template>
                             </template>
                             <button type="button" onClick="{{ c.copy }}" style="{{ c.copyStyle }}">{{ c.copyLabel }}</button>
                           </div>
@@ -625,21 +625,6 @@ this.saveFail = false;
 if (this.sb()) this.queueSync();
 }
 canon(v) { return window.MPGT.canon(v); }
-mailClient(id, ref, email, n) {
-const set = (state, text) => this.setState({ mail: Object.assign({}, this.state.mail || {}, { [id]: { state, text } }) });
-if (!email) { set('warn', 'No email address on this booking, so no confirmation email was sent. Message the client instead.'); return; }
-if (!(window.MPGT && window.MPGT.on && window.MPGT.sendConfirmation)) { set('warn', 'Email sending is not connected in this preview.'); return; }
-set('busy', 'Sending confirmation email to ' + email + '...');
-window.MPGT.sendConfirmation(ref).then((j) => {
-if (j && j.ok) { set('ok', 'Confirmation email sent to ' + email + '.'); return; }
-const e = j && j.error;
-if (e === 'not-confirmed' && n < 5) { setTimeout(() => this.mailClient(id, ref, email, n + 1), 2000); return; }
-if (e === 'not-configured' || (j && j.httpStatus === 404 && !e)) set('warn', 'Email sending is not set up yet (see the setup steps). Please message the client yourself.');
-else if (e === 'no-email') set('warn', 'This booking has no valid email address. Message the client instead.');
-else if (e === 'not-admin' || e === 'login') set('warn', 'Your admin session could not be verified. Log in again, then use Resend confirmation email.');
-else set('warn', 'The confirmation email could not be sent. Use Resend confirmation email, or message the client.');
-}).catch(() => set('warn', 'The confirmation email could not be sent (no connection). Use Resend confirmation email.'));
-}
 setDlgF(k, v) { if (this.state.dlg) this.setState({ dlg: Object.assign({}, this.state.dlg, { [k]: v, err: '' }) }); }
 dlgFail(msg) { if (this.state.dlg) this.setState({ dlg: Object.assign({}, this.state.dlg, { err: msg, busy: false }) }); }
 verifyAdminPw(pw) {
@@ -1141,7 +1126,7 @@ cash: ' You can pay in cash on the day of your trip.'
 };
 msg = hi + ' Thank you for your request ' + b.ref + ' (' + tripLine + '). Our quotation is ' + (amt || 'to follow') + '.' + (HOW[b.pay] || '');
 } else if (b.status === 'confirmed') {
-msg = hi + (b.rebooked ? ' Your rebooking for ' + b.ref + ' is confirmed and your payment is already received.' : (b.pay === 'cash' ? ' Your booking ' + b.ref + ' is confirmed. Please pay ' + (amt || 'the agreed fare') + ' in cash on the day of your trip.' : ' We have received your payment' + (amt ? ' of ' + amt : '') + ' and your booking ' + b.ref + ' is confirmed.')) + ' Trip: ' + tripLine + '. Vehicle: ' + b.vehicle + '. Thank you for choosing us, we look forward to driving you.';
+msg = hi + (b.rebooked ? ' Your rebooking for ' + b.ref + ' is confirmed and your payment is already received.' : (b.pay === 'cash' ? ' Your booking ' + b.ref + ' is confirmed. Please pay ' + (amt || 'the agreed fare') + ' in cash on the day of your trip.' : ' We have received your payment' + (amt ? ' of ' + amt : '') + ' and your booking ' + b.ref + ' is confirmed.')) + ' Trip: ' + tripLine + '. Vehicle: ' + b.vehicle + '.' + (b.driver ? ' Driver: ' + b.driver + '.' : '') + (b.car ? ' Car: ' + b.car + '.' : '') + (b.plate ? ' Plate number: ' + b.plate + '.' : '') + ' You can check your booking status anytime at https://www.manilapampangagotaxi.com/track . Thank you for choosing us, we look forward to driving you.';
 } else if (b.status === 'rejected') {
 const why = rj ? (REJ_WHY[rj.reason] || REJ_WHY.o) : REJ_WHY.o;
 msg = hi + ' We are sorry, we cannot accept your request ' + b.ref + ' (' + tripLine + ') because ' + why + '.' + (rj && rj.note ? ' ' + rj.note : '') + (rebookUrl ? ' Your payment is safe with us. You can choose a new date here, without making a new booking: ' + rebookUrl : ' Thank you for understanding.');
@@ -1159,7 +1144,7 @@ copyStyle: 'min-height:40px;padding:0 16px;border-radius:2px;border:1px solid #D
 });
 if (b.wa) channels.push({ label: 'WhatsApp', value: '+' + b.wa, isLink: true, action: 'Open WhatsApp', href: 'https://wa.me/' + b.wa + '?text=' + encodeURIComponent(msg), ...copyBtn(b.id + 'wa', msg) });
 if (b.kakao) channels.push({ label: 'Kakao', value: b.kakao, isLink: false, action: '', href: '', ...copyBtn(b.id + 'kk', msg) });
-if (b.email) channels.push({ label: 'Email', value: b.email, isLink: true, action: 'Open email', href: 'mailto:' + b.email + '?subject=' + encodeURIComponent('Your request ' + b.ref + ' - Manila Pampanga Go Taxi') + '&body=' + encodeURIComponent(msg), ...copyBtn(b.id + 'em', msg) });
+if (b.email) channels.push({ label: 'Email', value: b.email, isLink: true, action: 'Open email', action2: 'Open Gmail', href2: 'https://mail.google.com/mail/?view=cm&fs=1&to=' + encodeURIComponent(b.email) + '&su=' + encodeURIComponent('Your request ' + b.ref + ' - Manila Pampanga Go Taxi') + '&body=' + encodeURIComponent(msg), href: 'mailto:' + b.email + '?subject=' + encodeURIComponent('Your request ' + b.ref + ' - Manila Pampanga Go Taxi') + '&body=' + encodeURIComponent(msg), ...copyBtn(b.id + 'em', msg) });
 
 const fail = (text) => this.setState({ err: { id: b.id, text } });
 const patchB = (patch, extra) => this.setState(Object.assign({ bookings: this.state.bookings.map((x) => x.id === b.id ? Object.assign({}, x, patch) : x), err: null }, extra || {}));
@@ -1183,7 +1168,6 @@ const patch = { status: 'confirmed', paid: b.pay !== 'cash' };
 if (b.link && !b.link.cancelled) patch.link = Object.assign({}, b.link, { paid: true });
 if (b.status === 'rebooking' && rb) { patch.origDate = b.origDate || b.date; patch.origTime = b.origTime || b.time; patch.date = rb.date; patch.time = rb.time; patch.rebooked = true; patch.rebook = null; }
 patchB(patch);
-this.mailClient(b.id, b.ref, b.email, 0);
 };
 const actions = [];
 if (b.status === 'new') {
@@ -1199,7 +1183,6 @@ actions.push({ label: 'Confirm rebooking', style: BTN.navy, pick: confirmIt });
 actions.push({ label: 'Reject', style: BTN.danger, pick: () => this.setState({ rej: { id: b.id, reason: 'd', note: '' }, err: null }) });
 } else if (b.status === 'confirmed') {
 actions.push({ label: 'Mark as completed', style: BTN.navy, pick: () => patchB({ status: 'completed' }) });
-if (b.email) actions.push({ label: 'Resend confirmation email', style: BTN.gold, pick: () => this.mailClient(b.id, b.ref, b.email, 0) });
 actions.push({ label: 'Reject', style: BTN.danger, pick: () => this.setState({ rej: { id: b.id, reason: 'd', note: '' }, err: null }) });
 }
 const hints = [];
@@ -1210,7 +1193,7 @@ hints.push({ label: 'Reject', text: 'Pick a reason. The client is notified' + (b
 } else if (b.status === 'rebooking') {
 hints.push({ label: 'Confirm rebooking', text: 'Moves the trip to the new date, keeps the same booking ID and tells the client it is confirmed.' });
 } else if (b.status === 'confirmed') {
-hints.push({ label: 'Confirmed', text: 'This trip shows on the Calendar tab. A confirmation email was sent to the client (if they gave an email).' });
+hints.push({ label: 'Confirmed', text: 'This trip shows on the Calendar tab. Use the "Message to client" box below to send the confirmation by WhatsApp or email.' });
 }
 let rebookInfo = '';
 if (b.status === 'rejected') {
@@ -1258,7 +1241,6 @@ setDriver: setF('driver'), setCar: setF('car'), setPlate: setF('plate', (v) => v
 feeNote: (() => { const df = Number(b.driverFee) || 0, of = Number(b.operatorFee) || 0; if (!df && !of) return 'Enter the fees to see what is left from the quotation rate.'; const left = qNum - df - of; return 'Fees total ' + peso(df + of) + '. ' + (qNum ? (left >= 0 ? 'Left from the quotation rate: ' + peso(left) + '.' : 'The fees are higher than the quotation rate by ' + peso(-left) + '.') : ''); })(),
 hasActions: actions.length > 0,
 actions, hints,
-hasMail: !!(s.mail && s.mail[b.id]), mailText: s.mail && s.mail[b.id] ? s.mail[b.id].text : '', mailStyle: 'margin:0;font-size:13.5px;line-height:1.5;color:' + (s.mail && s.mail[b.id] && s.mail[b.id].state === 'ok' ? '#2F7D4F' : s.mail && s.mail[b.id] && s.mail[b.id].state === 'warn' ? '#8A5A00' : '#4A5D70'),
 hasErr: !!(s.err && s.err.id === b.id), errText: s.err && s.err.id === b.id ? s.err.text : '',
 // reject form
 rejecting, rejId: 'rj-' + b.id, rejNoteId: 'rn-' + b.id, rejOpts: REJ_OPTS,

@@ -215,16 +215,6 @@
     return M.req('POST', '/rest/v1/rpc/track_booking', { p_ref: ref, p_contact: contact });
   };
 
-  // ---- confirmation email (admin only; sent by the /api/send-confirmation function) ----
-  M.sendConfirmation = function (ref) {
-    var base = (window.MPGT_API || '');
-    return M.token().then(function (t) {
-      if (!t) throw { status: 401 };
-      return fetch(base + '/api/send-confirmation', { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + t }, body: JSON.stringify({ ref: ref }) })
-        .then(function (r) { return r.json().catch(function () { return {}; }).then(function (j) { j.httpStatus = r.status; return j; }); });
-    });
-  };
-
   // ---- rebook ------------------------------------------------------------
   M.submitRebook = function (r) {
     return M.req('POST', '/rest/v1/rebook_requests', { digits: String(r.digits), date: r.date, time: r.time, note: r.note || '' }, { prefer: 'return=minimal' });
