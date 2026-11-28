@@ -93,10 +93,35 @@ a[style*="background:#C9A66B"]:hover,button[style*="background:#C9A66B"]:hover,a
     <div style="margin-top:auto;display:flex;flex-direction:column;gap:12px">
       <a href="/" style="font-size:13px;color:#CFC7B6;letter-spacing:.04em">&larr; View website</a>
       <p style="margin:0;font-size:12px;line-height:1.5;color:#9FB0C2">{{ modeNote }}</p>
+      <button type="button" onClick="{{ openPw }}" style="min-height:40px;padding:0 14px;border-radius:2px;border:1px solid rgba(201,166,107,.35);background:transparent;color:#E6CC96;font:inherit;font-size:12.5px;font-weight:600;cursor:pointer">Change password</button>
       <button type="button" onClick="{{ signOut }}" style="min-height:40px;padding:0 14px;border-radius:2px;border:1px solid rgba(201,166,107,.6);background:transparent;color:#E6CC96;font:inherit;font-size:12.5px;font-weight:600;cursor:pointer">Sign out</button>
       <template data-sc="if" value="{{ testMode }}" hint-placeholder-val="{{ true }}">      <button type="button" onClick="{{ resetData }}" style="min-height:40px;padding:0 14px;border-radius:2px;border:1px solid rgba(245,241,232,.35);background:transparent;color:#F5F1E8;font:inherit;font-size:12.5px;font-weight:600;cursor:pointer">Reset test data</button></template>
     </div>
   </aside>
+
+  <!-- DIALOGS -->
+  <template data-sc="if" value="{{ dlgOn }}" hint-placeholder-val="{{ false }}">
+    <div style="position:fixed;inset:0;z-index:60;background:rgba(10,24,38,.62);display:flex;align-items:center;justify-content:center;padding:16px;box-sizing:border-box;overflow-y:auto">
+      <form onSubmit="{{ dlgSubmit }}" role="dialog" aria-modal="true" aria-label="{{ dlgTitle }}" style="width:100%;max-width:440px;box-sizing:border-box;background:#FFFFFF;border-radius:4px;border-top:4px solid {{ dlgAccent }};padding:26px 24px;display:flex;flex-direction:column;gap:14px;color:#102A43">
+        <h2 style="margin:0;font-family:'Cormorant Garamond',Georgia,serif;font-size:28px;font-weight:600">{{ dlgTitle }}</h2>
+        <p style="margin:0;font-size:14px;line-height:1.6;color:#4A5D70">{{ dlgText }}</p>
+        <template data-sc="if" value="{{ dlgIsPw }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex;flex-direction:column;gap:6px"><label class="lbl" for="dlg-cur">Current password</label><input class="fld" id="dlg-cur" type="password" autocomplete="current-password" value="{{ dlg.cur }}" onInput="{{ setDlgCur }}" onChange="{{ setDlgCur }}"></div>
+          <div style="display:flex;flex-direction:column;gap:6px"><label class="lbl" for="dlg-new">New password (8+ characters)</label><input class="fld" id="dlg-new" type="password" autocomplete="new-password" value="{{ dlg.nw }}" onInput="{{ setDlgNew }}" onChange="{{ setDlgNew }}"></div>
+          <div style="display:flex;flex-direction:column;gap:6px"><label class="lbl" for="dlg-new2">Repeat new password</label><input class="fld" id="dlg-new2" type="password" autocomplete="new-password" value="{{ dlg.nw2 }}" onInput="{{ setDlgNew2 }}" onChange="{{ setDlgNew2 }}"></div>
+        </template>
+        <template data-sc="if" value="{{ dlgIsDel }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex;flex-direction:column;gap:6px"><label class="lbl" for="dlg-pw">Your admin password</label><input class="fld" id="dlg-pw" type="password" autocomplete="current-password" value="{{ dlg.pw }}" onInput="{{ setDlgPw }}" onChange="{{ setDlgPw }}"></div>
+        </template>
+        <template data-sc="if" value="{{ dlg.err }}" hint-placeholder-val="{{ false }}"><p role="alert" style="margin:0;font-size:14px;color:#B3261E">{{ dlg.err }}</p></template>
+        <template data-sc="if" value="{{ dlg.ok }}" hint-placeholder-val="{{ false }}"><p role="status" style="margin:0;font-size:14px;color:#2F7D4F">{{ dlg.ok }}</p></template>
+        <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:4px">
+          <template data-sc="if" value="{{ dlgShowGo }}" hint-placeholder-val="{{ true }}"><button type="submit" style="min-height:48px;padding:0 22px;border:0;border-radius:2px;background:{{ dlgAccent }};color:#FFFFFF;font:inherit;font-weight:700;font-size:15px;cursor:pointer">{{ dlgGo }}</button></template>
+          <button type="button" onClick="{{ closeDlg }}" style="min-height:48px;padding:0 22px;border:2px solid #102A43;border-radius:2px;background:transparent;color:#102A43;font:inherit;font-weight:600;font-size:15px;cursor:pointer">{{ dlgCloseLabel }}</button>
+        </div>
+      </form>
+    </div>
+  </template>
 
   <!-- MAIN -->
   <main style="flex:1 1 640px;min-width:0;padding:32px 40px 64px;box-sizing:border-box">
@@ -194,6 +219,7 @@ a[style*="background:#C9A66B"]:hover,button[style*="background:#C9A66B"]:hover,a
                           <p style="margin:0;font-size:12.5px;line-height:1.55;color:#4A5D70">Driver, car and plate are shown to the client in the confirmation. The fees are private and only visible here in Admin.</p>
                         </div>
                       </template>
+                      <div><button type="button" onClick="{{ b.askDelete }}" style="min-height:40px;padding:0 16px;border:1px solid #B3261E;border-radius:2px;background:transparent;color:#B3261E;font:inherit;font-weight:600;font-size:13.5px;cursor:pointer">Delete booking</button></div>
                       <template data-sc="if" value="{{ b.hasMail }}" hint-placeholder-val="{{ false }}"><p role="status" style="{{ b.mailStyle }}">{{ b.mailText }}</p></template>
                       <template data-sc="if" value="{{ b.hasActions }}" hint-placeholder-val="{{ true }}">
                         <div style="display:flex;flex-direction:column;gap:8px">
@@ -614,6 +640,55 @@ else if (e === 'not-admin' || e === 'login') set('warn', 'Your admin session cou
 else set('warn', 'The confirmation email could not be sent. Use Resend confirmation email, or message the client.');
 }).catch(() => set('warn', 'The confirmation email could not be sent (no connection). Use Resend confirmation email.'));
 }
+setDlgF(k, v) { if (this.state.dlg) this.setState({ dlg: Object.assign({}, this.state.dlg, { [k]: v, err: '' }) }); }
+dlgFail(msg) { if (this.state.dlg) this.setState({ dlg: Object.assign({}, this.state.dlg, { err: msg, busy: false }) }); }
+verifyAdminPw(pw) {
+if (this.sb()) {
+const M = window.MPGT, email = ((M.session() || {}).email || '').trim();
+if (!email) return Promise.reject({ status: 401 });
+return M.login(email, pw).then(() => true, (err) => { if (err && err.net) throw err; return false; });
+}
+const cred = this.getCred();
+return Promise.all([this.hashPw(pw), cred ? Promise.resolve('') : this.hashPw('manila2026')]).then((r) => cred ? r[0] === cred.h : r[0] === r[1]);
+}
+dlgGo() {
+const d = this.state.dlg; if (!d || d.busy || d.ok) return;
+const net = (err) => this.dlgFail(err && err.net ? 'Cannot reach the server. Check your connection and try again.' : 'Something went wrong (' + ((err && err.status) || 'error') + '). Please try again.');
+if (d.kind === 'del') {
+if (!d.pw) { this.dlgFail('Enter your admin password.'); return; }
+this.setState({ dlg: Object.assign({}, d, { busy: true, err: '' }) });
+this.verifyAdminPw(d.pw).then((ok) => {
+if (!ok) { this.dlgFail('That password is not correct.'); return; }
+const b = this.state.bookings.find((x) => x.id === d.id);
+const finish = () => {
+this.deleted = this.deleted || {}; this.deleted[d.ref] = true;
+delete this.syncedBk[d.ref];
+this.setState({ bookings: this.state.bookings.filter((x) => x.id !== d.id), dlg: null, err: null, selected: null, openId: null });
+};
+if (!this.sb()) { finish(); return; }
+const M = window.MPGT, digits = String(d.ref).replace(/\D/g, '');
+const jobs = [M.areq('DELETE', '/rest/v1/bookings?ref=eq.' + encodeURIComponent(d.ref), undefined, { prefer: 'return=minimal' })];
+return Promise.all(jobs).then(() => {
+if (b && b.receipt) M.removeFile('receipts', b.receipt).catch(() => {});
+if (digits) M.areq('DELETE', '/rest/v1/rebook_requests?digits=eq.' + digits, undefined, { prefer: 'return=minimal' }).catch(() => {});
+finish();
+});
+}).catch(net);
+return;
+}
+if (!d.cur) { this.dlgFail('Enter your current password.'); return; }
+if (String(d.nw || '').length < 8) { this.dlgFail('The new password must have at least 8 characters.'); return; }
+if (d.nw !== d.nw2) { this.dlgFail('The two new passwords do not match.'); return; }
+if (d.nw === d.cur) { this.dlgFail('Choose a password different from the current one.'); return; }
+this.setState({ dlg: Object.assign({}, d, { busy: true, err: '' }) });
+this.verifyAdminPw(d.cur).then((ok) => {
+if (!ok) { this.dlgFail('Your current password is not correct.'); return; }
+const done = () => this.setState({ dlg: Object.assign({}, this.state.dlg || d, { busy: false, err: '', ok: 'Your password was changed. Use the new one the next time you log in.', cur: '', nw: '', nw2: '' }) });
+if (this.sb()) return window.MPGT.areq('PUT', '/auth/v1/user', { password: d.nw }).then(done);
+const cred = this.getCred();
+return this.hashPw(d.nw).then((h) => { try { localStorage.setItem('mpgt.admin.cred', JSON.stringify({ u: cred ? cred.u : 'admin', h })); } catch (err) { this.dlgFail('The new password could not be saved in this browser.'); return; } done(); });
+}).catch(net);
+}
 setSync(v) { if (this.state.syncState !== v) this.setState({ syncState: v }); }
 queueSync() { clearTimeout(this.syncT); this.syncT = setTimeout(() => this.runSync(), 700); }
 runSync() {
@@ -836,6 +911,7 @@ const byRef = {}; this.state.bookings.forEach((b) => { byRef[b.ref] = b; });
 const next = this.state.bookings.slice(), fresh = [];
 let changed = false;
 remote.forEach((d) => {
+if (this.deleted && this.deleted[d.ref]) return;
 const rc = this.canon(d), l = byRef[d.ref];
 if (!l) { fresh.push(d); this.syncedBk[d.ref] = rc; return; }
 if (rc !== this.syncedBk[d.ref] && this.canon(l) === this.syncedBk[d.ref]) {
@@ -1174,6 +1250,7 @@ rebookWhen: rb ? fmtDate(rb.date) + ', ' + fmtTime(rb.time) : '',
 hasRebookNote: !!(rb && rb.note),
 rebookNote: rb ? rb.note : '',
 // actions
+askDelete: () => this.setState({ dlg: { kind: 'del', id: b.id, ref: b.ref, name: b.name, pw: '', err: '', ok: '', busy: false } }),
 showAssign: b.status !== 'rejected',
 fDriver: 'dr-' + b.id, fCar: 'car-' + b.id, fPlate: 'pl-' + b.id, fDFee: 'df-' + b.id, fOFee: 'of-' + b.id,
 driver: b.driver || '', car: b.car || '', plate: b.plate || '', driverFee: b.driverFee == null ? '' : b.driverFee, operatorFee: b.operatorFee == null ? '' : b.operatorFee,
@@ -1342,6 +1419,16 @@ isAuthed: !!s.authed, notAuthed: !s.authed && !s.booting, isBooting: !!s.booting
 testMode: !this.sb(), userPh: this.sb() ? 'Email' : 'Username',
 modeNote: this.sb() ? (s.syncState === 'saving' ? 'Saving your changes\u2026' : s.syncState === 'error' ? 'Not saved yet. Retrying\u2026' : 'Live: changes are saved online and show on the website.') : 'Test mode: what you change here is saved in this browser and shows on the website.',
 saveMsg: this.sb() ? 'Your latest changes could not be saved online yet. We keep retrying. Please check your internet connection.' : 'Your latest changes could not be saved in this browser (storage is full or blocked). Try a smaller photo, or delete unused photos.',
+dlg: s.dlg || {}, dlgOn: !!s.dlg, dlgIsPw: !!(s.dlg && s.dlg.kind === 'pw'), dlgIsDel: !!(s.dlg && s.dlg.kind === 'del'),
+dlgTitle: s.dlg && s.dlg.kind === 'del' ? 'Delete booking' : 'Change password',
+dlgText: s.dlg && s.dlg.kind === 'del' ? 'Delete ' + s.dlg.ref + (s.dlg.name ? ' (' + s.dlg.name + ')' : '') + ' permanently, including its receipt and rebook requests. This cannot be undone. Enter your admin password to confirm.' : 'Enter your current password, then choose a new one.',
+dlgAccent: s.dlg && s.dlg.kind === 'del' ? '#B3261E' : '#102A43',
+dlgGo: s.dlg && s.dlg.busy ? 'Please wait\u2026' : (s.dlg && s.dlg.kind === 'del' ? 'Delete permanently' : 'Save new password'),
+dlgShowGo: !(s.dlg && s.dlg.ok), dlgCloseLabel: s.dlg && s.dlg.ok ? 'Close' : 'Cancel',
+openPw: () => this.setState({ dlg: { kind: 'pw', cur: '', nw: '', nw2: '', err: '', ok: '', busy: false } }),
+closeDlg: () => this.setState({ dlg: null }),
+dlgSubmit: (ev) => { if (ev && ev.preventDefault) ev.preventDefault(); this.dlgGo(); },
+setDlgCur: (ev) => this.setDlgF('cur', ev.target.value), setDlgNew: (ev) => this.setDlgF('nw', ev.target.value), setDlgNew2: (ev) => this.setDlgF('nw2', ev.target.value), setDlgPw: (ev) => this.setDlgF('pw', ev.target.value),
 loginUser: s.loginUser, loginPass: s.loginPass, loginErr: s.loginErr, loginInfo: s.loginInfo,
 setLoginUser: (ev) => this.setState({ loginUser: ev.target.value, loginErr: '' }),
 setLoginPass: (ev) => this.setState({ loginPass: ev.target.value, loginErr: '' }),
