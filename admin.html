@@ -279,10 +279,11 @@ a[style*="background:#C9A66B"]:hover,button[style*="background:#C9A66B"]:hover,a
                             <span style="flex:0 0 72px;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#8F6B2E">{{ c.label }}</span>
                             <span style="flex:1 1 140px;min-width:0;font-size:14px;overflow-wrap:anywhere">{{ c.value }}</span>
                             <template data-sc="if" value="{{ c.isLink }}" hint-placeholder-val="{{ true }}">
-                              <a href="{{ c.href }}" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;justify-content:center;min-height:40px;box-sizing:border-box;padding:0 18px;border-radius:2px;background:#C9A66B;color:#102A43;font-weight:600;font-size:12.5px">{{ c.action }}</a>
+                              <a href="{{ c.href }}" target="{{ c.target }}" rel="noopener" style="display:inline-flex;align-items:center;justify-content:center;min-height:40px;box-sizing:border-box;padding:0 18px;border-radius:2px;background:#C9A66B;color:#102A43;font-weight:600;font-size:12.5px">{{ c.action }}</a>
                               <template data-sc="if" value="{{ c.href2 }}" hint-placeholder-val="{{ false }}"><a href="{{ c.href2 }}" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;justify-content:center;min-height:40px;box-sizing:border-box;padding:0 18px;border-radius:2px;background:#C9A66B;color:#102A43;font-weight:600;font-size:12.5px">{{ c.action2 }}</a></template>
                             </template>
                             <button type="button" onClick="{{ c.copy }}" style="{{ c.copyStyle }}">{{ c.copyLabel }}</button>
+                            <template data-sc="if" value="{{ c.hint }}" hint-placeholder-val="{{ false }}"><p style="flex:1 1 100%;margin:0;font-size:12px;line-height:1.5;color:#4A5D70">{{ c.hint }}</p></template>
                           </div>
                         </template>
                       </div>
@@ -1142,9 +1143,9 @@ copy: () => { const done = () => { this.setState({ copied: key }); setTimeout(()
 copyLabel: s.copied === key ? 'Copied' : 'Copy message',
 copyStyle: 'min-height:40px;padding:0 16px;border-radius:2px;border:1px solid #D8CFBA;background:#FFFFFF;color:#102A43;font:inherit;font-size:12.5px;font-weight:600;cursor:pointer'
 });
-if (b.wa) channels.push({ label: 'WhatsApp', value: '+' + b.wa, isLink: true, action: 'Open WhatsApp', href: 'https://wa.me/' + b.wa + '?text=' + encodeURIComponent(msg), ...copyBtn(b.id + 'wa', msg) });
+if (b.wa) channels.push({ label: 'WhatsApp', value: '+' + b.wa, isLink: true, action: 'Open WhatsApp', target: '_blank', href: 'https://wa.me/' + b.wa + '?text=' + encodeURIComponent(msg), ...copyBtn(b.id + 'wa', msg) });
 if (b.kakao) channels.push({ label: 'Kakao', value: b.kakao, isLink: false, action: '', href: '', ...copyBtn(b.id + 'kk', msg) });
-if (b.email) channels.push({ label: 'Email', value: b.email, isLink: true, action: 'Open email', action2: 'Open Gmail', href2: 'https://mail.google.com/mail/?view=cm&fs=1&to=' + encodeURIComponent(b.email) + '&su=' + encodeURIComponent('Your request ' + b.ref + ' - Manila Pampanga Go Taxi') + '&body=' + encodeURIComponent(msg), href: 'mailto:' + b.email + '?subject=' + encodeURIComponent('Your request ' + b.ref + ' - Manila Pampanga Go Taxi') + '&body=' + encodeURIComponent(msg), ...copyBtn(b.id + 'em', msg) });
+if (b.email) channels.push({ label: 'Email', value: b.email, isLink: true, action: 'Open email', target: '_self', hint: 'If nothing opens, this computer has no email app set up. Use Open Gmail instead, or Copy message and paste it into any email.', action2: 'Open Gmail', href2: 'https://mail.google.com/mail/?view=cm&fs=1&to=' + encodeURIComponent(b.email) + '&su=' + encodeURIComponent('Your request ' + b.ref + ' - Manila Pampanga Go Taxi') + '&body=' + encodeURIComponent(msg), href: 'mailto:' + b.email + '?subject=' + encodeURIComponent('Your request ' + b.ref + ' - Manila Pampanga Go Taxi') + '&body=' + encodeURIComponent(msg), ...copyBtn(b.id + 'em', msg) });
 
 const fail = (text) => this.setState({ err: { id: b.id, text } });
 const patchB = (patch, extra) => this.setState(Object.assign({ bookings: this.state.bookings.map((x) => x.id === b.id ? Object.assign({}, x, patch) : x), err: null }, extra || {}));

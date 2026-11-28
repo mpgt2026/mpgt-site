@@ -151,6 +151,10 @@ header>nav[aria-label="Main"]{order:3;flex:1 1 100% !important;flex-wrap:nowrap 
 header>nav[aria-label="Main"]::-webkit-scrollbar{display:none}
 header>nav[aria-label="Main"] a{flex:none;white-space:nowrap;padding:8px 0 !important}
 }
+.veh{display:flex;flex-direction:column;background:#FFFFFF;border:1px solid #E3DCCB;border-radius:4px;overflow:hidden;color:#102A43;transition:transform .35s ease,box-shadow .35s ease,border-color .35s ease}
+.veh:hover{transform:translateY(-6px);box-shadow:0 18px 36px rgba(16,42,67,.16);border-color:#C9A66B}
+.veh .vp{aspect-ratio:16/10;background:#FFFFFF;display:flex;align-items:center;justify-content:center;padding:14px;border-bottom:1px solid #EFE9DA}
+.veh .vp img{width:100%;height:100%;object-fit:contain;display:block}
 .place{display:block;background:#FFFFFF;border:1px solid #E3DCCB;border-radius:4px;overflow:hidden;color:#102A43;transition:transform .35s ease,box-shadow .35s ease,border-color .35s ease}
 .place:hover{transform:translateY(-6px);box-shadow:0 18px 36px rgba(16,42,67,.16);border-color:#C9A66B;color:#102A43}
 .place .ph{position:relative;aspect-ratio:4/3;overflow:hidden;background:#102A43}
@@ -184,6 +188,7 @@ header>nav[aria-label="Main"] a{flex:none;white-space:nowrap;padding:8px 0 !impo
       <a href="#top" style="padding:10px 0;border-bottom:1px solid #C9A66B">Home</a>
       <a href="#services" style="padding:10px 0">Our Services</a>
       <a href="#destinations" style="padding:10px 0">Destinations</a>
+      <a href="#vehicles" style="padding:10px 0">Vehicles</a>
       <a href="/routes" style="padding:10px 0">Popular Routes</a>
       <a href="#why" style="padding:10px 0">About Us</a>
       <a href="/faq" style="padding:10px 0">FAQ</a>
@@ -298,6 +303,30 @@ header>nav[aria-label="Main"] a{flex:none;white-space:nowrap;padding:8px 0 !impo
               <span style="display:block;margin-top:10px;font-size:11.5px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:#8F6B2E">Read the route guide <span aria-hidden="true">&rarr;</span></span>
             </span>
           </a>
+        </li>
+      </template>
+    </ul>
+  </section>
+
+  <section id="vehicles" style="background:#FBF8F1;padding:88px 40px;border-top:1px solid #E3DCCB;border-bottom:1px solid #E3DCCB">
+    <div style="text-align:center;display:flex;flex-direction:column;gap:8px;align-items:center">
+      <h2 style="margin:0;font-family:'Cormorant Garamond',Georgia,serif;font-size:42px;font-weight:500;">Our vehicles</h2>
+      <div style="width:56px;height:1px;background:#C9A66B"></div>
+      <p style="margin:0;font-size:17px;font-style:italic;color:#4A5D70">Clean, air-conditioned and driven by an experienced driver.</p>
+    </div>
+    <ul style="list-style:none;margin:32px auto 0;padding:0;max-width:1180px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:24px">
+      <template data-sc="for" list="{{ fleet }}" as="fv" hint-placeholder-count="3">
+        <li>
+          <article class="veh" style="height:100%">
+            <div class="vp"><img src="{{ fv.img }}" alt="{{ fv.alt }}" loading="lazy"></div>
+            <div style="display:flex;flex-direction:column;gap:10px;padding:20px 22px 22px;flex:1">
+              <p style="margin:0;font-size:11.5px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:#8F6B2E">{{ fv.cat }}</p>
+              <h3 style="margin:0;font-family:'Cormorant Garamond',Georgia,serif;font-weight:600;font-size:27px;line-height:1.15">{{ fv.name }}</h3>
+              <p style="margin:0;font-size:14.5px;line-height:1.6;color:#4A5D70">{{ fv.desc }}</p>
+              <p style="margin:0;font-size:13.5px;font-weight:600;color:#102A43">{{ fv.seats }} seats &middot; {{ fv.bags }} bags</p>
+              <a href="/book" class="btn-ring sm" style="margin-top:auto;align-self:flex-start">Book this vehicle</a>
+            </div>
+          </article>
         </li>
       </template>
     </ul>
@@ -677,7 +706,18 @@ img.src = reader.result;
 };
 reader.readAsDataURL(file);
 };
-return { places,
+const FLEET0 = [{ cat: 'Sedan', name: 'Mitsubishi Mirage G4', img: '/assets/c8a2bcb42d778ed924bee088dd5a067f.jpg', seats: '4', bags: '2', desc: 'Compact air-conditioned sedan, ideal for solo travelers and couples.' }, { cat: 'MPV / SUV / AUV', name: 'Mitsubishi Xpander GLS', img: '/assets/29d0bf5fd4b078bf9721c792b05c9949.jpg', seats: '6', bags: '3', desc: 'Spacious MPV for families and small groups.' }, { cat: 'Van', name: 'Toyota Hiace', img: '/assets/09a9f1ebcb219ab9ea16ecf97e9ed680.png', seats: '10', bags: '8', desc: 'Large van for bigger groups and whole-day service.' }];
+let fleet = FLEET0;
+try {
+const adm2 = JSON.parse(localStorage.getItem('mpgt.admin.v1'));
+if (adm2 && Array.isArray(adm2.vehicles) && adm2.vehicles.length) {
+const ck = (c) => /van/i.test(c || '') ? 'Van' : /mpv|suv|auv/i.test(c || '') ? 'MPV / SUV / AUV' : 'Sedan';
+const pick = ['Sedan', 'MPV / SUV / AUV', 'Van'].map((c) => adm2.vehicles.find((v) => v && v.name && ck(v.cat) === c && v.status !== 'Maintenance') || adm2.vehicles.find((v) => v && v.name && ck(v.cat) === c)).filter(Boolean);
+if (pick.length) fleet = pick.map((v) => ({ cat: ck(v.cat), name: v.name, img: v.img || '', seats: v.seats || '', bags: v.bags || '', desc: v.desc || '' }));
+}
+} catch (err) {}
+fleet = fleet.map((v) => Object.assign({ alt: v.name + ' available with a driver' }, v));
+return { places, fleet,
 gallery,
 lbOpen: s.lb >= 0, lbSrc: s.lb >= 0 ? GAL[s.lb].src : '', lbAlt: s.lb >= 0 ? GAL[s.lb].alt : '', lbCap: s.lb >= 0 ? GAL[s.lb].cap : '',
 lbClose: () => this.setState({ lb: -1 }), lbStay: (ev) => { if (ev && ev.stopPropagation) ev.stopPropagation(); },

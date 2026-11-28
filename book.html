@@ -305,6 +305,12 @@ header>nav[aria-label="Main"] a{flex:none;white-space:nowrap;padding:8px 0 !impo
                       <span style="display:inline-flex;align-items:center;justify-content:center;min-height:48px;box-sizing:border-box;padding:0 22px;border-radius:2px;background:#E9E3D3;color:#5B6D7F;font-weight:600;font-size:14px">Enter both locations first</span>
                     </template>
                   </div>
+                  <template data-sc="if" value="{{ showMap }}" hint-placeholder-val="{{ false }}">
+                    <div style="border-top:1px solid #E3DCCB;background:#FFFFFF">
+                      <iframe title="Route map" src="{{ mapSrc }}" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen style="display:block;width:100%;height:340px;border:0"></iframe>
+                      <p class="hint" style="margin:0;padding:10px 18px">{{ mapNote }}</p>
+                    </div>
+                  </template>
                 </div>
 
                 <!-- EXTRA STOPS -->
@@ -930,6 +936,18 @@ const dest = s.dest.trim();
 const ready = !!(pickup && dest);
 const t = new Date();
 const today = t.getFullYear() + '-' + String(t.getMonth() + 1).padStart(2, '0') + '-' + String(t.getDate()).padStart(2, '0');
+const mapWant = JSON.stringify({ p: pickup, d: dest, s: stops });
+if (this.mapWant !== mapWant) {
+this.mapWant = mapWant;
+clearTimeout(this.mapT);
+this.mapT = setTimeout(() => { if (this.mapWant === mapWant && JSON.stringify(this.state.mapQ || {}) !== mapWant) this.setState({ mapQ: JSON.parse(mapWant) }); }, 900);
+}
+const mq0 = s.mapQ || {};
+const mq = { p: mq0.p || '', d: mq0.d || '', s: mq0.s || [] };
+const withPH = (x) => /philippines/i.test(x) ? x : x + ', Philippines';
+const mapSrc = mq.p && mq.d
+? 'https://maps.google.com/maps?output=embed&hl=en&saddr=' + enc(withPH(mq.p)) + '&daddr=' + mq.s.concat([mq.d]).map((x) => enc(withPH(x))).join('+to:')
+: 'https://maps.google.com/maps?output=embed&hl=en&q=' + enc(withPH(mq.p || mq.d));
 const mapsUrl = 'https://www.google.com/maps/dir/?api=1&origin=' + enc(pickup) + '&destination=' + enc(dest) + (stops.length ? '&waypoints=' + enc(stops.join('|')) : '') + '&travelmode=driving';
 
 const routeDefs = [{ id: 'custom', label: 'Custom route (quotation)' }, { id: 'pm', label: 'Pampanga \u2192 Metro Manila' }, { id: 'mp', label: 'Metro Manila \u2192 Pampanga' }];
@@ -1070,7 +1088,7 @@ stopsLabel: s.showStops ? 'Hide extra stops' : 'Add extra stops',
 stopsIcon: s.showStops ? '−' : '+',
 toggleStops: () => this.setState({ showStops: !this.state.showStops }),
 routeText: ready ? pickup + ' → ' + dest : 'Enter both locations above to prepare your driving directions.',
-mapsReady: ready, mapsNotReady: !ready, mapsUrl,
+mapsReady: ready, mapsNotReady: !ready, mapsUrl, showMap: !!(mq.p || mq.d), mapSrc, mapNote: mq.p && mq.d ? 'Live map from Google Maps. Distance and drive time are shown on the map. Your final fare is confirmed in your quotation.' : 'Enter both pickup and drop-off to see the route.',
 showFlight: s.trip === 'airport',
 hasFormErr: !!(e.name || e.phone || e.agree), errPickup: e.pickup || '', errDest: e.dest || '', errDate: e.date || '', errName: e.name || '', errPhone: e.phone || '', errAgree: e.agree || '',
 invPickup: !!e.pickup, invDest: !!e.dest, invDate: !!e.date, invName: !!e.name, invPhone: !!e.phone,
